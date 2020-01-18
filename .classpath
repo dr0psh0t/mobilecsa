@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="com"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Tomcat 8.0.27"/>
+	<classpathentry kind="lib" path="E:/dagondon/jar lib/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="E:/dagondon/jar lib/joda-time-2.9.7.jar"/>
+	<classpathentry kind="lib" path="E:/dagondon/jar lib/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="E:/dagondon/jar lib/mariadb-java-client-1.5.7.jar"/>
+	<classpathentry kind="lib" path="E:/dagondon/jar lib/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="E:/dagondon/jar lib/googleauth.jar"/>
+	<classpathentry kind="output" path="out/production/mobilescsa"/>
+</classpath>
