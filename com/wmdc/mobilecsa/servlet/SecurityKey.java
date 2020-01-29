@@ -1,7 +1,7 @@
 package wmdc.mobilecsa.servlet;
 
 import com.warrenstrange.googleauth.GoogleAuthenticator;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -19,6 +19,7 @@ import java.sql.*;
  */
 @WebServlet("/securitykey")
 public class SecurityKey extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

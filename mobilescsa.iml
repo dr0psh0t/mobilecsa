@@ -61,15 +61,6 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://D:/ddagondon/jar lib/json-simple-1.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
           <root url="jar://D:/ddagondon/jar lib/mariadb-java-client-1.5.7.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -107,6 +98,15 @@
       <library>
         <CLASSES>
           <root url="jar://D:/Program Files/Apache Tomcat 8.0.27/lib/servlet-api.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://D:/ddagondon/jar lib/json-20190722.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

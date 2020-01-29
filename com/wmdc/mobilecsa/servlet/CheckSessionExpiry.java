@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -19,7 +19,9 @@ import java.sql.SQLException;
  * Created by wmdcprog on 2/5/2018.
  */
 @WebServlet("/checksessionexpiry")
+
 public class CheckSessionExpiry extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

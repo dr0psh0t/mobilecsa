@@ -28,7 +28,7 @@ public class GetInitialJoborderPhoto extends HttpServlet {
         processRequest(request, response);
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
         if (!Utils.isOnline(request)) {

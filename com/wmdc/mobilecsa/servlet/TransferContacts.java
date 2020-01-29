@@ -1,7 +1,7 @@
 package wmdc.mobilecsa.servlet;
 
 import org.apache.commons.lang3.text.WordUtils;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -15,7 +15,9 @@ import java.io.PrintWriter;
 import java.sql.*;
 
 @WebServlet("/transfercontact")
+
 public class TransferContacts extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -272,7 +274,7 @@ public class TransferContacts extends HttpServlet {
         Utils.redirectIfNull(request, response);
     }
 
-    public int getContactCount(int contactId, Connection conn) throws SQLException {
+    private int getContactCount(int contactId, Connection conn) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
                 "SELECT COUNT (*) as contactCount FROM contacts WHERE contact_id = ?");
         prepStmt.setInt(1, contactId);

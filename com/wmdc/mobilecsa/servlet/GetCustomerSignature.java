@@ -13,7 +13,9 @@ import java.io.InputStream;
 import java.sql.*;
 
 @WebServlet("/getcustomersignature")
+
 public class GetCustomerSignature extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,7 +28,7 @@ public class GetCustomerSignature extends HttpServlet {
         procRequest(request, response);
     }
 
-    protected void procRequest(HttpServletRequest request, HttpServletResponse response)
+    private void procRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
         if (!Utils.isOnline(request)) {

@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet.getJsonData;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -20,6 +20,7 @@ import java.util.ArrayList;
  * Created by wmdcprog on 8/31/2017.
  */
 @WebServlet("/getcountrycode")
+
 public class GetCountryCode extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

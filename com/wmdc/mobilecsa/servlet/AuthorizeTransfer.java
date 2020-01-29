@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
@@ -20,8 +20,10 @@ import java.sql.SQLException;
  * Created by wmdcprog on 7/14/2017.
  */
 @WebServlet("/authorizetransfer")
+
 public class AuthorizeTransfer extends HttpServlet {
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
         response.setContentType("application/json");
@@ -34,8 +36,6 @@ public class AuthorizeTransfer extends HttpServlet {
         }
 
         Connection conn = null;
-        ResultSet resultSet = null;
-        PreparedStatement prepStmt = null;
 
         try {
             Utils.databaseForName(getServletContext());
@@ -105,7 +105,7 @@ public class AuthorizeTransfer extends HttpServlet {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, null, null);
             out.close();
         }
     }

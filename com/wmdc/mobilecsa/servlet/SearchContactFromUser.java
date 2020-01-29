@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -18,7 +18,9 @@ import java.util.ArrayList;
 
 /*** Created by wmdcprog on 8/3/2017.*/
 @WebServlet("/searchcontactfromuser")
+
 public class SearchContactFromUser extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,7 +33,7 @@ public class SearchContactFromUser extends HttpServlet {
         processRequest(request, response);
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();

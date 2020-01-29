@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
@@ -186,11 +186,9 @@ public class ActivateUser extends HttpServlet {
             if (username == null) {
                 Utils.logError("\"username\" parameter is null");
                 Utils.printJsonException(responseJson, "Username required.", out);
-                return;
             } else if (username.isEmpty()) {
                 Utils.logError("\"username\" parameter is empty");
                 Utils.printJsonException(responseJson, "Username required.", out);
-                return;
             }
         } catch (IOException ie) {
             System.err.println(ie.toString());

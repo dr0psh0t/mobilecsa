@@ -1,7 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -137,8 +136,10 @@ public class GetCsaJoList extends HttpServlet {
                     return;
                 }
 
-                JSONParser parser = new JSONParser();
-                resJson = (JSONObject) parser.parse(result);
+                //JSONParser parser = new JSONParser();
+                //resJson = (JSONObject) parser.parse(result);
+
+                resJson = new JSONObject(result);
 
                 out.println(resJson);
             } else {

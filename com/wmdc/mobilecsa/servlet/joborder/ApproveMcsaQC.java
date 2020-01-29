@@ -1,7 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -130,7 +129,6 @@ public class ApproveMcsaQC extends HttpServlet {
                     stringBuilder.append(line);
                 }
 
-                JSONParser parser = new JSONParser();
                 String qcResponse = stringBuilder.toString();
 
                 if (qcResponse.isEmpty()) {
@@ -139,11 +137,12 @@ public class ApproveMcsaQC extends HttpServlet {
                 }
 
                 if (qcResponse.contains("\"success\"")) {
-                    resJson = (JSONObject) parser.parse(qcResponse);
+                    resJson = new JSONObject(qcResponse);
                 } else {
                     qcResponse = Utils.getCorrectJson(qcResponse);
                     qcResponse = Utils.getCorrectJsonReason(qcResponse);
-                    resJson = (JSONObject) parser.parse(qcResponse);
+
+                    resJson = new JSONObject(qcResponse);
                 }
 
                 out.println(resJson);

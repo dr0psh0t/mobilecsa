@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import  org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;

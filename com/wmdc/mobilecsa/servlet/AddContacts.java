@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -47,9 +47,6 @@ public class AddContacts extends HttpServlet {
         String website = request.getParameter("website");
         String emergency = request.getParameter("emergency");
         Part filePart = request.getPart("specimenPhoto");
-
-        Long.parseLong(mobile);
-        Long.parseLong(emergencyContact);
 
         Utils.checkParameterValue(request.getParameter("csaId"), request.getParameter("faxCode"),
                 request.getParameter("city"), request.getParameter("country"), request.getParameter("zip"),
@@ -356,11 +353,9 @@ public class AddContacts extends HttpServlet {
             if (jobPosition == null) {
                 Utils.logError("\"jobPosition\" parameter is null.");
                 Utils.printJsonException(new JSONObject(), "Job position is required.", out);
-                return;
             } else if (jobPosition.isEmpty()) {
                 Utils.logError("\"jobPosition\" parameter is empty.");
                 Utils.printJsonException(new JSONObject(), "Job position is required.", out);
-                return;
             }
         } catch (IOException ie) {
             System.err.println(ie.toString());

@@ -36,8 +36,7 @@ Ext.onReady(function() {
                 region : 'center',
                 layout : 'fit',     //  setting layout to fit will stretch the grids height to match parent
                 padding : 3,
-                items : [customerGrid, customerCompanyGrid, gridPanel,
-                    contactsGrid, adminGrid, joborderGridPanel]
+                items : [customerGrid, customerCompanyGrid, gridPanel, contactsGrid, adminGrid, joborderGridPanel]
             },{
                 xtype : 'panel',
                 id : 'westPanel',

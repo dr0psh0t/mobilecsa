@@ -1,7 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
-
+import org.json.JSONObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

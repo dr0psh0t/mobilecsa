@@ -1,7 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -135,8 +134,7 @@ public class GetWorkOrderQCList extends HttpServlet {
                     return;
                 }
 
-                JSONParser parser = new JSONParser();
-                resJson = (JSONObject) parser.parse(serverResponse);
+                resJson = new JSONObject(serverResponse);
                 resJson.put("success", true);
 
                 out.println(resJson);

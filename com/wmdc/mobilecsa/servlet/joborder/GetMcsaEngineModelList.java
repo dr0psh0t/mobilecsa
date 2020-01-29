@@ -1,8 +1,7 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONException;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -157,7 +156,6 @@ public class GetMcsaEngineModelList extends HttpServlet {
                 }
 
                 String serverResponse = stringBuilder.toString();
-                JSONParser jsonParser = new JSONParser();
 
                 if (serverResponse.isEmpty()) {
                     Utils.printJsonException(resJson, "No response from server.", out);
@@ -165,10 +163,11 @@ public class GetMcsaEngineModelList extends HttpServlet {
                 }
 
                 try {
-                    resJson = (JSONObject) jsonParser.parse(serverResponse);
+                    resJson = new JSONObject(serverResponse);
+
                     resJson.put("success", true);
                     out.println(resJson);
-                } catch (ParseException pe) {
+                } catch (JSONException pe) {
                     ArrayList<JSONObject> models = new ArrayList<>();
                     resJson = new JSONObject();
                     resJson.put("success", true);

@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -15,7 +15,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @WebServlet("/updatecontact")
+
 public class UpdateContact extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,7 +35,6 @@ public class UpdateContact extends HttpServlet {
 
         Connection conn = null;
         PreparedStatement prepStmt = null;
-        ResultSet resultSet = null;
 
         String lastname, firstname, mi, company, jobPosition, address, mobile, email, website, emergencyContact,
                 emergency, year, month, day;
@@ -186,7 +187,7 @@ public class UpdateContact extends HttpServlet {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, null);
             out.close();
         }
     }

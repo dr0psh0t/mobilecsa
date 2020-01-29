@@ -1,7 +1,8 @@
 package wmdc.mobilecsa.utils;
 
 import org.apache.commons.codec.binary.Base64;
-import org.json.simple.JSONObject;
+
+import org.json.JSONObject;
 import wmdc.mobilecsa.exceptions.NonExistingException;
 
 import javax.imageio.IIOImage;
@@ -121,8 +122,8 @@ public class Utils {
         if (url == null) {
             throw new NullPointerException("URL database is null");
         } else {
-            return DriverManager.getConnection(getUrlFromConfig(servletContext),
-                    getPropertyValue("user", servletContext), getPropertyValue("password", servletContext));
+                return DriverManager.getConnection(url, getPropertyValue("user", servletContext),
+                        getPropertyValue("password", servletContext));
         }
     }
 
@@ -145,7 +146,7 @@ public class Utils {
         return getPropertyValue("serverAddress", servletContext);
     }
 
-    public static String getUrlFromConfig(ServletContext servletContext) throws SQLException, IOException {
+    private static String getUrlFromConfig(ServletContext servletContext) throws SQLException, IOException {
         Connection conn = null;
         PreparedStatement prepStmt = null;
         ResultSet resultSet = null;
@@ -896,19 +897,25 @@ public class Utils {
             if (conn != null) {
                 conn.close();
             }
-        } catch (SQLException e) {}
+        } catch (SQLException e) {
+            System.err.println(e.toString());
+        }
 
         try {
             if (prepStmt != null) {
                 prepStmt.close();
             }
-        } catch (SQLException e) {}
+        } catch (SQLException e) {
+            System.err.println(e.toString());
+        }
 
         try {
             if (resultSet != null) {
                 resultSet.close();
             }
-        } catch (SQLException e) {}
+        } catch (SQLException e) {
+            System.err.println(e.toString());
+        }
     }
 
     public static InputStream getSignatureInputStream(String signature) throws Exception {
@@ -921,9 +928,6 @@ public class Utils {
 
             ImageIO.write(signatureImage, "png", os);
             return new ByteArrayInputStream(os.toByteArray());
-        } catch(IOException ie) {
-            displayStackTraceArray(ie.getStackTrace(), "wmdc.mobilecsa.utils", "IOException", ie.toString());
-            throw ie;
         } catch (Exception e) {
             displayStackTraceArray(e.getStackTrace(), "wmdc.mobilecsa.utils", "IOException", e.toString());
             throw e;
@@ -1006,8 +1010,6 @@ public class Utils {
             return new FileInputStream(file);
         }
 
-        // the answer is none of the above
-
         Iterator iter = ImageIO.getImageWritersByFormatName("jpeg");
 
         ImageWriter writer = (ImageWriter)iter.next();
@@ -1025,8 +1027,7 @@ public class Utils {
 
         File fileOut2 = null;
 
-        while (fileSize > sizeThreshold)
-        {
+        while (fileSize > sizeThreshold) {
             if (percent >= quality) {
                 percent = percent * 0.1f;
             }
@@ -1035,7 +1036,7 @@ public class Utils {
 
             File fileOut = new File("pic.jpg");
             if (fileOut.exists()) {
-                fileOut.delete();
+                System.out.println("fileOut.delete()= "+fileOut.delete());
             }
             FileImageOutputStream output = new FileImageOutputStream(fileOut);
 
@@ -1048,12 +1049,10 @@ public class Utils {
             fileOut2 = new File("pic.jpg");
             long newFileSize = fileOut2.length();
 
-            if (newFileSize == fileSize)
-            {
+            if (newFileSize == fileSize) {
                 // cannot reduce more, return
                 break;
-            }
-            else {
+            } else {
                 fileSize = newFileSize;
             }
 
@@ -1062,8 +1061,7 @@ public class Utils {
 
         writer.dispose();
 
-        FileInputStream fileInputStream = new FileInputStream(fileOut2);
-        return fileInputStream;
+        return new FileInputStream(fileOut2);
     }
 
     public static String getJoborderFolderName(ServletContext servletContext) {
@@ -1266,11 +1264,9 @@ public class Utils {
             if (filePart == null) {
                 Utils.logError("\"filePart\" parameter is null.");
                 printJsonException(new JSONObject(), "Null parameter found. See logs.", out);
-                return;
             } else if (filePart.getSize() < 1) {
                 Utils.logError("\"filePart\" size is zero.");
                 printJsonException(new JSONObject(), "Empty parameter found. See logs.", out);
-                return;
             }
         } catch (IOException ie) {
             System.err.println(ie.toString());
@@ -1281,11 +1277,11 @@ public class Utils {
                                               String exceptionName, String toString) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(exceptionName+": "+toString);
+        stringBuilder.append(exceptionName).append(": ").append(toString);
 
         for (StackTraceElement elem : stackTraceElements) {
             if (elem.toString().contains(packageRoot)) {
-                stringBuilder.append(" Source: "+elem.toString()+" ");
+                stringBuilder.append(" Source: ").append(elem.toString()).append(" ");
             }
         }
 
@@ -1296,11 +1292,11 @@ public class Utils {
         }
     }
 
-    public static String getRelevantTrace(StackTraceElement[] traceElements, String packageRoot) {
+    private static String getRelevantTrace(StackTraceElement[] traceElements, String packageRoot) {
         StringBuilder stringBuilder = new StringBuilder();
         for (StackTraceElement elem : traceElements) {
             if (elem.toString().contains(packageRoot)) {
-                stringBuilder.append(packageRoot+"\n");
+                stringBuilder.append(packageRoot).append("\n");
             }
         }
         return stringBuilder.toString();
@@ -1310,10 +1306,11 @@ public class Utils {
         System.out.println(object);
     }
 
+    /*
     public static void print(String tag, Object object) {
         String tagObject = "P/"+tag+": "+object.toString();
         System.out.println(tagObject);
-    }
+    }*/
 
     public static String getCorrectJson(String incorrectJsonStr) {
         int start = incorrectJsonStr.indexOf("success");
@@ -1363,11 +1360,7 @@ public class Utils {
         prepStmt.close();
         resultSet.close();
 
-        if (lat == 0 && lng == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return (lat != 0 && lng != 0);
     }
 
     public static boolean inspectAddressContact(int contactId, Connection conn) throws SQLException {
@@ -1388,11 +1381,7 @@ public class Utils {
         prepStmt.close();
         resultSet.close();
 
-        if (lat == 0 && lng == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return (lat != 0 && lng != 0);
     }
 
     public static void invalidImage(HttpServletResponse response, ServletContext sc)
@@ -1409,7 +1398,8 @@ public class Utils {
         String path = "C:\\Users\\mcsa\\mcsa_log.txt";
 
         File logFile = new File(path);
-        logFile.getParentFile().mkdirs();
+
+        System.out.println("mkdirs= "+logFile.getParentFile().mkdirs());
 
         FileWriter fileWriter;
 

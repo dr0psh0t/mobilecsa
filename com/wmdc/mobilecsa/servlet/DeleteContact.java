@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -19,6 +19,7 @@ import java.sql.SQLException;
  * Created by wmdcprog on 5/30/2017.
  */
 @WebServlet("/deletecontact")
+
 public class DeleteContact extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

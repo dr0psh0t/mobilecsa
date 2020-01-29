@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -19,7 +19,9 @@ import java.sql.SQLException;
  * Created by wmdcprog on 11/10/2018.
  */
 @WebServlet("/deleteinitialjoborder")
+
 public class DeleteInitialJoborder extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
@@ -47,7 +49,6 @@ public class DeleteInitialJoborder extends HttpServlet {
 
         Connection conn = null;
         PreparedStatement prepStmt = null;
-        ResultSet resultSet = null;
 
         try {
             Utils.databaseForName(getServletContext());
@@ -82,7 +83,7 @@ public class DeleteInitialJoborder extends HttpServlet {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, null);
             out.close();
         }
     }
@@ -93,7 +94,7 @@ public class DeleteInitialJoborder extends HttpServlet {
         Utils.illegalRequest(response);
     }
 
-    public int getJoborderCountById(int initialJoborderId, Connection conn) throws SQLException {
+    private int getJoborderCountById(int initialJoborderId, Connection conn) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
                 "SELECT COUNT (*) AS joCount FROM initial_joborder WHERE initial_joborder_id = ?");
         prepStmt.setInt(1, initialJoborderId);

@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -100,7 +100,7 @@ public class GetInitialJoborderList extends HttpServlet {
         }
     }
 
-    public String getExcludedTime(String dateAdded) throws java.text.ParseException {
+    private String getExcludedTime(String dateAdded) throws java.text.ParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S", Locale.ENGLISH);
         LocalDate date = LocalDate.parse(dateAdded, formatter);
 

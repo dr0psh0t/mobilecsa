@@ -13,19 +13,22 @@ import java.io.InputStream;
 import java.sql.*;
 
 @WebServlet("/getcustomerphoto")
+
 public class GetCustomerPhoto extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         procRequest(request, response);
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         procRequest(request, response);
     }
 
-    protected void procRequest(HttpServletRequest request, HttpServletResponse response)
+    private void procRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         if (!Utils.isOnline(request)) {

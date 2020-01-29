@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -61,8 +61,6 @@ public class SearchJoborderFromAdmin extends HttpServlet {
             String sql;
 
             try {
-                Integer.parseInt(query);
-
                 sql = "SELECT initial_joborder_id, customer_source, customer, date_stamp, serial_num, model_id, " +
                         "make, jo_number, is_added FROM initial_joborder WHERE jo_number = ?";
                 prepStmt = conn.prepareStatement(sql);
@@ -71,7 +69,7 @@ public class SearchJoborderFromAdmin extends HttpServlet {
                 sql = "SELECT initial_joborder_id, customer_source, customer, date_stamp, serial_num, model_id, " +
                         "make, jo_number, is_added FROM initial_joborder WHERE customer like ?";
                 prepStmt = conn.prepareStatement(sql);
-                prepStmt.setString(1, new StringBuilder().append(query).append("%").toString());
+                prepStmt.setString(1, query+"%");
             }
 
             resultSet = prepStmt.executeQuery();
@@ -117,7 +115,7 @@ public class SearchJoborderFromAdmin extends HttpServlet {
         doPost(request, response);
     }
 
-    public String getExcludedTime(String dateAdded) throws java.text.ParseException {
+    private String getExcludedTime(String dateAdded) throws java.text.ParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S", Locale.ENGLISH);
         LocalDate date = LocalDate.parse(dateAdded, formatter);
 

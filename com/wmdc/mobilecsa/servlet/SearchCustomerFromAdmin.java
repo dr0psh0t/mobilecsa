@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -20,8 +20,10 @@ import java.util.ArrayList;
  * Created by wmdcprog on 7/15/2017.
  */
 @WebServlet("/searchcustomerfromadmin")
+
 public class SearchCustomerFromAdmin extends HttpServlet {
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         response.setContentType("application/json");

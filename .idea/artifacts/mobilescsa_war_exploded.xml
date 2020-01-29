@@ -34,6 +34,8 @@
           <element id="file-copy" path="D:/ddagondon/jar lib/googleauth.jar" />
           <element id="file-copy" path="D:/ddagondon/jar lib/commons-lang3-3.5.jar" />
           <element id="file-copy" path="D:/ddagondon/jar lib/commons-codec-1.10.jar" />
+          <element id="file-copy" path="D:/ddagondon/jar lib/mariadb-java-client-1.5.7.jar" />
+          <element id="file-copy" path="D:/ddagondon/jar lib/json-20190722.jar" />
         </element>
       </element>
     </root>

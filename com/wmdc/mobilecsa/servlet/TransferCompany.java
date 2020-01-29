@@ -1,7 +1,7 @@
 package wmdc.mobilecsa.servlet;
 
 import org.apache.commons.lang3.text.WordUtils;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -16,9 +16,11 @@ import java.sql.*;
 
 @WebServlet("/transfercompany")
 public class TransferCompany extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("application/json");
         JSONObject resJson = new JSONObject();
         PrintWriter out = response.getWriter();
@@ -83,6 +85,7 @@ public class TransferCompany extends HttpServlet {
                     "email, website, date_added, date_stamp, classification, plant, profile_photo, signature, " +
                     "is_deleted, id_num, contact_person, company FROM customers WHERE customer_id = ?",
                     Statement.RETURN_GENERATED_KEYS);
+
             prepStmt.setInt(1, customerId);
             resultSet = prepStmt.executeQuery();
 
@@ -276,7 +279,7 @@ public class TransferCompany extends HttpServlet {
         Utils.illegalRequest(response);
     }
 
-    public int getCompanyCount(int customerId, Connection conn) throws SQLException {
+    private int getCompanyCount(int customerId, Connection conn) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
                 "SELECT COUNT (*) AS customerCount FROM customers WHERE customer_id = ?");
         prepStmt.setInt(1, customerId);

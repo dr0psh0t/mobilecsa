@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -23,11 +23,15 @@ import java.sql.SQLException;
 @MultipartConfig(fileSizeThreshold=1024*1024*6, // 5MB
         maxFileSize=1024*1024*3,      // 3MB
         maxRequestSize=1024*1024*50)   // 50MB
+
 @WebServlet("/updatecontactphoto")
+
 public class UpdateContactPhoto extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("application/json");
         JSONObject resJson = new JSONObject();
         PrintWriter out = response.getWriter();
@@ -57,7 +61,6 @@ public class UpdateContactPhoto extends HttpServlet {
 
         Connection conn = null;
         PreparedStatement prepStmt = null;
-        ResultSet resultSet = null;
 
         try {
             Utils.databaseForName(getServletContext());
@@ -89,7 +92,7 @@ public class UpdateContactPhoto extends HttpServlet {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
             Utils.printJsonException(resJson, e.toString(), out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, null);
             out.close();
         }
     }

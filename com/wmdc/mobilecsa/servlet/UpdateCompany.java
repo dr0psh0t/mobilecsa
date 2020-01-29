@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -15,7 +15,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @WebServlet("/updatecompany")
+
 public class UpdateCompany extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,12 +36,12 @@ public class UpdateCompany extends HttpServlet {
         Connection conn = null;
         Connection connCRM = null;
         PreparedStatement prepStmt = null;
-        ResultSet resultSet = null;
+        //ResultSet resultSet = null;
 
         String company, address, email, website, contactPerson, contactNumber, emergency;
 
-        int plant, city, province, country, fax, telephone, faxAreaCode, faxCountryCode, countryCode, areaCode, zip,
-                er, mf, calib, spareParts, customerId;
+        int plant, city, province, country, fax, telephone, faxAreaCode, faxCountryCode, countryCode, areaCode, zip, er,
+                mf, calib, spareParts, customerId;
 
         double latitude, longitude;
 
@@ -175,7 +177,7 @@ public class UpdateCompany extends HttpServlet {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
             Utils.printJsonException(responseJson, "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, null);
             Utils.closeDBResource(connCRM, null, null);
             out.close();
         }

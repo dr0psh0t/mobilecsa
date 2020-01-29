@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet.getJsonData;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -185,7 +185,7 @@ public class GetContactsByParams extends HttpServlet {
         }
     }
 
-    public int getContactCount(Connection conn, int contactId) throws SQLException {
+    private int getContactCount(Connection conn, int contactId) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT (*) AS contactCount FROM contacts " +
                         "WHERE contact_id = ?");
         prepStmt.setInt(1, contactId);

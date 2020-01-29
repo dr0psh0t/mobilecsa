@@ -2,7 +2,7 @@ package wmdc.mobilecsa.servlet;
 
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
@@ -22,6 +22,7 @@ import java.sql.SQLException;
  * Created by wmdcprog on 9/19/2017.
  */
 @WebServlet("/createadministrator")
+
 public class CreateAdministrator extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

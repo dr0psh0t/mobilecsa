@@ -1,5 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
-import org.json.simple.JSONObject;
+
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.imageio.ImageIO;
@@ -27,7 +28,9 @@ import java.util.Arrays;
 @MultipartConfig(fileSizeThreshold = 1024*1024*6,   //  6MB
         maxFileSize=1024*1024*3,                    //  3MB
         maxRequestSize = 1024*1024*50)
+
 @WebServlet("/updateinitialjoborder")
+
 public class UpdateInitialJoborder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -74,7 +77,6 @@ public class UpdateInitialJoborder extends HttpServlet {
             return;
         }
 
-        /*
         if (photoPart == null) {
             Utils.logError("\"photoPart\" parameter is null.");
             Utils.printJsonException(resJson, "Picture required. See logs or try again.", out);
@@ -85,11 +87,10 @@ public class UpdateInitialJoborder extends HttpServlet {
             Utils.logError("\"photoPart\" size is zero.");
             Utils.printJsonException(resJson, "Picture required. See logs or try again.", out);
             return;
-        }*/
+        }
 
         Connection conn = null;
         PreparedStatement prepStmt = null;
-        ResultSet resultSet = null;
 
         try {
             Utils.databaseForName(getServletContext());
@@ -152,7 +153,7 @@ public class UpdateInitialJoborder extends HttpServlet {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, null);
             out.close();
         }
     }
@@ -163,7 +164,7 @@ public class UpdateInitialJoborder extends HttpServlet {
         Utils.illegalRequest(response);
     }
 
-    public int[] getImageDimension(InputStream inputStream) throws IOException {
+    private int[] getImageDimension(InputStream inputStream) throws IOException {
         BufferedImage bufferedImage = ImageIO.read(inputStream);
         return new int[]{bufferedImage.getWidth(), bufferedImage.getHeight()};
     }
@@ -174,6 +175,7 @@ public class UpdateInitialJoborder extends HttpServlet {
 
             PreparedStatement prepStmt = conn.prepareStatement("UPDATE initial_joborder SET signature = ? " +
                     "WHERE initial_joborder_id = ?");
+
             prepStmt.setBlob(1, signatureStream);
             prepStmt.setInt(2, initialJoborderId);
             prepStmt.executeUpdate();
@@ -183,22 +185,28 @@ public class UpdateInitialJoborder extends HttpServlet {
 
     private String updatePhoto(Connection conn, int initialJoborderId, int preparedBy, InputStream photoStream,
                              InputStream inputStream) throws Exception {
+
         int[] imageDimension = getImageDimension(inputStream);
         PreparedStatement prepStmt;
 
         if (isPictureSaved(initialJoborderId, conn)) {
+
             prepStmt = conn.prepareStatement("UPDATE initial_joborder_image SET image = ?, width = ?, " +
                     "height = ? WHERE initial_joborder_id = ?");
+
             prepStmt.setBlob(1, photoStream);
             prepStmt.setInt(2, imageDimension[0]);
             prepStmt.setInt(3, imageDimension[1]);
             prepStmt.setInt(4, initialJoborderId);
             prepStmt.executeUpdate();
             prepStmt.close();
+
             return "";
         } else {
+
             prepStmt = conn.prepareStatement("INSERT INTO initial_joborder_image (image, initial_joborder_id, " +
                     "prepared_by, date_stamp, image_type, width, height) VALUES (?, ?, ?, NOW(), ?, ?, ?)");
+
             prepStmt.setBlob(1, photoStream);
             prepStmt.setInt(2, initialJoborderId);
             prepStmt.setInt(3, preparedBy);
@@ -217,8 +225,10 @@ public class UpdateInitialJoborder extends HttpServlet {
     }
 
     private boolean isPictureSaved(int initialJoId, Connection conn) throws SQLException {
+
         PreparedStatement prepStmt = conn.prepareStatement(
                 "SELECT COUNT (*) AS pictureCount FROM initial_joborder_image WHERE initial_joborder_id = ?");
+
         prepStmt.setInt(1, initialJoId);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -230,10 +240,6 @@ public class UpdateInitialJoborder extends HttpServlet {
         prepStmt.close();
         resultSet.close();
 
-        if (pictureCount > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return pictureCount > 0;
     }
 }

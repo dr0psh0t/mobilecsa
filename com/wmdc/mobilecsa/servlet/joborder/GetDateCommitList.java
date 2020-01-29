@@ -1,7 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -128,13 +127,13 @@ public class GetDateCommitList extends HttpServlet {
                 }
 
                 String serverResponse = stringBuilder.toString();
+
                 if (serverResponse.isEmpty()) {
                     Utils.printJsonException(resJson, "No response from server.", out);
                     return;
                 }
 
-                JSONParser parser = new JSONParser();
-                resJson = (JSONObject) parser.parse(serverResponse);
+                resJson = new JSONObject(serverResponse);
 
                 out.println(resJson);
             } else {
@@ -161,7 +160,7 @@ public class GetDateCommitList extends HttpServlet {
         Utils.illegalRequest(response);
     }
 
-    public void checkParameter(String serverUrl, String akey, String cid, String source, JSONObject resJson,
+    private void checkParameter(String serverUrl, String akey, String cid, String source, JSONObject resJson,
                                PrintWriter out) {
         try {
             if (cid == null) {
@@ -197,11 +196,9 @@ public class GetDateCommitList extends HttpServlet {
             if (akey == null) {
                 Utils.logError("\"akey\" parameter is null");
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-                return;
             } else if (akey.isEmpty()) {
                 Utils.logError("\"akey\" parameter is empty");
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-                return;
             }
         } catch (IOException ie) {
             System.err.println(ie.toString());

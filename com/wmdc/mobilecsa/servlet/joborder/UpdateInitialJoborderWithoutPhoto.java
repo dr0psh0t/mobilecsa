@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -13,7 +13,6 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +21,7 @@ import java.util.Arrays;
  * Created by wmdcprog on 8/4/2018.
  */
 @WebServlet("/updateinitialjoborderwithoutphoto")
+
 public class UpdateInitialJoborderWithoutPhoto extends HttpServlet {
 
     @Override
@@ -67,7 +67,6 @@ public class UpdateInitialJoborderWithoutPhoto extends HttpServlet {
 
         Connection conn = null;
         PreparedStatement prepStmt = null;
-        ResultSet resultSet = null;
 
         try {
             Utils.databaseForName(getServletContext());
@@ -115,7 +114,7 @@ public class UpdateInitialJoborderWithoutPhoto extends HttpServlet {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, null);
             out.close();
         }
     }

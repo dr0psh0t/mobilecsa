@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet.getJsonData;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -15,7 +15,9 @@ import java.sql.*;
 /**
  * Created by wmdcprog on 3/31/2017.
  */
+
 @WebServlet("/getcsabyparams")
+
 public class GetCsaByParams extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -92,7 +94,7 @@ public class GetCsaByParams extends HttpServlet {
         }
     }
 
-    public int getCsaCountById(Connection conn,int csaId) throws SQLException {
+    private int getCsaCountById(Connection conn,int csaId) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT (*) AS userCount FROM users WHERE csa_id = ?");
         prepStmt.setInt(1, csaId);
 

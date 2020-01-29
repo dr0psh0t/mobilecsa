@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.imageio.ImageIO;
@@ -18,12 +18,14 @@ import java.sql.*;
 /*** Created by wmdcprog on 4/27/2018.*/
 
 @MultipartConfig(fileSizeThreshold = 1024*1024*6, maxFileSize=1024*1024*3, maxRequestSize = 1024*1024*50)
+
 @WebServlet("/initialjoborder")
 
 public class InitialJobOrder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
@@ -35,7 +37,6 @@ public class InitialJobOrder extends HttpServlet {
 
         Connection conn = null;
         PreparedStatement prepStmt = null;
-        ResultSet resultSet = null;
 
         try {
             Utils.databaseForName(getServletContext());
@@ -87,7 +88,6 @@ public class InitialJobOrder extends HttpServlet {
 
             if (photoStream == null) {
                 Utils.printJsonException(responseJson, "File stream is null. Cannot upload your photo.", out);
-                //Utils.logError("\"photoStream\" is null.");
                 return;
             }
 
@@ -155,12 +155,12 @@ public class InitialJobOrder extends HttpServlet {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
             Utils.printJsonException(responseJson, "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, null);
             out.close();
         }
     }
 
-    public int[] getImageDimension(InputStream inputStream) throws IOException {
+    private int[] getImageDimension(InputStream inputStream) throws IOException {
         BufferedImage bufferedImage = ImageIO.read(inputStream);
         return new int[]{bufferedImage.getWidth(), bufferedImage.getHeight()};
     }
@@ -183,8 +183,10 @@ public class InitialJobOrder extends HttpServlet {
     }
 
     private boolean isPictureSaved(int initialJoId, Connection conn) throws SQLException {
+
         PreparedStatement prepStmt = conn.prepareStatement(
                 "SELECT COUNT (*) AS pictureCount FROM initial_joborder_image WHERE initial_joborder_id = ?");
+
         prepStmt.setInt(1, initialJoId);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -196,16 +198,14 @@ public class InitialJobOrder extends HttpServlet {
         prepStmt.close();
         resultSet.close();
 
-        if (pictureCount > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return pictureCount > 0;
     }
 
     private boolean isJoNumberExists(String joNo, Connection conn) throws SQLException {
+
         PreparedStatement prepStmt = conn.prepareStatement(
                 "SELECT COUNT (*) AS joNoCount FROM initial_joborder WHERE jo_number = ?");
+
         prepStmt.setString(1, joNo);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -217,14 +217,10 @@ public class InitialJobOrder extends HttpServlet {
         prepStmt.close();
         resultSet.close();
 
-        if (joNoCount > 0) {
-            return true;    //  existing joNumber
-        } else {
-            return false;
-        }
+        return joNoCount > 0;
     }
 
-    public void checkParameter(String customer, String mobile, String serialNo, String poDate, String dateReceive,
+    private void checkParameter(String customer, String mobile, String serialNo, String poDate, String dateReceive,
                                String category, String remarks, String make, String customerId,
                                String modelId, String preparedBy, String referenceNo, String joSignature,
                                String source, String purchaseOrder, String joNumber, Part photoPart, PrintWriter out) {
@@ -395,11 +391,9 @@ public class InitialJobOrder extends HttpServlet {
             if (photoPart == null) {
                 Utils.logError("\"photoPart\" parameter is null.");
                 Utils.printJsonException(new JSONObject(), "Photo is required. See logs or try again.", out);
-                return;
             } else if (photoPart.getSize() < 1) {
                 Utils.logError("\"photoPart\" parameter is empty.");
                 Utils.printJsonException(new JSONObject(), "Photo is required. See logs or try again.", out);
-                return;
             }
         } catch (IOException ie) {
             System.err.println(ie.toString());

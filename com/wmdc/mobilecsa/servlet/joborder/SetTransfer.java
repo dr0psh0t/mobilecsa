@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -58,7 +58,6 @@ public class SetTransfer extends HttpServlet {
 
         Connection conn = null;
         PreparedStatement prepStmt = null;
-        ResultSet resultSet = null;
 
         try {
             Utils.databaseForName(getServletContext());
@@ -90,7 +89,7 @@ public class SetTransfer extends HttpServlet {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, null);
             out.close();
         }
     }
@@ -101,7 +100,7 @@ public class SetTransfer extends HttpServlet {
         Utils.illegalRequest(response);
     }
 
-    public boolean doesInitialJoExists(int initJoId, Connection conn) throws SQLException {
+    private boolean doesInitialJoExists(int initJoId, Connection conn) throws SQLException {
 
         PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT (*) AS initJoCount FROM initial_joborder " +
                 "WHERE initial_joborder_id = ?");
@@ -116,10 +115,6 @@ public class SetTransfer extends HttpServlet {
         prepStmt.close();
         resultSet.close();
 
-        if (initJoCount > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return initJoCount > 0;
     }
 }

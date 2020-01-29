@@ -14,6 +14,7 @@ import java.sql.*;
 
 @WebServlet("/getcontactsignature")
 public class GetContactsSignature extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,7 +27,7 @@ public class GetContactsSignature extends HttpServlet {
         procRequest(request, response);
     }
 
-    protected void procRequest(HttpServletRequest request, HttpServletResponse response)
+    private void procRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
         if (!Utils.isOnline(request)) {

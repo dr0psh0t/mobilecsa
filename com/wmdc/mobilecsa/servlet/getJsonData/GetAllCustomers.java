@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet.getJsonData;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -18,7 +18,9 @@ import java.util.Comparator;
 /**
  * Created by wmdcprog on 4/27/2018.
  */
+
 @WebServlet("/getallcustomers")
+
 public class GetAllCustomers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

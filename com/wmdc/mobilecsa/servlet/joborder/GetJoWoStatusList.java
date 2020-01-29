@@ -1,7 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -136,9 +135,7 @@ public class GetJoWoStatusList extends HttpServlet {
                     return;
                 }
 
-                JSONParser parser = new JSONParser();
-                resJson = (JSONObject) parser.parse(result);
-                resJson.put("success", true);
+                resJson = new JSONObject(result);
 
                 out.println(resJson);
             } else {

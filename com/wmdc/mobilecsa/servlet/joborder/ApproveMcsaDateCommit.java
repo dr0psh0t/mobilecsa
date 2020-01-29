@@ -1,7 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -127,7 +126,6 @@ public class ApproveMcsaDateCommit extends HttpServlet {
                     stringBuilder.append(line);
                 }
 
-                JSONParser parser = new JSONParser();
                 String dcResponse = stringBuilder.toString();
 
                 if (dcResponse.isEmpty()) {
@@ -136,12 +134,13 @@ public class ApproveMcsaDateCommit extends HttpServlet {
                 }
 
                 if (dcResponse.contains("\"success\"")) {
-                    resJson = (JSONObject) parser.parse(dcResponse);
+                    resJson = new JSONObject(dcResponse);
                 } else {
                     dcResponse = getCorrectJson(dcResponse);
                     dcResponse = getCorrectJsonReason(dcResponse);
-                    resJson = (JSONObject) parser.parse(dcResponse);
+                    resJson = new JSONObject(dcResponse);
                 }
+
                 out.println(resJson);
             } else {
                 Utils.logError("Approve request did not succeed. Status code: "+statusCode);

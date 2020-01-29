@@ -1,9 +1,8 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
-
+import org.json.JSONObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +19,9 @@ import java.sql.SQLException;
  * Created by wmdcprog on 9/19/2017.
  */
 @WebServlet("/changeadminpass")
+
 public class ChangeAdminPassword extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

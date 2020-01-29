@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
@@ -20,7 +20,9 @@ import java.sql.SQLException;
  * Created by wmdcprog on 11/26/2018.
  */
 @WebServlet("/checkmcsaandroidadminpassword")
+
 public class CheckMcsaAndroidAdminPassword extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

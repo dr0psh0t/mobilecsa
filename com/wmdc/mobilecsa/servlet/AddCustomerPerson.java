@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -16,7 +16,9 @@ import java.sql.SQLException;
 @MultipartConfig(fileSizeThreshold=1024*1024*6, // 5MB
         maxFileSize=1024*1024*3,      // 3MB
         maxRequestSize=1024*1024*50)   // 50MB
+
 @WebServlet("/addcustomerperson")
+
 public class AddCustomerPerson extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -355,11 +357,9 @@ public class AddCustomerPerson extends HttpServlet {
             if (mobile == null) {
                 Utils.logError("\"mobile\" parameter is null.");
                 Utils.printJsonException(new JSONObject(), "Mobile is required.", out);
-                return;
             } else if (mobile.isEmpty()) {
                 Utils.logError("\"mobile\" parameter is empty.");
                 Utils.printJsonException(new JSONObject(), "Mobile is required.", out);
-                return;
             }
         } catch (IOException ie) {
             System.err.println(ie.toString());

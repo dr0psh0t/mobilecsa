@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet.getJsonData;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -19,6 +19,7 @@ import java.sql.SQLException;
  * Created by wmdcprog on 9/20/2017.
  */
 @WebServlet("/getadministratorbyparams")
+
 public class GetAdministratorByParams extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -67,7 +68,7 @@ public class GetAdministratorByParams extends HttpServlet {
             }
 
             prepStmt = conn.prepareStatement("SELECT admin_id, username, creator_id, date_stamp, secret_key " +
-                            "FROM admins WHERE admin_id = ?");
+                    "FROM admins WHERE admin_id = ?");
             prepStmt.setInt(1, adminId);
             resultSet = prepStmt.executeQuery();
 
@@ -97,7 +98,7 @@ public class GetAdministratorByParams extends HttpServlet {
         }
     }
 
-    public int getAdminCountById(Connection conn, int adminId) throws SQLException {
+    private int getAdminCountById(Connection conn, int adminId) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
                 "SELECT COUNT (*) AS adminCount FROM admins WHERE admin_id = ?");
         prepStmt.setInt(1, adminId);

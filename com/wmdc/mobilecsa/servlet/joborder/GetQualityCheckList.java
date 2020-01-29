@@ -1,7 +1,6 @@
 package wmdc.mobilecsa.servlet.joborder;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -137,14 +136,13 @@ public class GetQualityCheckList extends HttpServlet {
                 }
 
                 String serverResponse = stringBuilder.toString();
-                JSONParser parser = new JSONParser();
 
                 if (serverResponse.isEmpty()) {
                     Utils.printJsonException(resJson, "No response from server.", out);
                     return;
                 }
 
-                resJson = (JSONObject) parser.parse(serverResponse);
+                resJson = new JSONObject(serverResponse);
                 resJson.put("success", true);
                 out.println(resJson);
             } else {

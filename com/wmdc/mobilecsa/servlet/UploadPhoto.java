@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -25,6 +25,7 @@ import java.sql.SQLException;
 @WebServlet("/uploadphoto")
 
 public class UploadPhoto extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
@@ -35,7 +36,6 @@ public class UploadPhoto extends HttpServlet {
 
         Connection conn = null;
         PreparedStatement prepStmt = null;
-        ResultSet resultSet = null;
 
         InputStream photoStream = null;
 
@@ -83,7 +83,7 @@ public class UploadPhoto extends HttpServlet {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
             Utils.printJsonException(resJson, "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, null);
             if (photoStream != null) {
                 photoStream.close();
             }

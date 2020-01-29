@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -16,7 +16,9 @@ import java.sql.SQLException;
 @MultipartConfig(fileSizeThreshold=1024*1024*6, // 5MB
         maxFileSize=1024*1024*3,      // 3MB
         maxRequestSize=1024*1024*50)   // 50MB
+
 @WebServlet("/addcustomercompany")
+
 public class AddCustomerCompany extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -91,9 +93,6 @@ public class AddCustomerCompany extends HttpServlet {
             latitude = Double.parseDouble(request.getParameter("lat"));
             longitude = Double.parseDouble(request.getParameter("lng"));
             signStatus = Boolean.parseBoolean(request.getParameter("signStatus"));
-
-            //  if the numeric string contains non-numeric characters, NumberFormatException is thrown
-            Long.parseLong(contactPersonNumber);
 
             if (!inspectEmailWebsite(email, website)) {
                 Utils.printJsonException(resJson, "Invalid email/website format.", out); return;
@@ -269,6 +268,7 @@ public class AddCustomerCompany extends HttpServlet {
     }
 
     private int getCompanyCount(Connection connection, String company) throws SQLException {
+
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT (*) AS customerCount FROM " +
                 "customers WHERE company = ?");
 
@@ -333,11 +333,9 @@ public class AddCustomerCompany extends HttpServlet {
             if (contactPersonNumber == null) {
                 Utils.logError("\"contactPersonNumber\" parameter is null.");
                 Utils.printJsonException(new JSONObject(), "Contact person number is required.", out);
-                return;
             } else if (contactPersonNumber.isEmpty()) {
                 Utils.logError("\"contactPersonNumber\" parameter is empty.");
                 Utils.printJsonException(new JSONObject(), "Contact person number is required.", out);
-                return;
             }
         } catch (IOException ie) {
             System.err.println(ie.toString());

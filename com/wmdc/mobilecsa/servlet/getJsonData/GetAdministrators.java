@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet.getJsonData;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -19,7 +19,9 @@ import java.util.ArrayList;
 /**
  * Created by wmdcprog on 9/20/2017.
  */
+
 @WebServlet("/getadministrators")
+
 public class GetAdministrators extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

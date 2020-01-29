@@ -1,7 +1,6 @@
 package wmdc.mobilecsa.servlet.getJsonData;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -170,11 +169,9 @@ public class GetMcsaCustomerList extends HttpServlet {
                     stringBuilder.append(line);
                 }
 
-                JSONParser parser = new JSONParser();
-                String serverResponse = stringBuilder.toString();
-                resJson = (JSONObject) parser.parse(serverResponse);
-
+                resJson = new JSONObject(stringBuilder.toString());
                 out.println(resJson);
+
             } else {
                 System.err.println("Approve request did not succeed. Status code: "+statusCode);
                 Utils.printJsonException(resJson, "Request did not succeed.", out);

@@ -1,6 +1,6 @@
 package wmdc.mobilecsa.servlet;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -20,7 +20,9 @@ import java.util.ArrayList;
  * Created by wmdcprog on 8/3/2017.
  */
 @WebServlet("/searchcustomerfromuser")
+
 public class SearchCustomerFromUser extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,7 +35,7 @@ public class SearchCustomerFromUser extends HttpServlet {
         procRequest(request, response);
     }
 
-    protected void procRequest(HttpServletRequest request, HttpServletResponse response)
+    private void procRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         response.setContentType("application/json");
@@ -76,7 +78,6 @@ public class SearchCustomerFromUser extends HttpServlet {
                 resultSet = prepStmt.executeQuery();
 
                 int customerId;
-                boolean isAPerson;
 
                 String photoLink;
                 String signatureLink;
@@ -114,14 +115,7 @@ public class SearchCustomerFromUser extends HttpServlet {
                     obj.put("id", customerId);
                     obj.put("customer", company.isEmpty() ? lastname+", "+firstname : company);
                     obj.put("isTransferred", resultSet.getInt("is_transferred"));
-
-                    if (!company.equals("")) {
-                        isAPerson = false;
-                    } else {
-                        isAPerson = true;
-                    }
-
-                    obj.put("isAPerson", isAPerson);
+                    obj.put("isAPerson", company.equals(""));
 
                     resultList.add(obj);
                     ++searchCount;

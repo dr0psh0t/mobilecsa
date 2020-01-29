@@ -1,7 +1,7 @@
 package wmdc.mobilecsa.servlet;
 
 import org.apache.commons.lang3.text.WordUtils;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -15,7 +15,9 @@ import java.io.PrintWriter;
 import java.sql.*;
 
 @WebServlet("/transfercustomer")
+
 public class TransferCustomer extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -304,32 +306,27 @@ public class TransferCustomer extends HttpServlet {
         Utils.illegalRequest(response);
     }
 
-    public String[] splitDate(String dateOfBirth)
-    {
+    private String[] splitDate(String dateOfBirth) {
         String[] dateSplit;
 
-        if (dateOfBirth == null)
-        {
+        if (dateOfBirth == null) {
             dateSplit = new String[3];
             dateSplit[0] = "0";
             dateSplit[1] = "0";
             dateSplit[2] = "0";
-        }
-        else if (dateOfBirth.equals(""))
-        {
+        } else if (dateOfBirth.equals("")) {
             dateSplit = new String[3];
             dateSplit[0] = "0";
             dateSplit[1] = "0";
             dateSplit[2] = "0";
-        }
-        else {
+        } else {
             dateSplit = dateOfBirth.split("-");
         }
 
         return dateSplit;
     }
 
-    public int getCustomerCount(int customerId, Connection conn) throws SQLException {
+    private int getCustomerCount(int customerId, Connection conn) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
                 "SELECT COUNT (*) AS customerCount FROM customers WHERE customer_id = ?");
         prepStmt.setInt(1, customerId);
