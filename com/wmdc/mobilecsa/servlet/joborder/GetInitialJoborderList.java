@@ -59,10 +59,9 @@ public class GetInitialJoborderList extends HttpServlet {
 
             prepStmt = conn.prepareStatement("SELECT initial_joborder_id, customer_source, customer, date_stamp, " +
                     "serial_num, model_id, make, is_added, jo_number FROM initial_joborder WHERE prepared_by = ? " +
-                    "AND is_added = ? ORDER BY YEAR(date_stamp) DESC, MONTH(date_stamp) DESC, DAY(date_stamp) DESC ");
+                    "ORDER BY YEAR(date_stamp) DESC, MONTH(date_stamp) DESC, DAY(date_stamp) DESC ");
 
             prepStmt.setInt(1, csaId);
-            prepStmt.setInt(2, 0);
             resultSet = prepStmt.executeQuery();
 
             ArrayList<JSONObject> initialJoborderList = new ArrayList<>();

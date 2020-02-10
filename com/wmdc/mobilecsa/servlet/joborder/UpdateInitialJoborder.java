@@ -61,33 +61,9 @@ public class UpdateInitialJoborder extends HttpServlet {
         String refNo = request.getParameter("refNo");
         String remarks = request.getParameter("remarks");
         String preparedBy = request.getParameter("preparedBy");
-        String imageType = request.getParameter("imageType");
         String joSignature = request.getParameter("joSignature");
         String joNumber = request.getParameter("joNumber");
         Part photoPart = request.getPart("photo");
-
-        System.out.println("photoPart => "+photoPart);
-
-        if (Utils.inspectNullRef(new ArrayList<>(Arrays.asList(
-                initialJoborderId, customerId, customer, source, mobile,
-                purchaseOrder, poDate, make, cat, modelId, serialNo,
-                dateReceive, dateCommit, refNo, remarks, preparedBy,
-                imageType, joSignature, joNumber)))) {
-            Utils.printJsonException(resJson, "Null parameters found.", out);
-            return;
-        }
-
-        if (photoPart == null) {
-            Utils.logError("\"photoPart\" parameter is null.");
-            Utils.printJsonException(resJson, "Picture required. See logs or try again.", out);
-            return;
-        }
-
-        if (photoPart.getSize() < 1) {
-            Utils.logError("\"photoPart\" size is zero.");
-            Utils.printJsonException(resJson, "Picture required. See logs or try again.", out);
-            return;
-        }
 
         Connection conn = null;
         PreparedStatement prepStmt = null;
