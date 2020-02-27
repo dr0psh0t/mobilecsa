@@ -100,6 +100,7 @@ public class DeleteContact extends HttpServlet {
             responseJson.put("reason", "Contact has been deleted");
 
             out.println(responseJson);
+
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);

@@ -1100,176 +1100,173 @@ public class Utils {
                                            String areaCode, String industry, String plant, String er, String mf,
                                            String spareParts, String calib, String province, String signStatus,
                                            String address, String signature, Part filePart, PrintWriter out) {
-        try {
-            if (csaId == null) {
-                Utils.logError("\"csaId\" parameter is null.");
-                printJsonException(new JSONObject(), "Missing data required. See logs or try again.", out);
-                return;
-            } else if (csaId.isEmpty()) {
-                Utils.logError("\"csaId\" parameter is empty.");
-                printJsonException(new JSONObject(), "Missing data required. See logs or try again.", out);
-                return;
-            }
 
-            if (faxCode == null) {
-                Utils.logError("\"faxCode\" parameter is null.");
-                printJsonException(new JSONObject(), "Fax code required.", out);
-                return;
-            } else if (faxCode.isEmpty()) {
-                Utils.logError("\"faxCode\" parameter is empty.");
-                printJsonException(new JSONObject(), "Fax code required.", out);
-                return;
-            }
+        if (csaId == null) {
+            Utils.logError("\"csaId\" parameter is null.");
+            printJsonException(new JSONObject(), "Missing data required. See logs or try again.", out);
+            return;
+        } else if (csaId.isEmpty()) {
+            Utils.logError("\"csaId\" parameter is empty.");
+            printJsonException(new JSONObject(), "Missing data required. See logs or try again.", out);
+            return;
+        }
 
-            if (city == null) {
-                Utils.logError("\"city\" parameter is null.");
-                printJsonException(new JSONObject(), "City required.", out);
-                return;
-            } else if (city.isEmpty()) {
-                Utils.logError("\"city\" parameter is empty.");
-                printJsonException(new JSONObject(), "City required.", out);
-                return;
-            }
+        if (faxCode == null) {
+            Utils.logError("\"faxCode\" parameter is null.");
+            printJsonException(new JSONObject(), "Fax code required.", out);
+            return;
+        } else if (faxCode.isEmpty()) {
+            Utils.logError("\"faxCode\" parameter is empty.");
+            printJsonException(new JSONObject(), "Fax code required.", out);
+            return;
+        }
 
-            if (country == null) {
-                Utils.logError("\"country\" parameter is null.");
-                printJsonException(new JSONObject(), "Country required.", out);
-                return;
-            } else if (country.isEmpty()) {
-                Utils.logError("\"country\" parameter is empty.");
-                printJsonException(new JSONObject(), "Country required.", out);
-                return;
-            }
+        if (city == null) {
+            Utils.logError("\"city\" parameter is null.");
+            printJsonException(new JSONObject(), "City required.", out);
+            return;
+        } else if (city.isEmpty()) {
+            Utils.logError("\"city\" parameter is empty.");
+            printJsonException(new JSONObject(), "City required.", out);
+            return;
+        }
 
-            if (zip == null) {
-                Utils.logError("\"zip\" parameter is null.");
-                printJsonException(new JSONObject(), "Zip required.", out);
-                return;
-            } else if (zip.isEmpty()) {
-                Utils.logError("\"zip\" parameter is empty.");
-                printJsonException(new JSONObject(), "Zip required.", out);
-                return;
-            }
+        if (country == null) {
+            Utils.logError("\"country\" parameter is null.");
+            printJsonException(new JSONObject(), "Country required.", out);
+            return;
+        } else if (country.isEmpty()) {
+            Utils.logError("\"country\" parameter is empty.");
+            printJsonException(new JSONObject(), "Country required.", out);
+            return;
+        }
 
-            if (areaCode == null) {
-                Utils.logError("\"areaCode\" parameter is null.");
-                printJsonException(new JSONObject(), "Area code required.", out);
-                return;
-            } else if (areaCode.isEmpty()) {
-                Utils.logError("\"areaCode\" parameter is empty.");
-                printJsonException(new JSONObject(), "Area code required.", out);
-                return;
-            }
+        if (zip == null) {
+            Utils.logError("\"zip\" parameter is null.");
+            printJsonException(new JSONObject(), "Zip required.", out);
+            return;
+        } else if (zip.isEmpty()) {
+            Utils.logError("\"zip\" parameter is empty.");
+            printJsonException(new JSONObject(), "Zip required.", out);
+            return;
+        }
 
-            if (industry == null) {
-                Utils.logError("\"industry\" parameter is null.");
-                printJsonException(new JSONObject(), "Industry required.", out);
-                return;
-            } else if (industry.isEmpty()) {
-                Utils.logError("\"industry\" parameter is empty.");
-                printJsonException(new JSONObject(), "Industry required.", out);
-                return;
-            }
+        if (areaCode == null) {
+            Utils.logError("\"areaCode\" parameter is null.");
+            printJsonException(new JSONObject(), "Area code required.", out);
+            return;
+        } else if (areaCode.isEmpty()) {
+            Utils.logError("\"areaCode\" parameter is empty.");
+            printJsonException(new JSONObject(), "Area code required.", out);
+            return;
+        }
 
-            if (plant == null) {
-                Utils.logError("\"plant\" parameter is null.");
-                printJsonException(new JSONObject(), "Plant required.", out);
-                return;
-            } else if (plant.isEmpty()) {
-                Utils.logError("\"plant\" parameter is empty.");
-                printJsonException(new JSONObject(), "Plant required.", out);
-                return;
-            }
+        if (industry == null) {
+            Utils.logError("\"industry\" parameter is null.");
+            printJsonException(new JSONObject(), "Industry required.", out);
+            return;
+        } else if (industry.isEmpty()) {
+            Utils.logError("\"industry\" parameter is empty.");
+            printJsonException(new JSONObject(), "Industry required.", out);
+            return;
+        }
 
-            if (er == null) {
-                Utils.logError("\"er\" parameter is null.");
-                printJsonException(new JSONObject(), "ER required.", out);
-                return;
-            } else if (er.isEmpty()) {
-                Utils.logError("\"er\" parameter is empty.");
-                printJsonException(new JSONObject(), "ER required.", out);
-                return;
-            }
+        if (plant == null) {
+            Utils.logError("\"plant\" parameter is null.");
+            printJsonException(new JSONObject(), "Plant required.", out);
+            return;
+        } else if (plant.isEmpty()) {
+            Utils.logError("\"plant\" parameter is empty.");
+            printJsonException(new JSONObject(), "Plant required.", out);
+            return;
+        }
 
-            if (mf == null) {
-                Utils.logError("\"mf\" parameter is null.");
-                printJsonException(new JSONObject(), "MF required.", out);
-                return;
-            } else if (mf.isEmpty()) {
-                Utils.logError("\"mf\" parameter is empty.");
-                printJsonException(new JSONObject(), "MF required.", out);
-                return;
-            }
+        if (er == null) {
+            Utils.logError("\"er\" parameter is null.");
+            printJsonException(new JSONObject(), "ER required.", out);
+            return;
+        } else if (er.isEmpty()) {
+            Utils.logError("\"er\" parameter is empty.");
+            printJsonException(new JSONObject(), "ER required.", out);
+            return;
+        }
 
-            if (spareParts == null) {
-                Utils.logError("\"spareParts\" parameter is null.");
-                printJsonException(new JSONObject(), "Spare parts required.", out);
-                return;
-            } else if (spareParts.isEmpty()) {
-                Utils.logError("\"spareParts\" parameter is empty.");
-                printJsonException(new JSONObject(), "Spare parts required.", out);
-                return;
-            }
+        if (mf == null) {
+            Utils.logError("\"mf\" parameter is null.");
+            printJsonException(new JSONObject(), "MF required.", out);
+            return;
+        } else if (mf.isEmpty()) {
+            Utils.logError("\"mf\" parameter is empty.");
+            printJsonException(new JSONObject(), "MF required.", out);
+            return;
+        }
 
-            if (calib == null) {
-                Utils.logError("\"calib\" parameter is null.");
-                printJsonException(new JSONObject(), "Calib required.", out);
-                return;
-            } else if (calib.isEmpty()) {
-                Utils.logError("\"calib\" parameter is empty.");
-                printJsonException(new JSONObject(), "Calib required.", out);
-                return;
-            }
+        if (spareParts == null) {
+            Utils.logError("\"spareParts\" parameter is null.");
+            printJsonException(new JSONObject(), "Spare parts required.", out);
+            return;
+        } else if (spareParts.isEmpty()) {
+            Utils.logError("\"spareParts\" parameter is empty.");
+            printJsonException(new JSONObject(), "Spare parts required.", out);
+            return;
+        }
 
-            if (province == null) {
-                Utils.logError("\"province\" parameter is null.");
-                printJsonException(new JSONObject(), "Province required.", out);
-                return;
-            } else if (province.isEmpty()) {
-                Utils.logError("\"province\" parameter is empty.");
-                printJsonException(new JSONObject(), "Province required.", out);
-                return;
-            }
+        if (calib == null) {
+            Utils.logError("\"calib\" parameter is null.");
+            printJsonException(new JSONObject(), "Calib required.", out);
+            return;
+        } else if (calib.isEmpty()) {
+            Utils.logError("\"calib\" parameter is empty.");
+            printJsonException(new JSONObject(), "Calib required.", out);
+            return;
+        }
 
-            if (signStatus == null) {
-                Utils.logError("\"signStatus\" parameter is null.");
-                printJsonException(new JSONObject(), "Signature required.", out);
-                return;
-            } else if (signStatus.isEmpty()) {
-                Utils.logError("\"signStatus\" parameter is empty.");
-                printJsonException(new JSONObject(), "Signature required.", out);
-                return;
-            }
+        if (province == null) {
+            Utils.logError("\"province\" parameter is null.");
+            printJsonException(new JSONObject(), "Province required.", out);
+            return;
+        } else if (province.isEmpty()) {
+            Utils.logError("\"province\" parameter is empty.");
+            printJsonException(new JSONObject(), "Province required.", out);
+            return;
+        }
 
-            if (address == null) {
-                Utils.logError("\"address\" parameter is null.");
-                printJsonException(new JSONObject(), "Address required.", out);
-                return;
-            } else if (address.isEmpty()) {
-                Utils.logError("\"address\" parameter is empty.");
-                printJsonException(new JSONObject(), "Address required.", out);
-                return;
-            }
+        if (signStatus == null) {
+            Utils.logError("\"signStatus\" parameter is null.");
+            printJsonException(new JSONObject(), "Signature required.", out);
+            return;
+        } else if (signStatus.isEmpty()) {
+            Utils.logError("\"signStatus\" parameter is empty.");
+            printJsonException(new JSONObject(), "Signature required.", out);
+            return;
+        }
 
-            if (signature == null) {
-                Utils.logError("\"signature\" parameter is null.");
-                printJsonException(new JSONObject(), "Signature required.", out);
-                return;
-            } else if (signature.isEmpty()) {
-                Utils.logError("\"signature\" parameter is empty.");
-                printJsonException(new JSONObject(), "Signature required.", out);
-                return;
-            }
+        if (address == null) {
+            Utils.logError("\"address\" parameter is null.");
+            printJsonException(new JSONObject(), "Address required.", out);
+            return;
+        } else if (address.isEmpty()) {
+            Utils.logError("\"address\" parameter is empty.");
+            printJsonException(new JSONObject(), "Address required.", out);
+            return;
+        }
 
-            if (filePart == null) {
-                Utils.logError("\"filePart\" parameter is null.");
-                printJsonException(new JSONObject(), "Null parameter found. See logs.", out);
-            } else if (filePart.getSize() < 1) {
-                Utils.logError("\"filePart\" size is zero.");
-                printJsonException(new JSONObject(), "Empty parameter found. See logs.", out);
-            }
-        } catch (IOException ie) {
-            System.err.println(ie.toString());
+        if (signature == null) {
+            Utils.logError("\"signature\" parameter is null.");
+            printJsonException(new JSONObject(), "Signature required.", out);
+            return;
+        } else if (signature.isEmpty()) {
+            Utils.logError("\"signature\" parameter is empty.");
+            printJsonException(new JSONObject(), "Signature required.", out);
+            return;
+        }
+
+        if (filePart == null) {
+            Utils.logError("\"filePart\" parameter is null.");
+            printJsonException(new JSONObject(), "Null parameter found. See logs.", out);
+        } else if (filePart.getSize() < 1) {
+            Utils.logError("\"filePart\" size is zero.");
+            printJsonException(new JSONObject(), "Empty parameter found. See logs.", out);
         }
     }
 
@@ -1285,11 +1282,7 @@ public class Utils {
             }
         }
 
-        try {
-            logError(stringBuilder.toString());
-        } catch (IOException ie) {
-            System.err.println(ie.toString());
-        }
+        logError(stringBuilder.toString());
     }
 
     private static String getRelevantTrace(StackTraceElement[] traceElements, String packageRoot) {
@@ -1386,6 +1379,7 @@ public class Utils {
 
     public static void invalidImage(HttpServletResponse response, ServletContext sc)
             throws ServletException, IOException{
+
         response.setContentType("image/jpeg");
         InputStream is = sc.getResourceAsStream("includes/images/invalid_image.jpg");
 
@@ -1394,7 +1388,11 @@ public class Utils {
         ImageIO.write(bi, "jpg", os);
     }
 
-    public static void logError(String errorText) throws IOException {
+    public static void logError(String errorText) {
+
+        System.err.println(errorText);
+
+        /*
         String path = "C:\\Users\\mcsa\\mcsa_log.txt";
 
         File logFile = new File(path);
@@ -1420,5 +1418,6 @@ public class Utils {
         printWriter.println(errorText);
         printWriter.println();
         printWriter.close();
+        */
     }
 }

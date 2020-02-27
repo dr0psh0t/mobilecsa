@@ -155,9 +155,9 @@ public class AddCustomerCompany extends HttpServlet {
 
             prepStmt.setInt(1, lastCustomerId);
             prepStmt.setString(2, alpha_industry[0]);
-            prepStmt.setString(3, ""); //  <-  lastname
-            prepStmt.setString(4, ""); //  <- firstname
-            prepStmt.setString(5, ""); //  <- mi
+            prepStmt.setString(3, "");  //  lastname
+            prepStmt.setString(4, "");  //  firstname
+            prepStmt.setString(5, "");  //  mi
 
             prepStmt.setString(6, company);
             prepStmt.setString(7, address);
@@ -174,11 +174,11 @@ public class AddCustomerCompany extends HttpServlet {
             prepStmt.setInt(16, faxNum);
             prepStmt.setInt(17, faxCountryCode);
             prepStmt.setInt(18, faxAreaCode);
-            prepStmt.setDate(19, null);                    //  <-  dateofbirth
+            prepStmt.setDate(19, null);                     //  dateofbirth
             prepStmt.setString(20, emergency);
 
-            prepStmt.setString(21, contactPerson);         //  <-  contact_person
-            prepStmt.setString(22, contactPersonNumber);   //  <-  contact_number
+            prepStmt.setString(21, contactPerson);          //  contact_person
+            prepStmt.setString(22, contactPersonNumber);    //  contact_number
             prepStmt.setString(23, email);
             prepStmt.setString(24, website);
             prepStmt.setInt(25, er);
@@ -199,18 +199,17 @@ public class AddCustomerCompany extends HttpServlet {
             prepStmt.setInt(37, province);
             prepStmt.setInt(38, Utils.getNextIdNumber(alpha_industry[0], conn));
 
-            prepStmt.setInt(39, 0);    //  <- is_transferred
-            prepStmt.setInt(40, 0);    //  <-  user_id
-
+            prepStmt.setInt(39, 0); //  is_transferred
+            prepStmt.setInt(40, 0); //  user_id
             prepStmt.execute();
 
             Utils.logAdd(conn, onlineUser, true);
             Utils.updateIndustryTable(alpha_industry[0], conn);
-
             Utils.printSuccessJson(resJson, "Successfully added customer.", out);
 
             filePart.getInputStream().close();
             signatureInputStream.close();
+
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
@@ -289,56 +288,53 @@ public class AddCustomerCompany extends HttpServlet {
 
     public void checkParameters(String faxCountryCode, String countryCode, String company, String contactPerson,
                                 String contactPersonNumber, PrintWriter out) {
-        try {
-            if (faxCountryCode == null) {
-                Utils.logError("\"faxCountryCode\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "Fax country code is required.", out);
-                return;
-            } else if (faxCountryCode.isEmpty()) {
-                Utils.logError("\"faxCountryCode\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "Fax country code is required.", out);
-                return;
-            }
 
-            if (countryCode == null) {
-                Utils.logError("\"countryCode\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "Country code is required.", out);
-                return;
-            } else if (countryCode.isEmpty()) {
-                Utils.logError("\"countryCode\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "Country code is required.", out);
-                return;
-            }
+        if (faxCountryCode == null) {
+            Utils.logError("\"faxCountryCode\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "Fax country code is required.", out);
+            return;
+        } else if (faxCountryCode.isEmpty()) {
+            Utils.logError("\"faxCountryCode\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "Fax country code is required.", out);
+            return;
+        }
 
-            if (company == null) {
-                Utils.logError("\"company\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "Company is required.", out);
-                return;
-            } else if (company.isEmpty()) {
-                Utils.logError("\"company\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "Company is required.", out);
-                return;
-            }
+        if (countryCode == null) {
+            Utils.logError("\"countryCode\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "Country code is required.", out);
+            return;
+        } else if (countryCode.isEmpty()) {
+            Utils.logError("\"countryCode\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "Country code is required.", out);
+            return;
+        }
 
-            if (contactPerson == null) {
-                Utils.logError("\"contactPerson\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "Contact person is required.", out);
-                return;
-            } else if (contactPerson.isEmpty()) {
-                Utils.logError("\"contactPerson\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "Contact person is required.", out);
-                return;
-            }
+        if (company == null) {
+            Utils.logError("\"company\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "Company is required.", out);
+            return;
+        } else if (company.isEmpty()) {
+            Utils.logError("\"company\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "Company is required.", out);
+            return;
+        }
 
-            if (contactPersonNumber == null) {
-                Utils.logError("\"contactPersonNumber\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "Contact person number is required.", out);
-            } else if (contactPersonNumber.isEmpty()) {
-                Utils.logError("\"contactPersonNumber\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "Contact person number is required.", out);
-            }
-        } catch (IOException ie) {
-            System.err.println(ie.toString());
+        if (contactPerson == null) {
+            Utils.logError("\"contactPerson\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "Contact person is required.", out);
+            return;
+        } else if (contactPerson.isEmpty()) {
+            Utils.logError("\"contactPerson\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "Contact person is required.", out);
+            return;
+        }
+
+        if (contactPersonNumber == null) {
+            Utils.logError("\"contactPersonNumber\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "Contact person number is required.", out);
+        } else if (contactPersonNumber.isEmpty()) {
+            Utils.logError("\"contactPersonNumber\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "Contact person number is required.", out);
         }
     }
 }

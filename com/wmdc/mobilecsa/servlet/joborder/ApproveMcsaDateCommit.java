@@ -196,7 +196,7 @@ public class ApproveMcsaDateCommit extends HttpServlet {
 
     public void checkParameters(String cid, String source, String joid, String aKey, String serverUrl,
                                 JSONObject resJson, PrintWriter out) {
-        try {
+
             if (cid == null) {
                 Utils.logError("\"cid\" parameter is null");
                 Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
@@ -240,14 +240,9 @@ public class ApproveMcsaDateCommit extends HttpServlet {
             if (serverUrl == null) {
                 Utils.logError("\"serverUrl\" parameter is null");
                 Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
             } else if (serverUrl.isEmpty()) {
                 Utils.logError("\"serverUrl\" parameter is empty");
                 Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
             }
-        } catch (IOException ie) {
-            System.err.println(ie.toString());
-        }
     }
 }

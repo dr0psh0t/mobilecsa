@@ -19,8 +19,11 @@ import java.sql.*;
 /**
  * Created by wmdcprog on 2/14/2017.
  */
+
 @WebServlet("/adduser")
+
 public class AddUser extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -144,6 +147,7 @@ public class AddUser extends HttpServlet {
 
             httpSession.setAttribute("tempUsername", username);
             out.println(responseJson);
+
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);

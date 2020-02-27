@@ -33,8 +33,6 @@ public class GetZipcodeByCityid extends HttpServlet {
         }
 
         Connection conn = null;
-        PreparedStatement prepStmt = null;
-        ResultSet resultSet = null;
 
         int cityId = 0;
 
@@ -82,7 +80,7 @@ public class GetZipcodeByCityid extends HttpServlet {
             responseJson.put("cityId", cityId);
             out.println(responseJson);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, null, null);
             out.close();
         }
     }

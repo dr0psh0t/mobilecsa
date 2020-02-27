@@ -58,6 +58,7 @@ public class GetProvinces extends HttpServlet {
             responseJson.put("provinceStore", arrayList);
             responseJson.put("success", true);
             out.println(responseJson);
+
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException", sqe.toString());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);

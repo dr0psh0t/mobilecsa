@@ -168,7 +168,7 @@ public class GetCsaJoList extends HttpServlet {
 
     public void checkParameters(String serverUrl, String akey, String cid, String source, String qType, String query,
                                 JSONObject resJson, PrintWriter out) {
-        try {
+
             if (cid == null) {
                 Utils.logError("\"cid\" parameter is null");
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
@@ -222,14 +222,9 @@ public class GetCsaJoList extends HttpServlet {
             if (query == null) {
                 Utils.logError("\"query\" parameter is null");
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-                return;
             } else if (query.isEmpty()) {
                 Utils.logError("\"query\" parameter is empty");
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-                return;
             }
-        } catch (IOException ie) {
-            System.err.println(ie.toString());
-        }
     }
 }

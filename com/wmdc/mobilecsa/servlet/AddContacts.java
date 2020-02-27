@@ -13,7 +13,9 @@ import java.sql.*;
 @MultipartConfig(fileSizeThreshold=1024*1024*6, // 5MB
         maxFileSize=1024*1024*3,      // 3MB
         maxRequestSize=1024*1024*50)   // 50MB
+
 @WebServlet("/addcontacts")
+
 public class AddContacts extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -213,6 +215,7 @@ public class AddContacts extends HttpServlet {
 
             filePart.getInputStream();
             signatureInputStream.close();
+
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
@@ -289,76 +292,73 @@ public class AddContacts extends HttpServlet {
 
     public void checkParameters(String lastname, String firstname, String birthDate, String mi, String mobile,
                                 String company, String jobPosition, PrintWriter out) {
-        try {
-            if (lastname == null) {
-                Utils.logError("\"lastname\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "Lastname is required.", out);
-                return;
-            } else if (lastname.isEmpty()) {
-                Utils.logError("\"lastname\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "Lastname is required.", out);
-                return;
-            }
 
-            if (firstname == null) {
-                Utils.logError("\"firstname\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "Firstname is required.", out);
-                return;
-            } else if (firstname.isEmpty()) {
-                Utils.logError("\"firstname\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "Firstname is required.", out);
-                return;
-            }
+        if (lastname == null) {
+            Utils.logError("\"lastname\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "Lastname is required.", out);
+            return;
+        } else if (lastname.isEmpty()) {
+            Utils.logError("\"lastname\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "Lastname is required.", out);
+            return;
+        }
 
-            if (birthDate == null) {
-                Utils.logError("\"birthDate\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "Birthdate is required.", out);
-                return;
-            } else if (birthDate.isEmpty()) {
-                Utils.logError("\"birthDate\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "Birthdate is required.", out);
-                return;
-            }
+        if (firstname == null) {
+            Utils.logError("\"firstname\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "Firstname is required.", out);
+            return;
+        } else if (firstname.isEmpty()) {
+            Utils.logError("\"firstname\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "Firstname is required.", out);
+            return;
+        }
 
-            if (mi == null) {
-                Utils.logError("\"mi\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "MI is required.", out);
-                return;
-            } else if (mi.isEmpty()) {
-                Utils.logError("\"mi\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "MI is required.", out);
-                return;
-            }
+        if (birthDate == null) {
+            Utils.logError("\"birthDate\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "Birthdate is required.", out);
+            return;
+        } else if (birthDate.isEmpty()) {
+            Utils.logError("\"birthDate\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "Birthdate is required.", out);
+            return;
+        }
 
-            if (mobile == null) {
-                Utils.logError("\"mobile\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "Mobile is required.", out);
-                return;
-            } else if (mobile.isEmpty()) {
-                Utils.logError("\"mobile\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "Mobile is required.", out);
-                return;
-            }
+        if (mi == null) {
+            Utils.logError("\"mi\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "MI is required.", out);
+            return;
+        } else if (mi.isEmpty()) {
+            Utils.logError("\"mi\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "MI is required.", out);
+            return;
+        }
 
-            if (company == null) {
-                Utils.logError("\"company\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "Company is required.", out);
-                return;
-            } else if (company.isEmpty()) {
-                Utils.logError("\"company\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "Company is required.", out);
-                return;
-            }
+        if (mobile == null) {
+            Utils.logError("\"mobile\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "Mobile is required.", out);
+            return;
+        } else if (mobile.isEmpty()) {
+            Utils.logError("\"mobile\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "Mobile is required.", out);
+            return;
+        }
 
-            if (jobPosition == null) {
-                Utils.logError("\"jobPosition\" parameter is null.");
-                Utils.printJsonException(new JSONObject(), "Job position is required.", out);
-            } else if (jobPosition.isEmpty()) {
-                Utils.logError("\"jobPosition\" parameter is empty.");
-                Utils.printJsonException(new JSONObject(), "Job position is required.", out);
-            }
-        } catch (IOException ie) {
-            System.err.println(ie.toString());
+        if (company == null) {
+            Utils.logError("\"company\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "Company is required.", out);
+            return;
+        } else if (company.isEmpty()) {
+            Utils.logError("\"company\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "Company is required.", out);
+            return;
+        }
+
+        if (jobPosition == null) {
+            Utils.logError("\"jobPosition\" parameter is null.");
+            Utils.printJsonException(new JSONObject(), "Job position is required.", out);
+        } else if (jobPosition.isEmpty()) {
+            Utils.logError("\"jobPosition\" parameter is empty.");
+            Utils.printJsonException(new JSONObject(), "Job position is required.", out);
         }
     }
 }

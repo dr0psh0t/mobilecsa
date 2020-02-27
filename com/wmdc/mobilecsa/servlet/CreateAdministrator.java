@@ -149,6 +149,7 @@ public class CreateAdministrator extends HttpServlet {
             } else {
                 Utils.printJsonException(responseJson, "Password is too short", out);
             }
+
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);

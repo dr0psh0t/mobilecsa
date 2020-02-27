@@ -172,68 +172,63 @@ public class ApproveMcsaQC extends HttpServlet {
 
     public void checkParameters(String serverUrl, String akey, String cid, String source, String joid, String woid,
                                 JSONObject resJson, PrintWriter out) {
-        try {
-            if (cid == null) {
-                Utils.logError("\"cid\" parameter is null");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            } else if (cid.isEmpty()) {
-                Utils.logError("\"cid\" parameter is empty");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            }
 
-            if (source == null) {
-                Utils.logError("\"source\" parameter is null");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            } else if (source.isEmpty()) {
-                Utils.logError("\"source\" parameter is empty");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            }
+        if (cid == null) {
+            Utils.logError("\"cid\" parameter is null");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return;
+        } else if (cid.isEmpty()) {
+            Utils.logError("\"cid\" parameter is empty");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return;
+        }
 
-            if (joid == null) {
-                Utils.logError("\"joid\" parameter is null");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            } else if (joid.isEmpty()) {
-                Utils.logError("\"joid\" parameter is empty");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            }
+        if (source == null) {
+            Utils.logError("\"source\" parameter is null");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return;
+        } else if (source.isEmpty()) {
+            Utils.logError("\"source\" parameter is empty");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return;
+        }
 
-            if (akey == null) {
-                Utils.logError("\"akey\" parameter is null");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            } else if (akey.isEmpty()) {
-                Utils.logError("\"akey\" parameter is empty");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            }
+        if (joid == null) {
+            Utils.logError("\"joid\" parameter is null");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return;
+        } else if (joid.isEmpty()) {
+            Utils.logError("\"joid\" parameter is empty");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return;
+        }
 
-            if (serverUrl == null) {
-                Utils.logError("\"serverUrl\" parameter is null");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            } else if (serverUrl.isEmpty()) {
-                Utils.logError("\"serverUrl\" parameter is empty");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            }
+        if (akey == null) {
+            Utils.logError("\"akey\" parameter is null");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return;
+        } else if (akey.isEmpty()) {
+            Utils.logError("\"akey\" parameter is empty");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return;
+        }
 
-            if (woid == null) {
-                Utils.logError("\"woid\" parameter is null");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            } else if (woid.isEmpty()) {
-                Utils.logError("\"woid\" parameter is empty");
-                Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-                return;
-            }
-        } catch (IOException ie) {
-            System.err.println(ie.toString());
+        if (serverUrl == null) {
+            Utils.logError("\"serverUrl\" parameter is null");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return;
+        } else if (serverUrl.isEmpty()) {
+            Utils.logError("\"serverUrl\" parameter is empty");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return;
+        }
+
+        if (woid == null) {
+            Utils.logError("\"woid\" parameter is null");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+        } else if (woid.isEmpty()) {
+            Utils.logError("\"woid\" parameter is empty");
+            Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
         }
     }
 }

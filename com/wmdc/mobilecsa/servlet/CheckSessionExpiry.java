@@ -31,8 +31,6 @@ public class CheckSessionExpiry extends HttpServlet {
         JSONObject responseJson = new JSONObject();
 
         Connection conn = null;
-        PreparedStatement prepStmt = null;
-        ResultSet resultSet = null;
 
         try {
             Utils.databaseForName(getServletContext());
@@ -52,7 +50,7 @@ public class CheckSessionExpiry extends HttpServlet {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, null, null);
             out.close();
         }
     }
