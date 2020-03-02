@@ -90,6 +90,9 @@ public class GetMcsaCustomerList extends HttpServlet {
             filter = request.getParameter("filter");
             cid = request.getParameter("cid");
 
+            System.out.println("filter= "+filter);
+            System.out.println("cid= "+cid);
+
             if (serverUrl == null) {
                 Utils.logError("\"serverUrl\" parameter is null");
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
@@ -168,6 +171,9 @@ public class GetMcsaCustomerList extends HttpServlet {
                 while ((line = bufferedReader.readLine()) != null) {
                     stringBuilder.append(line);
                 }
+
+                connStream.close();
+                bufferedReader.close();
 
                 resJson = new JSONObject(stringBuilder.toString());
                 out.println(resJson);

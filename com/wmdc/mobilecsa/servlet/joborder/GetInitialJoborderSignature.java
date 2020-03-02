@@ -103,7 +103,6 @@ public class GetInitialJoborderSignature extends HttpServlet {
                 out.close();
             } else {
                 Utils.printJsonException(resJson, "System cannot find signature", response.getWriter());
-                return;
             }
         } catch (ClassNotFoundException | SQLException sqe) {
             response.setContentType("application/json");

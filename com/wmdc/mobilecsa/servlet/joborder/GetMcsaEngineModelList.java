@@ -146,14 +146,16 @@ public class GetMcsaEngineModelList extends HttpServlet {
             int statusCode = conn.getResponseCode();
             if (statusCode == HttpURLConnection.HTTP_OK) {
                 InputStream connIStream = conn.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(
-                        new InputStreamReader(connIStream));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connIStream));
                 StringBuilder stringBuilder = new StringBuilder();
                 String line;
 
                 while ((line = bufferedReader.readLine()) != null) {
                     stringBuilder.append(line);
                 }
+
+                connIStream.close();
+                bufferedReader.close();
 
                 String serverResponse = stringBuilder.toString();
 
@@ -174,6 +176,7 @@ public class GetMcsaEngineModelList extends HttpServlet {
                     resJson.put("models", models);
                     out.println(resJson);
                 }
+
             } else {
                 Utils.logError("Request did not succeed. Status code: "+statusCode);
                 Utils.printJsonException(resJson, "Request did not succeed. See logs or try again.", out);

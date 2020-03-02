@@ -46,7 +46,7 @@ public class GetJoWoStatusList extends HttpServlet {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
             return null;
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
             return null;
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet);
@@ -108,10 +108,7 @@ public class GetJoWoStatusList extends HttpServlet {
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
 
-            writer.write("akey=" + akey +
-                    "&cid=" + cid +
-                    "&source=" + source +
-                    "&query=" + joId);
+            writer.write("akey="+akey+"&cid="+cid+"&source="+source+"&query="+joId);
 
             writer.flush();
             writer.close();
@@ -130,6 +127,9 @@ public class GetJoWoStatusList extends HttpServlet {
                     stringBuilder.append(line);
                 }
 
+                connStream.close();
+                bufferedReader.close();
+
                 String result = stringBuilder.toString();
 
                 if (result.isEmpty()) {
@@ -138,8 +138,8 @@ public class GetJoWoStatusList extends HttpServlet {
                 }
 
                 resJson = new JSONObject(result);
-
                 out.println(resJson);
+
             } else {
                 Utils.logError("Request did not succeed. Status code: "+statusCode);
                 Utils.printJsonException(resJson, "Request did not succeed. See logs or try again.", out);

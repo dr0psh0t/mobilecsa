@@ -120,14 +120,16 @@ public class ApproveMcsaQC extends HttpServlet {
             int statusCode = conn.getResponseCode();
             if (statusCode == HttpURLConnection.HTTP_OK) {
                 InputStream connIStream = conn.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(
-                        new InputStreamReader(connIStream));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connIStream));
                 StringBuilder stringBuilder = new StringBuilder();
                 String line;
 
                 while ((line = bufferedReader.readLine()) != null) {
                     stringBuilder.append(line);
                 }
+
+                connIStream.close();
+                bufferedReader.close();
 
                 String qcResponse = stringBuilder.toString();
 
@@ -146,6 +148,7 @@ public class ApproveMcsaQC extends HttpServlet {
                 }
 
                 out.println(resJson);
+
             } else {
                 Utils.logError("Approve request did not succeed. Status code: "+statusCode);
                 Utils.printJsonException(resJson, "Approve request did not succeed.", out);

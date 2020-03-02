@@ -129,6 +129,9 @@ public class GetCsaJoList extends HttpServlet {
                     stringBuilder.append(line);
                 }
 
+                connStream.close();
+                bufferedReader.close();
+
                 String result = stringBuilder.toString();
 
                 if (result.isEmpty()) {
@@ -136,16 +139,14 @@ public class GetCsaJoList extends HttpServlet {
                     return;
                 }
 
-                //JSONParser parser = new JSONParser();
-                //resJson = (JSONObject) parser.parse(result);
-
                 resJson = new JSONObject(result);
-
                 out.println(resJson);
+
             } else {
                 Utils.logError("Approve request did not succeed. Status code: "+statusCode);
                 Utils.printJsonException(resJson, "Approve request did not succeed.", out);
             }
+
         } catch (MalformedURLException | ConnectException | SocketTimeoutException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
                     sqe.toString());

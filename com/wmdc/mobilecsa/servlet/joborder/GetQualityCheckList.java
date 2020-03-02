@@ -135,6 +135,9 @@ public class GetQualityCheckList extends HttpServlet {
                     stringBuilder.append(line);
                 }
 
+                connIStream.close();
+                bufferedReader.close();
+
                 String serverResponse = stringBuilder.toString();
 
                 if (serverResponse.isEmpty()) {
@@ -145,6 +148,7 @@ public class GetQualityCheckList extends HttpServlet {
                 resJson = new JSONObject(serverResponse);
                 resJson.put("success", true);
                 out.println(resJson);
+
             } else {
                 Utils.logError("Request did not succeed. Status code: "+statusCode);
                 Utils.printJsonException(resJson, "Request did not succeed.", out);

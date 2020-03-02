@@ -126,6 +126,9 @@ public class ApproveMcsaDateCommit extends HttpServlet {
                     stringBuilder.append(line);
                 }
 
+                connIStream.close();
+                bufferedReader.close();
+
                 String dcResponse = stringBuilder.toString();
 
                 if (dcResponse.isEmpty()) {
@@ -142,10 +145,12 @@ public class ApproveMcsaDateCommit extends HttpServlet {
                 }
 
                 out.println(resJson);
+
             } else {
                 Utils.logError("Approve request did not succeed. Status code: "+statusCode);
                 Utils.printJsonException(resJson, "Approve request did not succeed.", out);
             }
+
         } catch (MalformedURLException | ConnectException | SocketTimeoutException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
                     sqe.toString());

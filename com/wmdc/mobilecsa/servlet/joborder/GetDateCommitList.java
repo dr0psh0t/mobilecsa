@@ -126,6 +126,9 @@ public class GetDateCommitList extends HttpServlet {
                     stringBuilder.append(line);
                 }
 
+                connIStream.close();
+                bufferedReader.close();
+
                 String serverResponse = stringBuilder.toString();
 
                 if (serverResponse.isEmpty()) {
@@ -134,8 +137,8 @@ public class GetDateCommitList extends HttpServlet {
                 }
 
                 resJson = new JSONObject(serverResponse);
-
                 out.println(resJson);
+
             } else {
                 Utils.logError("Approve request did not succeed. Status code: "+statusCode);
                 Utils.printJsonException(resJson, "Approve request did not succeed.", out);
