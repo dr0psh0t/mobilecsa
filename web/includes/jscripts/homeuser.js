@@ -6,27 +6,22 @@ sendRequest('scanloggedinsession', 'post', { source : '5' }, function(o, s, resp
 
     var assoc = Ext.decode(response.responseText);
 
-    if (assoc['success'])
-    {
+    if (assoc['success']) {
         if (assoc['isAdmin']) {
             location.assign('csamanagement.jsp');
         }
-    }
-    else {
+    } else {
         location.assign('index.jsp');
     }
 });
 
 var topMostPanel = Ext.create('Ext.panel.Panel', {
-
     region : 'center',
     layout : 'border',
     title : user,
     titleAlign : 'center',
     headerCls : 'x-panel-header',
-
     listeners : {
-
         'render' : function(panel) {
             panel.body.on('click', function() {
                 closeNav();
@@ -34,72 +29,58 @@ var topMostPanel = Ext.create('Ext.panel.Panel', {
         }
     },
 
-    header : {
-
-        titlePosition : 1,
-        defaults : {
-            xtype : 'tool'
+    items : [{
+        xtype : 'panel',
+        region : 'center',
+        layout : {
+            type : 'hbox',
+            align : 'center',
+            pack : 'center'
         },
-
-        items : [
-            {
-                xtype : 'image',
-                src : 'includes/images/icons/menu_icon.png',
-                id : 'menuId',
-                width : 25,
-                height : 25,
-                cls : ['my-field-cls']
-            }
-        ]
-    },
-
-    items : [
-        {
-            xtype : 'panel',
-            region : 'center',
-
-            layout : {
-                type : 'hbox',
-                align : 'center',
-                pack : 'center'
-            },
-
-            items : [
-                {
-                    xtype : 'button',
-                    iconCls : 'customer',
-                    iconAlign : 'top',
-                    cls : 'x-button',
-                    width : 140,
-                    height : 140,
-                    margin : '0 10 0 0',
-                    html : '<span class="bigBtn">Customer</span>',
-
-                    listeners : {
-                        click : function() {
-                            location.assign('customer.jsp');
-                        }
-                    }
-                },
-                {
-                    xtype : 'button',
-                    iconCls : 'contacts',
-                    iconAlign : 'top',
-                    cls : 'x-button',
-                    width : 140,
-                    height : 140,
-                    margin : '0 0 0 10',
-                    html : '<span class="bigBtn">Add contacts</span>',
-
-                    listeners  : {
-                        click : function() {
-                            location.assign('addcontacts.jsp');
-                        }
-                    }
+        items : [{
+            xtype : 'button',
+            iconCls : 'customer',
+            iconAlign : 'top',
+            cls : 'x-button',
+            width : 110,
+            height : 110,
+            margin : '0 5 0 0',
+            html : '<span class="bigBtn">Customer</span>',
+            listeners : {
+                click : function() {
+                    //location.assign('customer.jsp');
                 }
-            ]
-        }
-    ]
+            }
+        },{
+            xtype : 'button',
+            iconCls : 'contacts',
+            iconAlign : 'top',
+            cls : 'x-button',
+            width : 110,
+            height : 110,
+            margin : '0 0 0 5',
+            html : '<span class="bigBtn">Contacts</span>',
+            listeners  : {
+                click : function() {
+                    //location.assign('addcontacts.jsp');
+                }
+            }
+        },{
+            xtype : 'button',
+            iconCls : 'contacts',
+            iconAlign : 'top',
+            cls : 'x-button',
+            width : 110,
+            height : 110,
+            margin : '0 0 0 5',
+            html : '<span class="bigBtn">TEST</span>',
+            listeners  : {
+                click : function() {
+                    //location.assign('addcontacts.jsp');
+                }
+            }
+        }]
+    }]
 });
 
 Ext.onReady(function() {
@@ -107,28 +88,127 @@ Ext.onReady(function() {
     Ext.QuickTips.init();
 
     Ext.create('Ext.container.Viewport', {
-        layout : 'border',
+        layout : 'fit',
         renderTo : Ext.getBody(),
-        items : [topMostPanel]
+        items : [
+            Ext.create('Ext.container.Container', {
+                layout: {
+                    type: 'vbox',
+                    align: 'center'
+                },
+                items: [{
+                    xtype: 'container',
+                    flex: 1,
+                    layout: {
+                        type: 'hbox',
+                        //align: 'stretch'
+                        align: 'center'
+                    },
+                    items: [{
+                        xtype : 'button',
+                        iconCls : 'customer',
+                        iconAlign : 'top',
+                        cls : 'x-button',
+                        width : 140,
+                        height : 140,
+                        margin : '5 5 5 5',
+                        html : '<span class="bigBtn">Customer</span>',
+                        listeners : {
+                            click : function() {
+                                location.assign('customer.jsp');
+                            }
+                        }
+                    },{
+                        xtype : 'button',
+                        iconCls : 'contacts',
+                        iconAlign : 'top',
+                        cls : 'x-button',
+                        width : 140,
+                        height : 140,
+                        margin : '5 5 5 5',
+                        html : '<span class="bigBtn">Contacts</span>',
+                        listeners  : {
+                            click : function() {
+                                location.assign('addcontacts.jsp');
+                            }
+                        }
+                    }]
+                },{
+                    xtype: 'container',
+                    flex: 1,
+                    layout: {
+                        type: 'hbox',
+                        //align: 'stretch'
+                        align: 'center'
+                    },
+                    items: [{
+                        xtype : 'button',
+                        iconCls : 'customer',
+                        iconAlign : 'top',
+                        cls : 'x-button',
+                        width : 140,
+                        height : 140,
+                        margin : '5 5 5 5',
+                        html : '<span class="bigBtn">Customer</span>',
+                        listeners : {
+                            click : function() {
+                            //    location.assign('customer.jsp');
+                            }
+                        }
+                    },{
+                        xtype : 'button',
+                        iconCls : 'contacts',
+                        iconAlign : 'top',
+                        cls : 'x-button',
+                        width : 140,
+                        height : 140,
+                        margin : '5 5 5 5',
+                        html : '<span class="bigBtn">Contacts</span>',
+                        listeners  : {
+                            click : function() {
+                             //   location.assign('addcontacts.jsp');
+                            }
+                        }
+                    }]
+                },{
+                    xtype: 'container',
+                    flex: 1,
+                    layout: {
+                        type: 'hbox',
+                        //align: 'stretch'
+                        align: 'center'
+                    },
+                    items: [{
+                        xtype : 'button',
+                        iconCls : 'customer',
+                        iconAlign : 'top',
+                        cls : 'x-button',
+                        width : 140,
+                        height : 140,
+                        margin : '5 5 5 5',
+                        html : '<span class="bigBtn">Customer</span>',
+                        listeners : {
+                            click : function() {
+                             //   location.assign('customer.jsp');
+                            }
+                        }
+                    },{
+                        xtype : 'button',
+                        iconCls : 'contacts',
+                        iconAlign : 'top',
+                        cls : 'x-button',
+                        width : 140,
+                        height : 140,
+                        margin : '5 5 5 5',
+                        html : '<span class="bigBtn">Contacts</span>',
+                        listeners  : {
+                            click : function() {
+                             //   location.assign('addcontacts.jsp');
+                            }
+                        }
+                    }]
+                }]
+            })
+        ]
     });
-
-    Ext.get('menuId').on('touchstart', function() {
-
-        if (navClose) {
-            openNav();
-        }
-        else {
-            closeNav();
-        }
-    });
-
-    window.addEventListener('orientationchange', function() {
-        document.getElementById('mySidenav').style.paddingTop = '76px';
-    });
-
-    window.addEventListener('resize', function() {
-        document.getElementById('mySidenav').style.paddingTop = '76px';
-    });
-
-    document.getElementById('mySidenav').style.paddingTop = '76px';
 });

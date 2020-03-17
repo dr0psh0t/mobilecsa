@@ -42,6 +42,7 @@
 </head>
 <body>
 
+<!--
 <div id="mySidenav" class="sidenav">
     <a href="#" onclick="gotoHome()">Home</a>
     <a href="#" onclick="searchChoices()">Search</a>
@@ -51,6 +52,7 @@
     <a href="#" onclick="help()">Help</a>
     <a href="#" onclick="logout()">Sign out</a>
 </div>
+-->
 
 </body>
 </html>

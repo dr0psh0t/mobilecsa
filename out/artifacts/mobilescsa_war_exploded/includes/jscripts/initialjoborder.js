@@ -49,7 +49,6 @@ Ext.define('Customer', {
     ]
 });
 
-var customerFilter = '';
 var customerStore = Ext.create('Ext.data.Store', {
     model : 'Customer',
     autoLoad : false/*,
@@ -90,7 +89,7 @@ Ext.define('Engine', {
 var engineStore = Ext.create('Ext.data.Store', {
     model : 'Engine',
     autoLoad : false,
-    proxy : {
+    /*proxy : {
         type : 'ajax',
         url : 'getmcsaenginemodellist',
         method : 'post',
@@ -104,7 +103,7 @@ var engineStore = Ext.create('Ext.data.Store', {
             type : 'json',
             rootProperty : 'models'
         }
-    }
+    }*/
 });
 
 var customer;

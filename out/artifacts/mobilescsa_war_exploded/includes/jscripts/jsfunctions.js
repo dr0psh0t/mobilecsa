@@ -397,8 +397,6 @@ function displayPhoto(link, sign) {
             Ext.create('Ext.panel.Panel', {
                 region : 'center',
                 id : 'picture',
-                //width : resizedWidth,
-                //height : resizedHeight,
                 items: [
                     Ext.create('Ext.Img', {
                         src : link,
@@ -409,6 +407,11 @@ function displayPhoto(link, sign) {
             })
         ],
         buttons: [{
+            text: 'Open in new tab',
+            handler: function() {
+                window.open(link, '_blank');
+            }
+        },{
             text: 'Close',
             handler: function() {
                 Ext.getCmp('pictureWindow').destroy();
@@ -607,20 +610,22 @@ function showMap(latitude, longitude, entity, stretched) {
             modal : true,
             items : [mapPanel],
             listeners : {
-                show : function() {
-                },
-                destroy : function() {
-                }
+                show : function() {},
+                destroy : function() {}
             },
-
             buttons : [{
-                    text : 'Close',
-                    handler : function() {
-                        Ext.getCmp('mapPanelId').destroy();
-                        Ext.getCmp('mapId').destroy();
-                    }
+                text: 'Open in new tab',
+                handler: function() {
+                    //window.open("https://www.google.com/maps/search/?api=1&query=47.5951518,-122.3316393", '_blank');
+                    window.open("https://www.google.com/maps/search/?api=1&query="+latitude+","+longitude, '_blank');
                 }
-            ]
+            },{
+                text : 'Close',
+                handler : function() {
+                    Ext.getCmp('mapPanelId').destroy();
+                    Ext.getCmp('mapId').destroy();
+                }
+            }]
         }).show();
     } catch (e) {
         //  destroy window and map panel

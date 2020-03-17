@@ -298,15 +298,13 @@ var addContactsForm = Ext.create('Ext.form.Panel', {
     defaults : {
         allowBlank : false
     },
-    items : [
-        {
+    items : [{
             xtype : 'label',
             html : '<p><span style="color: red">*</span>Lastname:</p>',
             anchor : '100%',
             margin : '20',
             cls : ['labeltextsize', 'bold-text', 'block-text']
-        },
-        {
+        },{
             xtype : 'textfield',
             name : 'lastname',
             id : 'lastname',
@@ -317,7 +315,6 @@ var addContactsForm = Ext.create('Ext.form.Panel', {
             enforceMaxLength : true,
             maxLength : 32,
             fieldCls : 'biggertext',
-
             triggers : {
                 clears : {
                     cls : 'x-form-clear-trigger',

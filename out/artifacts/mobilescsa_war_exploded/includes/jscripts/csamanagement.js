@@ -1949,7 +1949,7 @@ function changePassword(csaId) {
 
     Ext.create('Ext.Window', {
         id : 'tempPassWindow',
-        title : 'Add Temporary Password',
+        title : 'New Password',
         width : 450,
         height : 180,
         minWidth : 450,
@@ -1964,9 +1964,9 @@ function changePassword(csaId) {
                 width: 450,
                 height: 180,
                 items: [{
-                    fieldLabel: 'Temporary Password',
-                    name: 'tempPassword',
-                    id: 'tempPassword',
+                    fieldLabel: 'New Password',
+                    name: 'newPassword',
+                    id: 'newPassword',
                     xtype: 'textfield',
                     anchor: '100%',
                     margin: '20',
