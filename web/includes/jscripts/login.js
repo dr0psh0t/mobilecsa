@@ -2,6 +2,8 @@
  * Created by wmdcprog on 9/5/2017.
  */
 
+// Stephanie Emma Jahboy Pilones
+
 sendRequest('scanloggedinsession', 'post', { source : '9' }, function (o, s, response) {
     var assoc = Ext.JSON.decode(response.responseText);
 
@@ -82,11 +84,11 @@ var formLogin = Ext.create('Ext.form.Panel', {
         enableKeyEvents : true,
         listeners : {
             keypress : function(textfield, eo) {
-                if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                if (eo.getCharCode() === Ext.EventObject.ENTER) {
                     Ext.getCmp('loginButton').handler();
                 }
             }
-        },
+        }
     },{
         xtype: 'label',
         text: '',

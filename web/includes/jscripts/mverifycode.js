@@ -16,7 +16,6 @@ sendRequest('confirmmomentarysessions', 'post', { source : '9' }, function(o, s,
 });
 
 var verifyCodeForm = Ext.create('Ext.form.Panel', {
-
     region : 'center',
     title : 'Security Key',
     titleAlign : 'center',
@@ -25,49 +24,39 @@ var verifyCodeForm = Ext.create('Ext.form.Panel', {
     height : '100%',
     frame : true,
     headerCls : 'x-panel-header',
-
     defaults : {
         allowBlank : false
     },
-
     layout : {
         type : 'vbox',
         align : 'center',
         pack : 'center'
     },
-
     style: {
         marginLeft	: 'auto',
         marginRight	: 'auto'
     },
-
     header : {
-
         titlePosition : 1,
         defaults : {
             xtype : 'tool'
         },
-
-        items : [
-            {
-                xtype : 'image',
-                width : 25,
-                height : 25,
-                id : 'menuId'
-            },
-            {
-                xtype : 'image',
-                src : 'includes/images/icons/backarrow.png',
-                width : 25,
-                height : 25,
-                cls : ['my-field-cls'],
-                id : 'back'
-            }
-        ]
+        items : [{
+            xtype : 'image',
+            width : 25,
+            height : 25,
+            id : 'menuId'
+        },{
+            xtype : 'image',
+            src : 'includes/images/icons/backarrow.png',
+            width : 25,
+            height : 25,
+            cls : ['my-field-cls'],
+            id : 'back'
+        }]
     },
 
-    items : [
-        {
+    items : [{
             xtype : 'textfield',
             inputType : 'number',
             emptyText : 'Security Key',
@@ -81,17 +70,13 @@ var verifyCodeForm = Ext.create('Ext.form.Panel', {
             maxLength : 6,
             fieldCls : 'biggertext',
             enableKeyEvents : true,
-
             listeners : {
-
                 keypress : function(textfield, eo) {
-
-                    if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                    if (eo.getCharCode() === Ext.EventObject.ENTER) {
                         Ext.getCmp('totpButton').handler();
                     }
                 }
             },
-
             triggers : {
                 clears : {
                     cls : 'x-form-clear-trigger',
@@ -100,8 +85,7 @@ var verifyCodeForm = Ext.create('Ext.form.Panel', {
                     }
                 }
             }
-        },
-        {
+        },{
             xtype : 'button',
             disabled : true,
             formBind : true,
@@ -109,52 +93,39 @@ var verifyCodeForm = Ext.create('Ext.form.Panel', {
             id : 'totpButton',
             width : 200,
             cls : ['x-btn-inner'],
-
             style : {
                 display : 'block',
                 margin : 'auto'
             },
-
             handler : function() {
-
                 var form = this.up('form').getForm();
 
-                if(form.isValid())
-                {
-                    form.submit({
+                if(form.isValid()) {
 
+                    form.submit({
                         url : 'securitykey',
                         method : 'post',
-
                         success	: function(form, action) {
-
                             var assoc = Ext.JSON.decode(action.response.responseText);
 
                             if (assoc['isAdmin']) {
                                 location.assign("csamanagement.jsp");
-                            }
-                            else {
+                            } else {
                                 location.assign("homeuser.jsp");
                             }
                         },
-
                         failure	: function(form, action) {
-
                             var assoc = Ext.JSON.decode(action.response.responseText);
 
                             Ext.MessageBox.show({
-
                                 title : 'Fail',
                                 message : assoc['reason'] + ". Go back to login page to generate the code.",
                                 buttons : Ext.Msg.YESNO,
-
                                 buttonText : {
                                     yes : 'OK',
                                     no : 'Back to login'
                                 },
-
                                 fn : function(btn) {
-
                                     if (btn === 'no') {
                                         location.assign('index.jsp');
                                     }

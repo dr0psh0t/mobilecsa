@@ -44,14 +44,14 @@ function displayAdminGrid(adminId) {
             });
 
             Ext.getCmp('adminPropGrid').setListeners({
-                beforeedit : function(one, two, three){
+                beforeedit : function(){
                     return false;
                 },
                 rowdblclick : function(dis, record, element, rowIndex, e, eOpts) {
                 }
             });
         },
-        failure: function (response, opts) {
+        failure: function (response) {
             var assoc = Ext.decode(response.responseText);
             Ext.Msg.alert("Failed", assoc['reason']);
         }
@@ -102,7 +102,7 @@ function displayCsaGrid(csaId) {
             });
 
             Ext.getCmp('csaGrid').setListeners({
-                beforeedit : function(one, two, three){
+                beforeedit : function(){
                     return false;
                 }
             });
@@ -158,7 +158,7 @@ function displayCompanyInfo(customerId, stretched) {
         url: 'getcustomercompanybyparams',
         method: 'POST',
         params: {customerId: customerId},
-        success: function (response, opts) {
+        success: function (response) {
             var assoc = Ext.decode(response.responseText);
 
             Ext.getCmp('companyGrid').setSource({
@@ -179,10 +179,10 @@ function displayCompanyInfo(customerId, stretched) {
             });
 
             Ext.getCmp('companyGrid').setListeners({
-                beforeedit : function(one, two, three){
+                beforeedit : function(){
                     return false;
                 },
-                rowdblclick : function (dis, record, element, rowIndex, e, eOpts) {
+                rowdblclick : function (dis, record) {
                     if (record.id === 'Location') {
                         showMap(assoc.latitude, assoc.longitude, assoc.company, stretched);
                         //window.open('https://www.google.com/maps?q='+rec.latitude+',+'+rec.longitude, '_blank');
@@ -194,7 +194,7 @@ function displayCompanyInfo(customerId, stretched) {
                 }
             });
         },
-        failure: function (response, opts) {
+        failure: function (response) {
             var assoc = Ext.decode(response.responseText);
             Ext.Msg.alert("Failed", assoc['reason']);
         }
@@ -245,7 +245,7 @@ function displayCustomerInfo(customerId, stretched) {
         url: 'getindividual',
         method: 'POST',
         params : { customerId : customerId },
-        success: function(response, opts) {
+        success: function(response) {
             var assoc = Ext.decode(response.responseText);
 
             Ext.getCmp('customerGrid').setSource({
@@ -266,10 +266,10 @@ function displayCustomerInfo(customerId, stretched) {
             });
 
             Ext.getCmp('customerGrid').setListeners({
-                beforeedit: function(one, two, three) {
+                beforeedit: function() {
                     return false;
                 },
-                rowdblclick: function (dis, record, element, rowIndex, e, eOpts) {
+                rowdblclick: function (dis, record) {
                     if (record.id === 'Location') {
                         showMap(assoc.latitude, assoc.longitude, assoc.lastname+', '+assoc.firstname, stretched);
                         //window.open('https://www.google.com/maps?q='+assoc.latitude+',+'+assoc.longitude, '_blank');
@@ -281,7 +281,7 @@ function displayCustomerInfo(customerId, stretched) {
                 }
             });
         },
-        failure: function(response, opts) {
+        failure: function(response) {
             var assoc = Ext.decode(response.responseText);
             Ext.Msg.alert("Failed", assoc['reason']);
         }
@@ -332,8 +332,10 @@ function displayContacts(contactId, stretched) {
         url: 'getcontactsbyparams',
         method: 'POST',
         params : { contactId : contactId },
-        success: function(response, opts) {
+        success: function(response) {
             var assoc = Ext.decode(response.responseText);
+
+            console.log(assoc);
 
             Ext.getCmp('contactGrid').setSource({
                 'Photo' : 'Double-click to see photo',
@@ -361,10 +363,10 @@ function displayContacts(contactId, stretched) {
             });
 
             Ext.getCmp('contactGrid').setListeners({
-                beforeedit : function(one, two, three){
+                beforeedit : function(){
                     return false;
                 },
-                rowdblclick : function(dis, record, element, rowIndex, e, eOpts){
+                rowdblclick : function(dis, record){
                     if (record.id === 'Location') {
                         showMap(assoc.latitude, assoc.longitude, assoc.lastname + ', ' + assoc.firstname, stretched);
                     } else if (record.id === 'Signature') {
@@ -375,7 +377,7 @@ function displayContacts(contactId, stretched) {
                 }
             });
         },
-        failure: function(response, opts) {
+        failure: function(response) {
             var assoc = Ext.decode(response.responseText);
             Ext.Msg.alert("Failed", assoc['reason']);
         }
@@ -559,7 +561,7 @@ function showMap(latitude, longitude, entity, stretched) {
                 var loadMap = function(lat, lng) {
 
                     var me = this;
-                    var location = { lat : lat, lng : lng};
+                    //var location = { lat : lat, lng : lng};
 
                     try {
                         me.map = new google.maps.Map(document.getElementById("myMap"), {
@@ -571,11 +573,11 @@ function showMap(latitude, longitude, entity, stretched) {
                         return false;
                     }
 
-                    var marker = new google.maps.Marker({
+                    /*var marker = new google.maps.Marker({
                         position : new google.maps.LatLng(lat, lng),
                         map : me.map,
                         //label : entity
-                    });
+                    });*/
 
                     me.infowindow = new google.maps.InfoWindow();
                     //me.infowindow.setContent(entity);
@@ -693,10 +695,10 @@ function displayJoborder(initialJOId) {
             });
 
             Ext.getCmp('joGrid').setListeners({
-                beforeedit : function(one, two, three) {
+                beforeedit : function() {
                     return false;
                 },
-                rowdblclick : function(dis, record, element, rowIndex, e, eOpts) {
+                rowdblclick : function(dis, record) {
                     if (record.id === 'Image') {
                         displayPhoto(
                             'getinitialjoborderphoto?initialJoborderId='+assoc['quotation']['initialJoborderId'],
@@ -709,7 +711,7 @@ function displayJoborder(initialJOId) {
                 }
             });
         },
-        failure: function(response, opts) {
+        failure: function(response) {
             var assoc = Ext.decode(response.responseText);
             Ext.Msg.alert("Failed", assoc['reason']);
         }
@@ -755,7 +757,7 @@ function logout() {
         conn.request({
             url : 'logout',
             method : 'post',
-            callback : function (o, s, response) {
+            callback : function () {
                 location.assign('index.jsp');
             }
         });

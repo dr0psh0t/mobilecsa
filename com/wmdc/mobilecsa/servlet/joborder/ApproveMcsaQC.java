@@ -4,10 +4,12 @@ import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.*;
 import java.net.*;
 import java.sql.Connection;
@@ -18,7 +20,13 @@ import java.sql.SQLException;
 /**
  * Created by wmdcprog on 5/12/2018.
  */
+
 @WebServlet("/approvemcsaqc")
+
+@MultipartConfig(fileSizeThreshold=1024*1024*6, // 5MB
+        maxFileSize=1024*1024*3,      // 3MB
+        maxRequestSize=1024*1024*50)   // 50MB
+
 public class ApproveMcsaQC extends HttpServlet {
     private String getApproveMcsaQCServlet() {
         Connection conn = null;
@@ -44,7 +52,7 @@ public class ApproveMcsaQC extends HttpServlet {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
             return null;
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
             return null;
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet);
@@ -55,6 +63,16 @@ public class ApproveMcsaQC extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
+        response.setContentType("application/json");
+
+        String cid = request.getParameter("cid");
+        String source = request.getParameter("source");
+        String joid = request.getParameter("joid");
+        String woid = request.getParameter("woid");
+
+        Part wophoto = request.getPart("wophoto");
+
+        /*
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
@@ -164,7 +182,7 @@ public class ApproveMcsaQC extends HttpServlet {
             if (conn != null) {
                 conn.disconnect();
             }
-        }
+        }*/
     }
 
     @Override

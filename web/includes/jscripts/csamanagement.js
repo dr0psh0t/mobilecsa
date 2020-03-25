@@ -122,7 +122,7 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
     frame : true,
     iconCls : 'contact-icon',
     listeners : {
-        beforeitemdblclick : function (selModel, record, index, options) {
+        beforeitemdblclick : function (selModel, record) {
             displayContacts(record.data.contactId, false);
         }
     },
@@ -162,7 +162,7 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
         dataIndex : 'isTransferred',
         align : 'center',
         flex : 1,
-        renderer : function(value, metaData, record, rowIndex, colIndex, store) {
+        renderer : function(value) {
             if (value === 1) {
                 return '<img style="width: 20px;"src="includes/images/icons/check2.png" />';
             } else {
@@ -174,7 +174,7 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
         dataIndex : 'isDeleted',
         align : 'center',
         flex : 1,
-        renderer : function(value, metaData, record, rowIndex, colIndex, store) {
+        renderer : function(value) {
             if (value === 1) {
                 return '<img style="width: 20px;"src="includes/images/icons/check2.png" />';
             } else {
@@ -192,7 +192,12 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
             handler : function() {
                 var records = contactsGrid.getSelectionModel().getSelection();
 
-                if (records.length < 1 && records != null) {
+                if (records === null) {
+                    Ext.Msg.alert('Warning', 'Select a contact to edit');
+                    return;
+                }
+
+                if (records.length < 1) {
                     Ext.Msg.alert('Warning', 'Select a contact to edit');
                     return;
                 }
@@ -218,7 +223,12 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
             handler : function() {
                 var records = contactsGrid.getSelectionModel().getSelection();
 
-                if (records.length < 1 && records != null) {
+                if (records === null) {
+                    Ext.Msg.alert('Warning', 'Select a contact to transfer');
+                    return;
+                }
+
+                if (records.length < 1) {
                     Ext.Msg.alert('Warning', 'Select a contact to transfer');
                     return;
                 }
@@ -256,7 +266,7 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
                                 allowBlank : false,
                                 listeners : {
                                     keypress : function(textfield, eo) {
-                                        if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                                        if (eo.getCharCode() === Ext.EventObject.ENTER) {
                                             Ext.getCmp('submitButton').handler();
                                         }
                                     }
@@ -276,7 +286,7 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
                                             method : 'get',
                                             url : 'authorizetransfer',
                                             params : { username : onlineUserFromAdmin },
-                                            success	: function(form, action) {  //  transfer contact
+                                            success	: function() {  //  transfer contact
                                                 Ext.getCmp('passwordForm').close();
                                                 Ext.getCmp('passwordWindow').close();
 
@@ -328,7 +338,12 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
             handler : function() {
                 var records = contactsGrid.getSelectionModel().getSelection();
 
-                if (records.length < 1 && records != null) {
+                if (records === null) {
+                    Ext.Msg.alert('Warning', 'Select a contact to delete');
+                    return;
+                }
+
+                if (records.length < 1) {
                     Ext.Msg.alert('Warning', 'Select a contact to delete');
                     return;
                 }
@@ -379,7 +394,7 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
             listeners : {
                 keypress : function(textfield, eo) {
 
-                    if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                    if (eo.getCharCode() === Ext.EventObject.ENTER) {
                         var query = Ext.getCmp('queryContact').getValue();
 
                         if (query.length > 2) {
@@ -439,7 +454,7 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
     frame : true,
     iconCls : 'company-icon',
     listeners : {
-        beforeitemdblclick : function (selModel, record, index, options) {
+        beforeitemdblclick : function (selModel, record) {
             displayCompanyInfo(record.data.customerId, false);
         }
     },
@@ -474,7 +489,7 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
         dataIndex : 'isTransferred',
         align : 'center',
         flex : 1,
-        renderer : function(value, metaData, record, rowIndex, colIndex, store) {
+        renderer : function(value) {
             if (value === 1) {
                 return '<img style="width: 20px;"src="includes/images/icons/check2.png" />';
             } else {
@@ -486,7 +501,7 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
         dataIndex : 'isDeleted',
         align : 'center',
         flex : 1,
-        renderer : function(value, metaData, record, rowIndex, colIndex, store) {
+        renderer : function(value) {
             if (value === 1) {
                 return '<img style="width: 20px;"src="includes/images/icons/check2.png" />';
             } else {
@@ -504,7 +519,12 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
             handler : function() {
                 var records = customerCompanyGrid.getSelectionModel().getSelection();
 
-                if (records.length < 1 && records != null) {
+                if (records === null) {
+                    Ext.Msg.alert('Warning', 'Select a customer to edit');
+                    return;
+                }
+
+                if (records.length < 1) {
                     Ext.Msg.alert('Warning', 'Select a customer to edit');
                     return;
                 }
@@ -530,7 +550,12 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
             handler : function() {
                 var records = customerCompanyGrid.getSelectionModel().getSelection();
 
-                if (records.length < 1 && records != null) {   //  no contacts selected
+                if (records === null) {   //  no contacts selected
+                    Ext.Msg.alert('Warning', 'Select a customer to transfer');
+                    return;
+                }
+
+                if (records.length < 1) {   //  no contacts selected
                     Ext.Msg.alert('Warning', 'Select a customer to transfer');
                     return;
                 }
@@ -557,7 +582,7 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
                         allowBlank : false,
                         listeners : {
                             keypress : function(textfield, eo) {
-                                if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                                if (eo.getCharCode() === Ext.EventObject.ENTER) {
                                     Ext.getCmp('submitButton').handler();
                                 }
                             }
@@ -577,7 +602,7 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
                                     method : 'get',
                                     url : 'authorizetransfer',
                                     params : { username : onlineUserFromAdmin },
-                                    success	: function(form, action) {  //  transfer contact
+                                    success	: function() {  //  transfer contact
                                         Ext.getCmp('passwordForm').close();
                                         Ext.getCmp('passwordWindow').close();
 
@@ -638,12 +663,17 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
             handler : function() {
                 var records = customerCompanyGrid.getSelectionModel().getSelection();
 
-                if (records.length < 1 && records != null) {
+                if (records === null) {
                     Ext.Msg.alert('Warning', 'Select a customer to delete');
                     return;
                 }
 
-                if (records[0].data.isDeleted == 1) {
+                if (records.length < 1) {
+                    Ext.Msg.alert('Warning', 'Select a customer to delete');
+                    return;
+                }
+
+                if (records[0].data.isDeleted === 1) {
                     Ext.Msg.alert('Warning', 'Customer already deleted.');
                     return;
                 }
@@ -686,7 +716,7 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
             },
             listeners : {
                 keypress : function(textfield, eo) {
-                    if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                    if (eo.getCharCode() === Ext.EventObject.ENTER) {
                         var query = Ext.getCmp('queryCompany').getValue();
 
                         if (query.length > 2) {
@@ -750,7 +780,7 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
     frame : true,
     iconCls : 'customer-icon',
     listeners : {
-        beforeitemdblclick : function (selModel, record, index, options) {
+        beforeitemdblclick : function (selModel, record) {
             displayCustomerInfo(record.data.customerId, false);
         }
     },
@@ -795,7 +825,7 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
         dataIndex : 'isTransferred',
         align : 'center',
         flex : 1,
-        renderer : function(value, metaData, record, rowIndex, colIndex, store) {
+        renderer : function(value) {
             if (value === 1) {
                 return '<img style="width: 20px;"src="includes/images/icons/check2.png" />';
             } else {
@@ -807,7 +837,7 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
         dataIndex : 'isDeleted',
         align : 'center',
         flex : 1,
-        renderer : function(value, metaData, record, rowIndex, colIndex, store) {
+        renderer : function(value) {
             if (value === 1) {
                 return '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
             } else {
@@ -825,7 +855,12 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
             handler: function() {
                 var records = customerGrid.getSelectionModel().getSelection();
 
-                if (records.length < 1 && records != null) {
+                if (records === null) {
+                    Ext.Msg.alert('Warning', 'Select a customer to edit.');
+                    return;
+                }
+
+                if (records.length < 1) {
                     Ext.Msg.alert('Warning', 'Select a customer to edit.');
                     return;
                 }
@@ -851,7 +886,12 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
             handler : function() {
                 var records = customerGrid.getSelectionModel().getSelection();
 
-                if (records.length < 1 && records != null) {   //  no customer selected
+                if (records === null) {   //  no customer selected
+                    Ext.Msg.alert('Warning', 'Select a customer to transfer');
+                    return;
+                }
+
+                if (records.length < 1) {   //  no customer selected
                     Ext.Msg.alert('Warning', 'Select a customer to transfer');
                     return;
                 }
@@ -877,7 +917,7 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
                         allowBlank : false,
                         listeners : {
                             keypress : function(textfield, eo) {
-                                if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                                if (eo.getCharCode() === Ext.EventObject.ENTER) {
                                     Ext.getCmp('submitButton').handler();
                                 }
                             }
@@ -896,7 +936,7 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
                                     method : 'get',
                                     url : 'authorizetransfer',
                                     params : { username : onlineUserFromAdmin },
-                                    success	: function(form, action) {  //  transfer contact
+                                    success	: function() {  //  transfer contact
                                         Ext.getCmp('passwordForm').close();
                                         Ext.getCmp('passwordWindow').close();
                                         Ext.Msg.show({
@@ -955,12 +995,17 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
             handler : function() {
                 var records = customerGrid.getSelectionModel().getSelection();
 
-                if (records.length < 1 && records != null) {
+                if (records === null) {
                     Ext.Msg.alert('Warning', 'Select a customer to delete');
                     return;
                 }
 
-                if (records[0].data.isDeleted == 1) {
+                if (records.length < 1) {
+                    Ext.Msg.alert('Warning', 'Select a customer to delete');
+                    return;
+                }
+
+                if (records[0].data.isDeleted === 1) {
                     Ext.Msg.alert('Warning', 'Customer already deleted.');
                     return;
                 }
@@ -1003,7 +1048,7 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
             },
             listeners : {
                 keypress : function(textfield, eo) {
-                    if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                    if (eo.getCharCode() === Ext.EventObject.ENTER) {
                         var query = Ext.getCmp('queryCustomer').getValue();
 
                         if (query.length > 2) {
@@ -1187,7 +1232,7 @@ var adminGrid = Ext.create('Ext.grid.Panel', {
     hidden : true,
     height : '100%',
     listeners : {
-        beforeitemdblclick : function (selModel, record, index, options) {
+        beforeitemdblclick : function (selModel, record) {
             displayAdminGrid(record.data.adminId);
         }
     },
@@ -1212,7 +1257,7 @@ var adminGrid = Ext.create('Ext.grid.Panel', {
         dataIndex: 'status',
         flex : 1,
         align : 'center',
-        renderer : function(value, metaData, record, rowIndex, colIndex, store) {
+        renderer : function(value) {
             if (value === 1) {
                 return '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
             } else {
@@ -1298,7 +1343,7 @@ var joborderGridPanel = Ext.create('Ext.grid.Panel', {
     frame : true,
     height : '100%',
     listeners : {
-        beforeitemdblclick : function (selectionModel, record, index, options) {
+        beforeitemdblclick : function (selectionModel, record) {
             displayJoborder(record.data.initialJoborderId);
         }
     },
@@ -1339,7 +1384,7 @@ var joborderGridPanel = Ext.create('Ext.grid.Panel', {
         dataIndex : 'added',
         cls : ['grid-column-align-center'],
         flex : 0.3,
-        renderer : function(value, metaData, record, rowIndex, colIndex, store) {
+        renderer : function(value) {
             if (value === 0) {
                 return '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
             } else {
@@ -1367,7 +1412,12 @@ var joborderGridPanel = Ext.create('Ext.grid.Panel', {
             handler : function() {
                 var records = Ext.getCmp('joborderGrid').getSelectionModel().getSelection();
 
-                if (records.length < 1 && records != null) {
+                if (records === null) {
+                    Ext.Msg.alert('Warning', 'Select joborder to delete.');
+                    return;
+                }
+
+                if (records.length < 1) {
                     Ext.Msg.alert('Warning', 'Select joborder to delete.');
                     return;
                 }
@@ -1412,7 +1462,7 @@ var joborderGridPanel = Ext.create('Ext.grid.Panel', {
             },
             listeners : {
                 keypress : function(textfield, eo) {
-                    if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                    if (eo.getCharCode() === Ext.EventObject.ENTER) {
                         var query = Ext.getCmp('queryJoborder').getValue();
                         if (query.length > 1) {
                             joborderStore.load({
@@ -1441,7 +1491,7 @@ var gridPanel = Ext.create('Ext.grid.Panel', {
     frame : true,
     height : '100%',
     listeners : {
-        beforeitemdblclick : function (selModel, record, index, options) {
+        beforeitemdblclick : function (selModel, record) {
             displayCsaGrid(record.data.csaId);
         }
     },
@@ -1466,7 +1516,7 @@ var gridPanel = Ext.create('Ext.grid.Panel', {
         dataIndex: 'passwordStatus',
         flex : 1,
         align : 'center',
-        renderer : function(value, metaData, record, rowIndex, colIndex, store) {
+        renderer : function(value) {
             if (value === '1') {
                 return '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
             } else {
@@ -1478,7 +1528,7 @@ var gridPanel = Ext.create('Ext.grid.Panel', {
         dataIndex: 'status',
         flex : 1,
         align : 'center',
-        renderer : function(value, metaData, record, rowIndex, colIndex, store) {
+        renderer : function(value) {
             if (value === 1) {
                 return '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
             } else {
@@ -1506,15 +1556,12 @@ var gridPanel = Ext.create('Ext.grid.Panel', {
             handler : function() {
                 var records = Ext.getCmp('csaGridId').getSelectionModel().getSelection();
 
-                console.log(records);
-
-                if (records.length < 1 && records != null) {
-                    Ext.MessageBox.alert("Warning", "Select a user to edit");
-                    return;
+                if (records !== null) {
+                    if (records.length > 0) {
+                        edit(records[0].data.csaId, records[0].data.lastname,
+                            records[0].data.firstname, records[0].data.username);
+                    }
                 }
-
-                edit(records[0].data.csaId, records[0].data.lastname,
-                    records[0].data.firstname, records[0].data.username);
             }
         },{
             xtype : 'button',
@@ -1532,7 +1579,12 @@ var gridPanel = Ext.create('Ext.grid.Panel', {
             handler : function() {
                 var records = Ext.getCmp('csaGridId').getSelectionModel().getSelection();
 
-                if (records.length < 1 && records != null) {
+                if (records === null) {
+                    Ext.MessageBox.alert("Warning", "Select a user to lock");
+                    return;
+                }
+
+                if (records.length < 1) {
                     Ext.MessageBox.alert("Warning", "Select a user to lock");
                     return;
                 }
@@ -1585,7 +1637,7 @@ function changeAdminPass() {
             enableKeyEvents : true,
             listeners : {
                 keypress : function(textfield, eo) {
-                    if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                    if (eo.getCharCode() === Ext.EventObject.ENTER) {
                         Ext.getCmp('changeAdminPassButton').handler();
                     }
                 }
@@ -1667,7 +1719,7 @@ function createAdministrator() {
             enableKeyEvents : true,
             listeners : {
                 keypress : function(textfield, eo) {
-                    if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                    if (eo.getCharCode() === Ext.EventObject.ENTER) {
                         Ext.getCmp('createAdministratorButton').handler();
                     }
                 }
@@ -1714,7 +1766,6 @@ function createAdministrator() {
         width : 400,
         height : 230,
         minWidth : 400,
-        minHeight : 230,
         minHeight : 230,
         layout : 'fit',
         plain : true,

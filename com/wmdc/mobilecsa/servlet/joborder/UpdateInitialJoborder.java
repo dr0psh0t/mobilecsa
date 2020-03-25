@@ -177,7 +177,7 @@ public class UpdateInitialJoborder extends HttpServlet {
             prepStmt.executeUpdate();
             prepStmt.close();
 
-            return "";
+            return "with photo saved.";
         } else {
 
             prepStmt = conn.prepareStatement("INSERT INTO initial_joborder_image (image, initial_joborder_id, " +
@@ -193,7 +193,7 @@ public class UpdateInitialJoborder extends HttpServlet {
             prepStmt.close();
 
             if (isPictureSaved(initialJoborderId, conn)) {
-                return "";
+                return "with photo saved.";
             } else {
                 return "but no picture was saved.";
             }

@@ -31,7 +31,6 @@ var verifyCodeForm = Ext.create('Ext.form.Panel', {
         marginLeft	: 'auto',
         marginRight	: 'auto'
     },
-
     items : [{
         xtype: 'textfield',
         inputType : 'number',
@@ -47,7 +46,7 @@ var verifyCodeForm = Ext.create('Ext.form.Panel', {
         enableKeyEvents : true,
         listeners : {
             keypress : function(textfield, eo) {
-                if (eo.getCharCode() == Ext.EventObject.ENTER) {
+                if (eo.getCharCode() === Ext.EventObject.ENTER) {
                     Ext.getCmp('totpButton').handler();
                 }
             }
@@ -60,59 +59,7 @@ var verifyCodeForm = Ext.create('Ext.form.Panel', {
                 }
             }
         }
-    }/*,{
-        xtype : 'button',
-        disabled : true,
-        formBind : true,
-        text : 'Submit',
-        id : 'totpButton',
-        width : 200,
-        height : 40,
-        padding : '10 10 10 10',
-        style : {
-            display : 'block',
-            margin : 'auto'
-        },
-        handler : function() {
-            var form = this.up('form').getForm();
-
-            if(form.isValid()) {
-
-                form.submit({
-                    url : 'securitykey',
-                    method : 'post',
-                    success: function(form, action) {
-                        var assoc = Ext.JSON.decode(action.response.responseText);
-
-                        if (assoc['isAdmin']) {
-                            location.assign("csamanagement.jsp");
-                        } else {
-                            location.assign("homeuser.jsp");
-                        }
-                    },
-                    failure: function(form, action) {
-                        var assoc = Ext.JSON.decode(action.response.responseText);
-
-                        Ext.MessageBox.show({
-                            title : 'Fail',
-                            message : assoc['reason'] + ". Go back to login page to generate the code.",
-                            buttons : Ext.Msg.YESNO,
-                            buttonText : {
-                                yes : 'OK',
-                                no : 'Back to login'
-                            },
-                            fn: function(btn) {
-                                if (btn === 'no') {
-                                    location.assign('index.jsp');
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-        }
-    }*/],
-
+    }],
     buttons: [{
         disabled : true,
         formBind : true,
@@ -163,7 +110,6 @@ Ext.onReady(function () {
     Ext.QuickTips.init();
 
     Ext.create('Ext.container.Viewport', {
-        layout : 'border',
         renderTo : Ext.getBody(),
         layout : {
             type : 'vbox',

@@ -65,8 +65,6 @@ Ext.define('Plant', {
 });
 
 function openEditCompanyMap() {
-    var mapStatus = true;
-
     try {
         var resizedWidth = document.body.clientWidth * 0.70;
         var resizedHeight = document.body.clientHeight * 0.95;
@@ -156,16 +154,18 @@ function openEditCompanyMap() {
                 }
             }]
         }).show();
-    } catch (e) {  //  google is not defined{
-        mapStatus = false;
+
+        return true;
+
+    } catch (e) {
 
         Ext.getCmp('mapPanel').destroy();
         Ext.getCmp('mapWindow').destroy();
 
         console.log(e.message);
-    } finally {
-        return mapStatus;
-    }
+        return false;
+
+    } finally {}
 }
 
 var plantStore;
@@ -773,7 +773,7 @@ function editCompany(customerId) {
         },
         failure: function(response, opts) {
             var failJson = Ext.decode(response.responseText);
-            Ext.MessageBox.show();
+            Ext.MessageBox.show('Failed', failJson['reason']);
         }
     });
 }
@@ -789,7 +789,7 @@ function getNumberObjects() {
 }
 
 function setZipcodeByCityid(city) {
-    if (city != '' && city != null) {
+    if (city !== '' && city !== null) {
         sendRequest('getzipcode', 'post', { city : city }, function (o, s, response) {
                 var assoc = Ext.decode(response.responseText);
 
@@ -848,12 +848,12 @@ function updateCompanyPhoto(customerId) {
                             img.onerror = function() {
                                 Ext.Msg.alert('Warning!', 'Chosen file is not an image.');
                                 Ext.getCmp('customerPhoto').inputEl.dom.value = '';
-                            }
+                            };
 
                             img.src = _URL.createObjectURL(file);
                             var fileSize = file.size;
 
-                            if (file.type != 'image/jpeg') {
+                            if (file.type !== 'image/jpeg') {
                                 Ext.Msg.alert('WARNING!', 'Photo should be jpeg.');
                                 Ext.getCmp('customerPhoto').inputEl.dom.value = '';
                             }

@@ -697,7 +697,7 @@ function editContact(contactId) {
             Ext.getCmp('longitude').setValue(oldLongitude);
             Ext.getCmp('dateofbirth').setValue(contactJson.dateOfBirth);
         },
-        failure: function(response, opts) {
+        failure: function(response) {
             var assoc = Ext.decode(response.responseText);
             Ext.Msg.alert("Failed", assoc['reason']);
         }
@@ -705,8 +705,6 @@ function editContact(contactId) {
 }
 
 function openEditContactMap() {
-    var mapStatus = true;
-
     try {
         var resizedWidth = document.body.clientWidth * 0.60;
         var resizedHeight = document.body.clientHeight * 0.95;
@@ -802,15 +800,16 @@ function openEditContactMap() {
                 }
             }]
         }).show();
-    } catch (e) {
-        mapStatus = false;
 
+        return true;
+
+    } catch (e) {
         Ext.getCmp('mapPanel').destroy();
         Ext.getCmp('mapWindow').destroy();
 
-        console.log(e.message);
+        return false;
     } finally {
-        return mapStatus;
+        //return mapStatus;
     }
 }
 
@@ -825,7 +824,7 @@ function getNumberObjects() {
 }
 
 function setZipcodeByCityid(city) {
-    if (city != '' && city != null) {
+    if (city !== '' && city !== null) {
         sendRequest('getzipcode', 'post', { city : city },
             function (o, s, response) {
                 var assoc = Ext.decode(response.responseText);
@@ -876,12 +875,12 @@ function updateContactPhoto(contactId) {
                     img.onerror = function() {
                         Ext.Msg.alert('Warning!', 'Chosen file is not an image.');
                         Ext.getCmp('contactPhoto').inputEl.dom.value = '';
-                    }
+                    };
 
                     img.src = _URL.createObjectURL(file);
                     var fileSize = file.size;
 
-                    if (file.type != 'image/jpeg')
+                    if (file.type !== 'image/jpeg')
                     {
                         Ext.Msg.alert('WARNING!', 'Photo should be jpeg.');
                         Ext.getCmp('contactPhoto').inputEl.dom.value = '';

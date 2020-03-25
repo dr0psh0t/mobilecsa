@@ -1,18 +1,26 @@
 package wmdc.mobilecsa.servlet;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.*;
 
@@ -215,4 +223,14 @@ public class AddUser extends HttpServlet {
             throws ServletException, IOException {
         Utils.illegalRequest(response);
     }
+
+    /*
+    public static InputStream getQrCode(String barcodeData, int height, int width)
+        throws WriterException, IOException {
+
+        BitMatrix matrix = new MultiFormatWriter().encode(barcodeData,
+                BarcodeFormat.QR_CODE, width, height);
+
+        BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(matrix);
+    }*/
 }
