@@ -28,6 +28,7 @@ import java.sql.SQLException;
         maxRequestSize=1024*1024*50)   // 50MB
 
 public class ApproveMcsaQC extends HttpServlet {
+
     private String getApproveMcsaQCServlet() {
         Connection conn = null;
         PreparedStatement prepStmt = null;
@@ -63,16 +64,15 @@ public class ApproveMcsaQC extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
+        /*
         response.setContentType("application/json");
-
         String cid = request.getParameter("cid");
         String source = request.getParameter("source");
         String joid = request.getParameter("joid");
         String woid = request.getParameter("woid");
-
         Part wophoto = request.getPart("wophoto");
+        */
 
-        /*
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
@@ -91,17 +91,30 @@ public class ApproveMcsaQC extends HttpServlet {
             return;
         }
 
-        HttpURLConnection conn = null;
-        URL url;
-
         String serverUrl = Utils.getServerAddress(getServletContext())+folder+"/"+servlet;
         String akey = Utils.getAPIKey(getServletContext());
         String cid = request.getParameter("cid");
         String source = request.getParameter("source");
         String joid = request.getParameter("joid");
         String woid = request.getParameter("woid");
+        Part wophoto = request.getPart("wophoto");
 
+        System.out.println(serverUrl);
+        System.out.println(akey);
+        System.out.println(cid);
+        System.out.println(source);
+        System.out.println(joid);
+        System.out.println(woid);
+        System.out.println(wophoto.getSize());
+
+        Utils.printSuccessJson(resJson, "TEST success json", out);
+
+
+        /*
         checkParameters(serverUrl, akey, cid, source, joid, woid, resJson, out);
+
+        HttpURLConnection conn = null;
+        URL url;
 
         try {
             url = new URL(serverUrl);

@@ -103,8 +103,6 @@ public class InitialJobOrder extends HttpServlet {
                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
 
-            System.out.println("customerId= "+customerId);
-
             prepStmt.setString(1, joNumber);
             prepStmt.setInt(2, customerId);
             prepStmt.setString(3, source);
