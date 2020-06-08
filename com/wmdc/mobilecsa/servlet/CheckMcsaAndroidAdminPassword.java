@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,14 +31,15 @@ public class CheckMcsaAndroidAdminPassword extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
         String mcsaAndroidAdminPassword = request.getParameter("mcsaAndroidAdminPassword");
         if (mcsaAndroidAdminPassword == null) {
-            Utils.logError("\"mcsaAndroidAdminPassword\" parameter is null.");
+            Utils.logError("\"mcsaAndroidAdminPassword\" parameter is null.", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         } else if (mcsaAndroidAdminPassword.isEmpty()) {
-            Utils.logError("\"mcsaAndroidAdminPassword\" parameter is empty.");
+            Utils.logError("\"mcsaAndroidAdminPassword\" parameter is empty.", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         }
@@ -69,13 +71,13 @@ public class CheckMcsaAndroidAdminPassword extends HttpServlet {
 
             out.println(resJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }

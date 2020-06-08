@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
  */
 @WebServlet("/getmcsaenginemodellist")
 public class GetMcsaEngineModelList extends HttpServlet {
-    private String getMcsaEngineModelList() {
+    private String getMcsaEngineModelList(ServletContext context) {
         Connection conn = null;
         PreparedStatement prepStmt = null;
         ResultSet resultSet = null;
@@ -43,13 +44,15 @@ public class GetMcsaEngineModelList extends HttpServlet {
 
             return key;
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException",
+                    sqe.toString(), context);
             return null;
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception",
+                    e.toString(), context);
             return null;
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, context);
         }
     }
 
@@ -60,18 +63,19 @@ public class GetMcsaEngineModelList extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
 
         String folder = Utils.getJoborderFolderName(getServletContext());
-        String servlet = getMcsaEngineModelList();
+        String servlet = getMcsaEngineModelList(ctx);
 
         if (folder == null || servlet == null) {
             Utils.printJsonException(resJson, "Cannot find path", out);
-            Utils.logError("folder: "+folder+", servlet: "+servlet);
+            Utils.logError("folder: "+folder+", servlet: "+servlet, ctx);
             return;
         }
 
@@ -85,31 +89,31 @@ public class GetMcsaEngineModelList extends HttpServlet {
 
         try {
             if (serverUrl == null) {
-                Utils.logError("\"serverUrl\" parameter is null");
+                Utils.logError("\"serverUrl\" parameter is null", ctx);
                 Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
                 return;
             } else if (serverUrl.isEmpty()) {
-                Utils.logError("\"serverUrl\" parameter is empty");
+                Utils.logError("\"serverUrl\" parameter is empty", ctx);
                 Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
                 return;
             }
 
             if (akey == null) {
-                Utils.logError("\"akey\" parameter is null");
+                Utils.logError("\"akey\" parameter is null", ctx);
                 Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
                 return;
             } else if (akey.isEmpty()) {
-                Utils.logError("\"akey\" parameter is empty");
+                Utils.logError("\"akey\" parameter is empty", ctx);
                 Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
                 return;
             }
 
             if (filter == null) {
-                Utils.logError("\"filter\" parameter is null");
+                Utils.logError("\"filter\" parameter is null", ctx);
                 Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
                 return;
             } else if (filter.isEmpty()) {
-                Utils.logError("\"filter\" parameter is empty");
+                Utils.logError("\"filter\" parameter is empty", ctx);
                 Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
                 return;
             }
@@ -178,15 +182,15 @@ public class GetMcsaEngineModelList extends HttpServlet {
                 }
 
             } else {
-                Utils.logError("Request did not succeed. Status code: "+statusCode);
+                Utils.logError("Request did not succeed. Status code: "+statusCode, ctx);
                 Utils.printJsonException(resJson, "Request did not succeed. See logs or try again.", out);
             }
         } catch (MalformedURLException | ConnectException | SocketTimeoutException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
-                    sqe.toString());
+                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), sqe.toString(), out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
             if (conn != null) {

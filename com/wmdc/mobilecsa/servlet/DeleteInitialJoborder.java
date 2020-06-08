@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,8 +30,9 @@ public class DeleteInitialJoborder extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
@@ -38,11 +40,11 @@ public class DeleteInitialJoborder extends HttpServlet {
         String initialJoborderIdStr = request.getParameter("initialJoborderId");
 
         if (initialJoborderIdStr == null) {
-            Utils.logError("\"initialJoborderIdStr\" parameter is null");
+            Utils.logError("\"initialJoborderIdStr\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         } else if (initialJoborderIdStr.isEmpty()) {
-            Utils.logError("\"initialJoborderIdStr\" parameter is empty");
+            Utils.logError("\"initialJoborderIdStr\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         }
@@ -57,7 +59,7 @@ public class DeleteInitialJoborder extends HttpServlet {
             int initialJoborderId = Integer.parseInt(initialJoborderIdStr);
 
             if (getJoborderCountById(initialJoborderId, conn) < 1) {
-                Utils.logError("No initial joborder found to delete using joborder id: "+initialJoborderId);
+                Utils.logError("No initial joborder found to delete using joborder id: "+initialJoborderId, ctx);
                 Utils.printJsonException(resJson, "No initial joborder found to delete.", out);
                 return;
             }
@@ -72,18 +74,18 @@ public class DeleteInitialJoborder extends HttpServlet {
                 prepStmt.execute();
                 Utils.printSuccessJson(resJson, "Initial joborder has been deleted.", out);
             } else {
-                Utils.logError("A problem has occured in deleting initial joborder. Rows affected: "+rowsAffected);
+                Utils.logError("A problem has occured in deleting initial joborder. Rows affected: "+rowsAffected, ctx);
                 Utils.printJsonException(resJson, "A problem has occured in deleting initial joborder. " +
                         "See logs or try again", out);
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
         }
     }
@@ -96,7 +98,7 @@ public class DeleteInitialJoborder extends HttpServlet {
 
     private int getJoborderCountById(int initialJoborderId, Connection conn) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS joCount FROM initial_joborder WHERE initial_joborder_id = ?");
+                "SELECT COUNT(*) AS joCount FROM initial_joborder WHERE initial_joborder_id = ?");
         prepStmt.setInt(1, initialJoborderId);
         ResultSet resultSet = prepStmt.executeQuery();
 

@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.joborder;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,7 @@ import java.sql.SQLException;
  */
 @WebServlet("/getmcsajoimage")
 public class GetMCSAJOImage extends HttpServlet {
-    private String getMcsaJoImage() {
+    private String getMcsaJoImage(ServletContext context) {
         Connection conn = null;
         PreparedStatement prepStmt = null;
         ResultSet resultSet = null;
@@ -42,13 +43,15 @@ public class GetMCSAJOImage extends HttpServlet {
 
             return key;
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString(),
+                    context);
             return null;
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(),
+                    context);
             return null;
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, context);
         }
     }
 
@@ -60,10 +63,12 @@ public class GetMCSAJOImage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String folder = Utils.getJoborderFolderName(getServletContext());
-        String servlet = getMcsaJoImage();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        String folder = Utils.getJoborderFolderName(getServletContext());
+        String servlet = getMcsaJoImage(ctx);
+
+        if (!Utils.isOnline(request, ctx)) {
             Utils.invalidImage(response, getServletContext());
             return;
         }
@@ -77,7 +82,7 @@ public class GetMCSAJOImage extends HttpServlet {
         String source = "mcsa";
         String jid = request.getParameter("joId");
 
-        checkParameters(serverUrl, akey, cid, source, jid, new JSONObject(), response.getWriter());
+        checkParameters(serverUrl, akey, cid, source, jid, new JSONObject(), response.getWriter(), ctx);
 
         try {
             url = new URL(serverUrl);
@@ -118,10 +123,10 @@ public class GetMCSAJOImage extends HttpServlet {
             out.close();
         } catch (MalformedURLException | ConnectException | SocketTimeoutException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
-                    sqe.toString());
+                    sqe.toString(), ctx);
             Utils.invalidImage(response, getServletContext());
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.invalidImage(response, getServletContext());
         } finally {
             if (conn != null) {
@@ -131,53 +136,53 @@ public class GetMCSAJOImage extends HttpServlet {
     }
 
     public void checkParameters(String serverUrl, String akey, String cid, String source, String jid,
-                                JSONObject resJson, PrintWriter out) {
+                                JSONObject resJson, PrintWriter out, ServletContext ctx) {
 
         if (serverUrl == null) {
-            Utils.logError("\"serverUrl\" parameter is null");
+            Utils.logError("\"serverUrl\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
             return;
         } else if (serverUrl.isEmpty()) {
-            Utils.logError("\"serverUrl\" parameter is empty");
+            Utils.logError("\"serverUrl\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
             return;
         }
 
         if (akey == null) {
-            Utils.logError("\"akey\" parameter is null");
+            Utils.logError("\"akey\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
             return;
         } else if (akey.isEmpty()) {
-            Utils.logError("\"akey\" parameter is empty");
+            Utils.logError("\"akey\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
             return;
         }
 
         if (source == null) {
-            Utils.logError("\"source\" parameter is null");
+            Utils.logError("\"source\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
             return;
         } else if (source.isEmpty()) {
-            Utils.logError("\"source\" parameter is empty");
+            Utils.logError("\"source\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
             return;
         }
 
         if (jid == null) {
-            Utils.logError("\"jid\" parameter is null");
+            Utils.logError("\"jid\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
             return;
         } else if (jid.isEmpty()) {
-            Utils.logError("\"jid\" parameter is empty");
+            Utils.logError("\"jid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
             return;
         }
 
         if (cid == null) {
-            Utils.logError("\"cid\" parameter is null");
+            Utils.logError("\"cid\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
         } else if (cid.isEmpty()) {
-            Utils.logError("\"cid\" parameter is empty");
+            Utils.logError("\"cid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
         }
     }

@@ -50,7 +50,6 @@ public class UploadPhoto extends HttpServlet {
             }
 
             Part photoPart = request.getPart("photo");
-            System.out.println(photoPart.getSize());
 
             if (photoPart.getSize() < 1) {
                 Utils.printJsonException(resJson, "photo size is 0", out);
@@ -77,13 +76,15 @@ public class UploadPhoto extends HttpServlet {
                 Utils.printJsonException(resJson, "No photo was uploaded", out);
             }
         } catch (SQLException | ClassNotFoundException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "SQLException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "SQLException", sqe.toString(),
+                    getServletContext());
             Utils.printJsonException(resJson, "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(),
+                    getServletContext());
             Utils.printJsonException(resJson, "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
+            Utils.closeDBResource(conn, prepStmt, null, getServletContext());
             if (photoStream != null) {
                 photoStream.close();
             }

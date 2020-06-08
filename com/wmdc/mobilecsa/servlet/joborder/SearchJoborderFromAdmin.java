@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.joborder;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,8 +33,9 @@ public class SearchJoborderFromAdmin extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
@@ -41,11 +43,11 @@ public class SearchJoborderFromAdmin extends HttpServlet {
         String query = request.getParameter("query");
 
         if (query == null) {
-            Utils.logError("\"query\" parameter is null");
+            Utils.logError("\"query\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data. See logs or try again.", out);
             return;
         } else if (query.isEmpty()) {
-            Utils.logError("\"query\" parameter is empty");
+            Utils.logError("\"query\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data. See logs or try again.", out);
             return;
         }
@@ -98,13 +100,14 @@ public class SearchJoborderFromAdmin extends HttpServlet {
             resJson.put("initialJoborderList", initialJoborderList);
             out.println(resJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException",
+                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }

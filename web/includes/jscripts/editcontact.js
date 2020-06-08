@@ -607,7 +607,8 @@ function editContact(contactId) {
                                     var assoc = Ext.JSON.decode(action.response.responseText);
                                     Ext.Msg.alert("Success", assoc['reason']);
 
-                                    contactStoreAcquireAll();
+                                    contactsStore.load({ url : 'getcontacts' });
+
                                     Ext.getCmp('editContactForm').close();
                                     Ext.getCmp('editContactWindow').close();
                                 },

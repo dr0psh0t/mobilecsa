@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.joborder;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -33,8 +34,9 @@ public class GetInitialJoborderSignature extends HttpServlet {
         throws ServletException, IOException {
 
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login to continue", response.getWriter());
             return;
         }
@@ -46,12 +48,12 @@ public class GetInitialJoborderSignature extends HttpServlet {
         String initialJoborderIdStr = request.getParameter("initialJoborderId");
 
         if (initialJoborderIdStr == null) {
-            Utils.logError("\"initialJoborderId\" parameter is null");
+            Utils.logError("\"initialJoborderId\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.",
                     response.getWriter());
             return;
         } else if (initialJoborderIdStr.isEmpty()) {
-            Utils.logError("\"initialJoborderId\" parameter is empty");
+            Utils.logError("\"initialJoborderId\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.",
                     response.getWriter());
             return;
@@ -63,7 +65,7 @@ public class GetInitialJoborderSignature extends HttpServlet {
 
             int initialJoborderId = Integer.parseInt(initialJoborderIdStr);
 
-            prepStmt = conn.prepareStatement("SELECT COUNT (*) AS joCount FROM initial_joborder WHERE " +
+            prepStmt = conn.prepareStatement("SELECT COUNT(*) AS joCount FROM initial_joborder WHERE " +
                     "initial_joborder_id = ?");
             prepStmt.setInt(1, initialJoborderId);
             resultSet = prepStmt.executeQuery();
@@ -74,7 +76,7 @@ public class GetInitialJoborderSignature extends HttpServlet {
             }
 
             if (joCount < 1) {
-                Utils.logError("No signature found using initial_joborder_id: "+initialJoborderId);
+                Utils.logError("No signature found using initial_joborder_id: "+initialJoborderId, ctx);
                 Utils.printJsonException(resJson, "Cannot find signature with the associated id",
                         response.getWriter());
                 return;
@@ -106,14 +108,16 @@ public class GetInitialJoborderSignature extends HttpServlet {
             }
         } catch (ClassNotFoundException | SQLException sqe) {
             response.setContentType("application/json");
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString(),ctx);
             Utils.printJsonException(new JSONObject(), sqe.toString(), response.getWriter());
+
         } catch (Exception e) {
             response.setContentType("application/json");
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", response.getWriter());
+
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
         }
     }
 }

@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +25,9 @@ public class UpdateCustomer extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Session not allowed", out);
             return;
         }
@@ -110,7 +112,7 @@ public class UpdateCustomer extends HttpServlet {
             connCRM = Utils.getConnectionFromCRM(getServletContext());
 
             if (getCustomerCount(conn, customerId) < 1) {
-                Utils.logError("No customer found with customer id: "+customerId);
+                Utils.logError("No customer found with customer id: "+customerId, ctx);
                 Utils.printJsonException(responseJson, "No customer found with the id", out);
                 return;
             }
@@ -140,7 +142,7 @@ public class UpdateCustomer extends HttpServlet {
             prepStmt.setString(2, firstname);
             prepStmt.setString(3, mi);
             prepStmt.setString(4, address);
-            prepStmt.setDate(5, Utils.getDate(year+"-"+month+"-"+day));
+            prepStmt.setDate(5, Utils.getDate(year+"-"+month+"-"+day, ctx));
 
             prepStmt.setString(6, cell);
             prepStmt.setString(7, email);
@@ -177,21 +179,21 @@ public class UpdateCustomer extends HttpServlet {
             responseJson.put("reason", "Successfully updated customer");
             out.println(responseJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(responseJson, sqe.toString(), out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(responseJson, e.toString(), out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
-            Utils.closeDBResource(connCRM, null, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
+            Utils.closeDBResource(connCRM, null, null, ctx);
             out.close();
         }
     }
 
     private int getCustomerCount(Connection conn, int customerId) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS customerCount FROM customers WHERE customer_id = ?" );
+                "SELECT COUNT(*) AS customerCount FROM customers WHERE customer_id = ?" );
         prepStmt.setInt(1, customerId);
         ResultSet resultSet = prepStmt.executeQuery();
 

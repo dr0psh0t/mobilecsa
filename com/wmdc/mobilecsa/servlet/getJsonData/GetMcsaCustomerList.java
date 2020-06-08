@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.getJsonData;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
  */
 @WebServlet("/getmcsacustomerlist")
 public class GetMcsaCustomerList extends HttpServlet {
-    private String getMcsaCustomerListServlet() {
+    private String getMcsaCustomerListServlet(ServletContext context) {
         Connection conn = null;
         PreparedStatement prepStmt = null;
         ResultSet resultSet = null;
@@ -42,14 +43,14 @@ public class GetMcsaCustomerList extends HttpServlet {
             return key;
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE,
-                    "db_exception", sqe.toString());
+                    "db_exception", sqe.toString(), context);
             return null;
         } catch (Exception e) {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE,
-                    "exception", e.toString());
+                    "exception", e.toString(), context);
             return null;
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, getServletContext());
         }
     }
 
@@ -60,8 +61,9 @@ public class GetMcsaCustomerList extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
@@ -75,11 +77,11 @@ public class GetMcsaCustomerList extends HttpServlet {
         HttpURLConnection conn = null;
 
         String folder = Utils.getJoborderFolderName(getServletContext());
-        String servlet = getMcsaCustomerListServlet();
+        String servlet = getMcsaCustomerListServlet(ctx);
 
         if (folder == null || servlet == null) {
             Utils.printJsonException(resJson, "Cannot find path", out);
-            Utils.logError("Error servlet path: folder= "+folder+", servlet= "+servlet+"\n\n");
+            Utils.logError("Error servlet path: folder= "+folder+", servlet= "+servlet+"\n\n", ctx);
             return;
         }
 
@@ -90,45 +92,42 @@ public class GetMcsaCustomerList extends HttpServlet {
             filter = request.getParameter("filter");
             cid = request.getParameter("cid");
 
-            System.out.println("filter= "+filter);
-            System.out.println("cid= "+cid);
-
             if (serverUrl == null) {
-                Utils.logError("\"serverUrl\" parameter is null");
+                Utils.logError("\"serverUrl\" parameter is null", ctx);
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (serverUrl.isEmpty()) {
-                Utils.logError("\"serverUrl\" parameter is empty");
+                Utils.logError("\"serverUrl\" parameter is empty", ctx);
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             if (akey == null) {
-                Utils.logError("\"akey\" parameter is null");
+                Utils.logError("\"akey\" parameter is null", ctx);
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (akey.isEmpty()) {
-                Utils.logError("\"akey\" parameter is empty");
+                Utils.logError("\"akey\" parameter is empty", ctx);
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             if (filter == null) {
-                Utils.logError("\"filter\" parameter is null");
+                Utils.logError("\"filter\" parameter is null", ctx);
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (filter.isEmpty()) {
-                Utils.logError("\"filter\" parameter is empty");
+                Utils.logError("\"filter\" parameter is empty", ctx);
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             if (cid == null) {
-                Utils.logError("\"cid\" parameter is null");
+                Utils.logError("\"cid\" parameter is null", ctx);
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (cid.isEmpty()) {
-                Utils.logError("\"cid\" parameter is empty");
+                Utils.logError("\"cid\" parameter is empty", ctx);
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
                 return;
             }
@@ -184,11 +183,11 @@ public class GetMcsaCustomerList extends HttpServlet {
             }
         } catch (MalformedURLException | ConnectException | SocketTimeoutException e) {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE,
-                    "DBException", e.toString());
+                    "DBException", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE,
-                    "Exception", e.toString());
+                    "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
             if (conn != null) {

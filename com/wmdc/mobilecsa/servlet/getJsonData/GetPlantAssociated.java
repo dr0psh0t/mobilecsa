@@ -23,7 +23,7 @@ public class GetPlantAssociated extends HttpServlet {
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, getServletContext())) {
             Utils.printJsonException(responseJson, "Login first.", out);
             return;
         }
@@ -54,13 +54,14 @@ public class GetPlantAssociated extends HttpServlet {
             out.println(responseJson);
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
-                    sqe.toString());
+                    sqe.toString(), getServletContext());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception",
+                    e.toString(), getServletContext());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, getServletContext());
             out.close();
         }
     }

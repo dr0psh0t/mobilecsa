@@ -2,6 +2,7 @@ package wmdc.mobilecsa.servlet;
 
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +32,9 @@ public class GetCustomerPhoto extends HttpServlet {
     private void procRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (!Utils.isOnline(request)) {
+        ServletContext ctx = getServletContext();
+
+        if (!Utils.isOnline(request, ctx)) {
             Utils.invalidImage(response, getServletContext());
             return;
         }
@@ -48,18 +51,18 @@ public class GetCustomerPhoto extends HttpServlet {
             conn = Utils.getConnection(getServletContext());
 
             if (request.getParameter("customerId") == null) {
-                Utils.logError("\"customerId\" parameter is null");
+                Utils.logError("\"customerId\" parameter is null", ctx);
                 Utils.invalidImage(response, getServletContext());
                 return;
             } else if (request.getParameter("customerId").isEmpty()) {
-                Utils.logError("\"customerId\" parameter is empty");
+                Utils.logError("\"customerId\" parameter is empty", ctx);
                 Utils.invalidImage(response, getServletContext());
                 return;
             }
 
             int customerId = Integer.parseInt(request.getParameter("customerId"));
 
-            prepStmt = conn.prepareStatement("SELECT COUNT (*) AS customerCount FROM customers WHERE customer_id = ?");
+            prepStmt = conn.prepareStatement("SELECT COUNT(*) AS customerCount FROM customers WHERE customer_id = ?");
             prepStmt.setInt(1, customerId);
             resultSet = prepStmt.executeQuery();
 
@@ -103,13 +106,13 @@ public class GetCustomerPhoto extends HttpServlet {
                 Utils.invalidImage(response, getServletContext());
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.invalidImage(response, getServletContext());
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.invalidImage(response, getServletContext());
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             if (!success) {
                 Utils.invalidImage(response, getServletContext());
             }

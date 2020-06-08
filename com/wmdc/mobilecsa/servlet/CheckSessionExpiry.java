@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,6 +30,7 @@ public class CheckSessionExpiry extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
         Connection conn = null;
 
@@ -44,13 +46,13 @@ public class CheckSessionExpiry extends HttpServlet {
                 Utils.printSuccessJson(responseJson, "username session is not null", out);
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, null, null);
+            Utils.closeDBResource(conn, null, null, ctx);
             out.close();
         }
     }

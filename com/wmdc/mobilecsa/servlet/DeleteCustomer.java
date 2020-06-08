@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,8 +30,9 @@ public class DeleteCustomer extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login", out);
             return;
         }
@@ -44,18 +46,18 @@ public class DeleteCustomer extends HttpServlet {
             conn = Utils.getConnection(getServletContext());
 
             if (request.getParameter("customerId") == null) {
-                Utils.logError("\"customerId\" parameter is null.");
+                Utils.logError("\"customerId\" parameter is null.", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (request.getParameter("customerId").isEmpty()) {
-                Utils.logError("\"customerId\" parameter is empty.");
+                Utils.logError("\"customerId\" parameter is empty.", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             int customerId = Integer.parseInt(request.getParameter("customerId"));
 
-            prepStmt = conn.prepareStatement("SELECT COUNT (*) AS customerCount FROM customers WHERE customer_id = ?");
+            prepStmt = conn.prepareStatement("SELECT COUNT(*) AS customerCount FROM customers WHERE customer_id = ?");
             prepStmt.setInt(1, customerId);
             resultSet = prepStmt.executeQuery();
 
@@ -65,7 +67,7 @@ public class DeleteCustomer extends HttpServlet {
             }
 
             if (customerCount < 1) {
-                Utils.logError("No customer found to delete using customer_id: "+customerId);
+                Utils.logError("No customer found to delete using customer_id: "+customerId, ctx);
                 Utils.printJsonException(responseJson, "No customers found to delete.", out);
                 return;
             }
@@ -80,7 +82,7 @@ public class DeleteCustomer extends HttpServlet {
             }
 
             if (isDeleted == -1) {
-                Utils.logError("No customer found to delete using customer_id: "+customerId);
+                Utils.logError("No customer found to delete using customer_id: "+customerId, ctx);
                 Utils.printJsonException(responseJson, "No customers found to delete.", out);
                 return;
             }
@@ -105,13 +107,13 @@ public class DeleteCustomer extends HttpServlet {
 
             out.println(responseJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }

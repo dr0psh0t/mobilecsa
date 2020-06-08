@@ -63,18 +63,15 @@ public class McdRester extends HttpServlet {
                     stringBuilder.append(line);
                 }
 
-                System.out.println(stringBuilder.toString());
-
                 //JSONParser parser = new JSONParser();
             } else {
-                System.out.println("statusCode is "+statusCode);
             }
 
         } catch (MalformedURLException | ConnectException | SocketTimeoutException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
-                    sqe.toString());
+                    sqe.toString(), getServletContext());
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), getServletContext());
         } finally {
             if (conn != null) {
                 conn.disconnect();

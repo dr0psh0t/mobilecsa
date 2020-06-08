@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -37,8 +38,9 @@ public class UpdateInitialJoborder extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
@@ -117,17 +119,18 @@ public class UpdateInitialJoborder extends HttpServlet {
                 updatePhotoStr = updatePhoto(conn, initialJoborderIdInt, preparedByInt, photoStream, inputStream);
             }
 
-            updateSignature(conn, joSignature, initialJoborderIdInt);
+            updateSignature(conn, joSignature, initialJoborderIdInt, ctx);
 
             Utils.printSuccessJson(resJson, "Initial joborder has been updated "+updatePhotoStr, out);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException",
+                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
         }
     }
@@ -143,9 +146,9 @@ public class UpdateInitialJoborder extends HttpServlet {
         return new int[]{bufferedImage.getWidth(), bufferedImage.getHeight()};
     }
 
-    private void updateSignature(Connection conn, String joSignature, int initialJoborderId) throws Exception {
+    private void updateSignature(Connection conn, String joSignature, int initialJoborderId, ServletContext ctx) throws Exception {
         if (!joSignature.isEmpty()) {
-            InputStream signatureStream = Utils.getSignatureInputStream(joSignature);
+            InputStream signatureStream = Utils.getSignatureInputStream(joSignature, ctx);
 
             PreparedStatement prepStmt = conn.prepareStatement("UPDATE initial_joborder SET signature = ? " +
                     "WHERE initial_joborder_id = ?");
@@ -201,7 +204,7 @@ public class UpdateInitialJoborder extends HttpServlet {
     private boolean isPictureSaved(int initialJoId, Connection conn) throws SQLException {
 
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS pictureCount FROM initial_joborder_image WHERE initial_joborder_id = ?");
+                "SELECT COUNT(*) AS pictureCount FROM initial_joborder_image WHERE initial_joborder_id = ?");
 
         prepStmt.setInt(1, initialJoId);
         ResultSet resultSet = prepStmt.executeQuery();

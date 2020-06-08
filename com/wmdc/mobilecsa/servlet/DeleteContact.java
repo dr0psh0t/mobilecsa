@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,8 +29,9 @@ public class DeleteContact extends HttpServlet {
         response.setContentType("application/json");
         JSONObject responseJson = new JSONObject();
         PrintWriter out = response.getWriter();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login first.", out);
             return;
         }
@@ -43,17 +45,17 @@ public class DeleteContact extends HttpServlet {
             conn = Utils.getConnection(getServletContext());
 
             if (request.getParameter("contactId") == null) {
-                Utils.logError("\"contactId\" parameter is null");
+                Utils.logError("\"contactId\" parameter is null", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (request.getParameter("contactId").isEmpty()) {
-                Utils.logError("\"contactId\" parameter is empty");
+                Utils.logError("\"contactId\" parameter is empty", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             int contactId = Integer.parseInt(request.getParameter("contactId"));
-            prepStmt = conn.prepareStatement("SELECT COUNT (*) as contactCount FROM contacts WHERE contact_id = ?");
+            prepStmt = conn.prepareStatement("SELECT COUNT(*) as contactCount FROM contacts WHERE contact_id = ?");
             prepStmt.setInt(1, contactId);
             resultSet = prepStmt.executeQuery();
 
@@ -63,7 +65,7 @@ public class DeleteContact extends HttpServlet {
             }
 
             if (contactCount < 1) {
-                Utils.logError("No contact found to delete using id: "+contactId);
+                Utils.logError("No contact found to delete using id: "+contactId, ctx);
                 Utils.printJsonException(responseJson, "No contact found to delete.", out);
                 return;
             }
@@ -102,13 +104,13 @@ public class DeleteContact extends HttpServlet {
             out.println(responseJson);
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }

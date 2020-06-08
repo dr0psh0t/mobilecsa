@@ -3,6 +3,8 @@ package wmdc.mobilecsa.servlet;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 import org.json.JSONObject;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,8 +31,9 @@ public class ChangeAdminPassword extends HttpServlet {
         response.setContentType("application/json");
         JSONObject responseJson = new JSONObject();
         PrintWriter out = response.getWriter();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login first.", out);
             return;
         }
@@ -47,21 +50,21 @@ public class ChangeAdminPassword extends HttpServlet {
             String password = request.getParameter("password");
 
             if (admin == null) {
-                Utils.logError("\"admin\" parameter is null.");
+                Utils.logError("\"admin\" parameter is null.", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (admin.isEmpty()) {
-                Utils.logError("\"admin\" parameter is empty.");
+                Utils.logError("\"admin\" parameter is empty.", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             if (password == null) {
-                Utils.logError("\"password\" parameter is null.");
+                Utils.logError("\"password\" parameter is null.", ctx);
                 Utils.printJsonException(responseJson, "Password is required.", out);
                 return;
             } else if (password.isEmpty()) {
-                Utils.logError("\"password\" parameter is empty.");
+                Utils.logError("\"password\" parameter is empty.", ctx);
                 Utils.printJsonException(responseJson, "Password is required.", out);
                 return;
             }
@@ -103,13 +106,13 @@ public class ChangeAdminPassword extends HttpServlet {
                 Utils.printJsonException(responseJson, "Password should be 8-32 characters in length.", out);
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }

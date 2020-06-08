@@ -33,7 +33,7 @@ public class GetAllInitialJoborderList extends HttpServlet {
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, getServletContext())) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
@@ -77,13 +77,15 @@ public class GetAllInitialJoborderList extends HttpServlet {
 
             out.println(resJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString(),
+                    getServletContext());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(),
+                    getServletContext());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, getServletContext());
             out.close();
         }
     }

@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +26,9 @@ public class UpdateCompany extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login first.", out);
             return;
         }
@@ -36,7 +38,6 @@ public class UpdateCompany extends HttpServlet {
         Connection conn = null;
         Connection connCRM = null;
         PreparedStatement prepStmt = null;
-        //ResultSet resultSet = null;
 
         String company, address, email, website, contactPerson, contactNumber, emergency;
 
@@ -105,7 +106,7 @@ public class UpdateCompany extends HttpServlet {
             longitude = Double.parseDouble(request.getParameter("longitude"));
 
             if (getCustomerCount(conn, customerId) < 1) {
-                Utils.logError("No customer found to update using customerId: "+customerId);
+                Utils.logError("No customer found to update using customerId: "+customerId, ctx);
                 Utils.printJsonException(responseJson, "No customer found to update", out);
                 return;
             }
@@ -171,21 +172,21 @@ public class UpdateCompany extends HttpServlet {
 
             out.println(responseJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(responseJson, "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(responseJson, "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
-            Utils.closeDBResource(connCRM, null, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
+            Utils.closeDBResource(connCRM, null, null, ctx);
             out.close();
         }
     }
 
     private int getCustomerCount(Connection conn, int customerId) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS customerCount FROM customers WHERE customer_id = ?" );
+                "SELECT COUNT(*) AS customerCount FROM customers WHERE customer_id = ?" );
         prepStmt.setInt(1, customerId);
         ResultSet resultSet = prepStmt.executeQuery();
 

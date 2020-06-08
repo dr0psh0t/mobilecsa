@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.joborder;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by wmdcprog on 5/12/2018.
@@ -29,7 +32,7 @@ import java.sql.SQLException;
 
 public class ApproveMcsaQC extends HttpServlet {
 
-    private String getApproveMcsaQCServlet() {
+    private String getApproveMcsaQCServlet(ServletContext context) {
         Connection conn = null;
         PreparedStatement prepStmt = null;
         ResultSet resultSet = null;
@@ -50,13 +53,15 @@ public class ApproveMcsaQC extends HttpServlet {
 
             return key;
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException",
+                    sqe.toString(), context);
             return null;
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(),
+                    context);
             return null;
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, context);
         }
     }
 
@@ -64,91 +69,142 @@ public class ApproveMcsaQC extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
-        /*
-        response.setContentType("application/json");
-        String cid = request.getParameter("cid");
-        String source = request.getParameter("source");
-        String joid = request.getParameter("joid");
-        String woid = request.getParameter("woid");
-        Part wophoto = request.getPart("wophoto");
-        */
-
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
         String folder = Utils.getJoborderFolderName(getServletContext());
-        String servlet = getApproveMcsaQCServlet();
+        String servlet = getApproveMcsaQCServlet(ctx);
 
         if (folder == null || servlet == null) {
-            Utils.logError("\"folder\": "+folder+"\"servlet\": "+servlet);
+            Utils.logError("\"folder\": "+folder+"\"servlet\": "+servlet, ctx);
             Utils.printJsonException(resJson, "Cannot find path", out);
             return;
         }
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
 
         String serverUrl = Utils.getServerAddress(getServletContext())+folder+"/"+servlet;
         String akey = Utils.getAPIKey(getServletContext());
+
         String cid = request.getParameter("cid");
         String source = request.getParameter("source");
         String joid = request.getParameter("joid");
         String woid = request.getParameter("woid");
         Part wophoto = request.getPart("wophoto");
 
-        System.out.println(serverUrl);
-        System.out.println(akey);
-        System.out.println(cid);
-        System.out.println(source);
-        System.out.println(joid);
-        System.out.println(woid);
-        System.out.println(wophoto.getSize());
-
-        Utils.printSuccessJson(resJson, "TEST success json", out);
 
 
-        /*
-        checkParameters(serverUrl, akey, cid, source, joid, woid, resJson, out);
+        //  check wophoto parameter
+        if (wophoto == null) {
+            Utils.printJsonException(resJson, "Workorder photo null. Try again.", out);
+            return;
+        }
+
+        if (wophoto.getSize() < 1) {
+            Utils.printJsonException(resJson, "Workorder photo invalid size. Try again.", out);
+            return;
+        }
+
+        InputStream fileInputStream = wophoto.getInputStream();
+
+        HashMap<String, String> params = new HashMap<>();
+
+        //  check string parameters
+        checkParameters(serverUrl, akey, cid, source, joid, woid, resJson, out, params, ctx);
 
         HttpURLConnection conn = null;
         URL url;
 
         try {
+
             url = new URL(serverUrl);
 
+            String lineEnd = "\r\n";
+            String twoHyphens = "--";
+            String boundary = "*****";
+
+            int bytesRead, bytesAvailable, bufferSize;
+            int maxBufferSize = 1024 * 1024;
+
+            byte[] buffer;
+
             conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15_000);
-            conn.setConnectTimeout(15_000);
+            conn.setReadTimeout(20000);
+            conn.setConnectTimeout(20000);
             conn.setRequestMethod("POST");
+            conn.setRequestProperty("Accept", "*/*");
             conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
             conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
             conn.setRequestProperty("Connection", "keep-alive");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
             conn.setRequestProperty("Cookie", "JSESSIONID="+request.getSession().getId());
-            conn.setRequestProperty("Host", "localhost:8080");
+            conn.setRequestProperty("Host", "ApproveMcsaQC");
             conn.setRequestProperty("Referer", "approvemcsaqc");
             conn.setRequestProperty("X-Requested-Width", "XMLHttpRequest");
             conn.setDoInput(true);
             conn.setDoOutput(true);
+            conn.setUseCaches(false);
 
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            DataOutputStream outputStream;
+            outputStream = new DataOutputStream(conn.getOutputStream());
+            outputStream.writeBytes(twoHyphens+boundary+lineEnd);
+            outputStream.writeBytes("Content-Type: image/jpeg");
+            outputStream.writeBytes(lineEnd);
+            outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+            outputStream.writeBytes("Content-Disposition: " +
+                    "form-data; name=\"wophoto\";filename=\"wophotofilename\"" + lineEnd);
+            outputStream.writeBytes(lineEnd);
 
-            writer.write("cid="+cid+
-                    "&akey="+akey+
-                    "&source="+source+
-                    "&joid="+joid+
-                    "&woid="+woid);
+            /* comment this first, because it does not set the content-type of photo
+            outputStream.writeBytes(twoHyphens+boundary+lineEnd);
+            outputStream.writeBytes("Content-Disposition: form-data; name=\"reference\""+lineEnd);
+            outputStream.writeBytes(lineEnd);
+            outputStream.writeBytes("my_reference_text");
+            outputStream.writeBytes(lineEnd);
+            outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+            outputStream.writeBytes("Content-Disposition: " +
+                    "form-data; name=\"wophoto\";filename=\"wophotofilename\"" + lineEnd);
+            outputStream.writeBytes(lineEnd);*/
 
-            writer.flush();
-            writer.close();
-            os.close();
-            conn.connect();
+            bytesAvailable = fileInputStream.available();
+            bufferSize = Math.min(bytesAvailable, maxBufferSize);
+            buffer = new byte[bufferSize];
 
+            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+            while (bytesRead > 0) {
+                outputStream.write(buffer, 0, bufferSize);
+                bytesAvailable = fileInputStream.available();
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            }
+
+            outputStream.writeBytes(lineEnd);
+
+            for (Map.Entry<String, String> mapEntry : params.entrySet()) {
+                String key = mapEntry.getKey();
+                String value = mapEntry.getValue();
+
+                outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                outputStream.writeBytes("Content-Disposition: form-data; name=\""+key+"\""+lineEnd);
+                outputStream.writeBytes("Content-Type: text/plain" + lineEnd);
+                outputStream.writeBytes(lineEnd);
+                outputStream.writeBytes(value);
+                outputStream.writeBytes(lineEnd);
+            }
+
+            outputStream.writeBytes(twoHyphens+boundary+twoHyphens+lineEnd);
             int statusCode = conn.getResponseCode();
+
+            outputStream.flush();
+            outputStream.close();
+            fileInputStream.close();
+
             if (statusCode == HttpURLConnection.HTTP_OK) {
                 InputStream connIStream = conn.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connIStream));
@@ -181,21 +237,50 @@ public class ApproveMcsaQC extends HttpServlet {
                 out.println(resJson);
 
             } else {
-                Utils.logError("Approve request did not succeed. Status code: "+statusCode);
+                Utils.logError("Approve request did not succeed. Status code: "+statusCode, ctx);
                 Utils.printJsonException(resJson, "Approve request did not succeed.", out);
             }
+
         } catch (MalformedURLException | ConnectException | SocketTimeoutException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
-                    sqe.toString());
+                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), sqe.toString(), out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
             if (conn != null) {
                 conn.disconnect();
             }
-        }*/
+        }
+    }
+
+    private void copyInputStreamToFile(InputStream in, File file) {
+        OutputStream out = null;
+
+        try {
+            out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+
+                in.close();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -205,64 +290,71 @@ public class ApproveMcsaQC extends HttpServlet {
     }
 
     public void checkParameters(String serverUrl, String akey, String cid, String source, String joid, String woid,
-                                JSONObject resJson, PrintWriter out) {
+                                JSONObject resJson, PrintWriter out, HashMap<String, String> params,
+                                ServletContext ctx) {
 
         if (cid == null) {
-            Utils.logError("\"cid\" parameter is null");
+            Utils.logError("\"cid\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
             return;
         } else if (cid.isEmpty()) {
-            Utils.logError("\"cid\" parameter is empty");
+            Utils.logError("\"cid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
             return;
         }
 
         if (source == null) {
-            Utils.logError("\"source\" parameter is null");
+            Utils.logError("\"source\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
             return;
         } else if (source.isEmpty()) {
-            Utils.logError("\"source\" parameter is empty");
+            Utils.logError("\"source\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
             return;
         }
 
         if (joid == null) {
-            Utils.logError("\"joid\" parameter is null");
+            Utils.logError("\"joid\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
             return;
         } else if (joid.isEmpty()) {
-            Utils.logError("\"joid\" parameter is empty");
+            Utils.logError("\"joid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
             return;
         }
 
         if (akey == null) {
-            Utils.logError("\"akey\" parameter is null");
+            Utils.logError("\"akey\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
             return;
         } else if (akey.isEmpty()) {
-            Utils.logError("\"akey\" parameter is empty");
+            Utils.logError("\"akey\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
             return;
         }
 
         if (serverUrl == null) {
-            Utils.logError("\"serverUrl\" parameter is null");
+            Utils.logError("\"serverUrl\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
             return;
         } else if (serverUrl.isEmpty()) {
-            Utils.logError("\"serverUrl\" parameter is empty");
+            Utils.logError("\"serverUrl\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
             return;
         }
 
         if (woid == null) {
-            Utils.logError("\"woid\" parameter is null");
+            Utils.logError("\"woid\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
         } else if (woid.isEmpty()) {
-            Utils.logError("\"woid\" parameter is empty");
+            Utils.logError("\"woid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
         }
+
+        params.put("cid", cid);
+        params.put("akey", akey);
+        params.put("source", source);
+        params.put("joid", joid);
+        params.put("woid", woid);
     }
 }

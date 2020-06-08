@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.joborder;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +26,9 @@ public class CheckInitial extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, getServletContext())) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
@@ -42,17 +44,17 @@ public class CheckInitial extends HttpServlet {
             String jono = request.getParameter("jono");
 
             if (jono == null) {
-                System.err.println("\"jono\" parameter is null");
+                Utils.logError("\"jono\" parameter is null", ctx);
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (jono.isEmpty()) {
-                System.err.println("\"jono\" parameter is empty");
+                Utils.logError("\"jono\" parameter is empty", ctx);
                 Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             prepStmt = conn.prepareStatement(
-                    "SELECT COUNT (*) AS initJoCount FROM initial_joborder WHERE jo_number = ?");
+                    "SELECT COUNT(*) AS initJoCount FROM initial_joborder WHERE jo_number = ?");
             prepStmt.setString(1, jono);
             resultSet = prepStmt.executeQuery();
 
@@ -71,13 +73,15 @@ public class CheckInitial extends HttpServlet {
 
             out.println(resJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException",
+                    sqe.toString(), getServletContext());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(),
+                    getServletContext());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }

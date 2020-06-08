@@ -23,8 +23,6 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -163,10 +161,10 @@ public class Utils {
             }
             return "jdbc:mysql://" + result.get(1) + ":" + result.get(2) + "/" + result.get(0);
         } catch (ClassNotFoundException | SQLException sqe) {
-            displayStackTraceArray(sqe.getStackTrace(), "wmdc.mobilecsa.utils", "DBException", sqe.toString());
+            displayStackTraceArray(sqe.getStackTrace(), "wmdc.mobilecsa.utils", "DBException", sqe.toString(), servletContext);
             return null;
         } finally {
-            closeDBResource(conn, prepStmt, resultSet);
+            closeDBResource(conn, prepStmt, resultSet, servletContext);
         }
     }
 
@@ -243,7 +241,7 @@ public class Utils {
 
     public static int getPlantIdByNameInCRM(String plantAssociated, Connection conn) throws Exception {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS plantCount FROM plant WHERE plant_associated = ?");
+                "SELECT COUNT(*) AS plantCount FROM plant WHERE plant_associated = ?");
         prepStmt.setString(1, plantAssociated);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -280,7 +278,7 @@ public class Utils {
 
     public static int getIndustryIdByName(String industry, Connection conn) throws Exception {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS industryCount FROM industry WHERE industry = ?");
+                "SELECT COUNT(*) AS industryCount FROM industry WHERE industry = ?");
         prepStmt.setString(1, industry);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -444,7 +442,7 @@ public class Utils {
         }
     }
 
-    public static Date getDate(String dateStr) throws ParseException {
+    public static Date getDate(String dateStr, ServletContext ctx) throws ParseException {
         if (dateStr == null) {
             return null;
         }
@@ -455,7 +453,7 @@ public class Utils {
             java.util.Date date = dateFormat.parse(dateStr);
             return new java.sql.Date(date.getTime());
         } catch (ParseException pe) {
-            displayStackTraceArray(pe.getStackTrace(), "wmdc.mobilecsa.utils", "ParseException", pe.toString());
+            displayStackTraceArray(pe.getStackTrace(), "wmdc.mobilecsa.utils", "ParseException", pe.toString(), ctx);
             return null;
         }
     }
@@ -463,12 +461,12 @@ public class Utils {
     public static void logLogin(Connection connection, String username, boolean isAdmin)
             throws ClassNotFoundException, SQLException, NonExistingException {
 
-        String countQuery = "SELECT COUNT (*) AS userCount FROM users WHERE username = ?";
+        String countQuery = "SELECT COUNT(*) AS userCount FROM users WHERE username = ?";
         String idQuery = "SELECT csa_id FROM users WHERE username = ?";
         String idType = "csa_id";
 
         if (isAdmin) {
-            countQuery = "SELECT COUNT (*) as userCount FROM admins WHERE username = ?";
+            countQuery = "SELECT COUNT(*) as userCount FROM admins WHERE username = ?";
             idQuery = "SELECT admin_id FROM admins WHERE username = ?";
             idType = "admin_id";
         }
@@ -543,7 +541,7 @@ public class Utils {
             throws SQLException, NonExistingException {
 
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS userCount FROM admins WHERE username = ?");
+                "SELECT COUNT(*) AS userCount FROM admins WHERE username = ?");
         prepStmt.setString(1, username);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -582,7 +580,7 @@ public class Utils {
     public static void logDelete(Connection conn, String deleteStatement, String username, boolean isCustomer)
             throws ClassNotFoundException, SQLException, NonExistingException {
 
-        PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT (*) AS userCount FROM admins WHERE username = ?");
+        PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT(*) AS userCount FROM admins WHERE username = ?");
         prepStmt.setString(1, username);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -622,7 +620,7 @@ public class Utils {
             throws ClassNotFoundException, SQLException, NonExistingException {
 
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS userCount FROM users WHERE username = ?");
+                "SELECT COUNT(*) AS userCount FROM users WHERE username = ?");
         prepStmt.setString(1, username);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -681,14 +679,15 @@ public class Utils {
         }
     }
 
-    public static boolean isOnline(HttpServletRequest request)
+    public static boolean isOnline(HttpServletRequest request, ServletContext ctx)
             throws ServletException, IOException {
         try {
             if (request.getSession().getAttribute("username") == null) {
                 return false;
             }
         } catch (NullPointerException npe) {
-            displayStackTraceArray(npe.getStackTrace(), "wmdc.mobilecsa.utils", "NullPointerException", npe.toString());
+            displayStackTraceArray(npe.getStackTrace(), "wmdc.mobilecsa.utils", "NullPointerException",
+                    npe.toString(), ctx);
             return false;
         }
         return true;
@@ -699,7 +698,7 @@ public class Utils {
         String[] industries = new String[3];
 
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS industryCount FROM industry WHERE industry_id = ?");
+                "SELECT COUNT(*) AS industryCount FROM industry WHERE industry_id = ?");
         prepStmt.setInt(1, industryId);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -733,7 +732,7 @@ public class Utils {
     public static String getPlantByIdInCRM(int plantId, Connection conn) throws SQLException, NonExistingException {
 
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS plantCount FROM plant WHERE plant_id = ?");
+                "SELECT COUNT(*) AS plantCount FROM plant WHERE plant_id = ?");
         prepStmt.setInt(1, plantId);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -765,7 +764,7 @@ public class Utils {
 
     public static String getCsaNameById(int csaId, Connection conn) throws SQLException, NonExistingException {
 
-        PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT (*) AS csaCount FROM users WHERE csa_id = ?");
+        PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT(*) AS csaCount FROM users WHERE csa_id = ?");
         prepStmt.setInt(1, csaId);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -832,7 +831,7 @@ public class Utils {
             throws SQLException, NonExistingException {
 
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS adminCount FROM admins WHERE admin_id = ?");
+                "SELECT COUNT(*) AS adminCount FROM admins WHERE admin_id = ?");
         prepStmt.setInt(1, adminId);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -892,13 +891,14 @@ public class Utils {
         out.println(responseJson);
     }
 
-    public static void closeDBResource(Connection conn, PreparedStatement prepStmt, ResultSet resultSet) {
+    public static void closeDBResource(Connection conn, PreparedStatement prepStmt, ResultSet resultSet,
+                                       ServletContext ctx) {
         try {
             if (conn != null) {
                 conn.close();
             }
         } catch (SQLException e) {
-            System.err.println(e.toString());
+            logError(e.toString(), ctx);
         }
 
         try {
@@ -906,7 +906,7 @@ public class Utils {
                 prepStmt.close();
             }
         } catch (SQLException e) {
-            System.err.println(e.toString());
+            logError(e.toString(), ctx);
         }
 
         try {
@@ -914,11 +914,11 @@ public class Utils {
                 resultSet.close();
             }
         } catch (SQLException e) {
-            System.err.println(e.toString());
+            logError(e.toString(), ctx);
         }
     }
 
-    public static InputStream getSignatureInputStream(String signature) throws Exception {
+    public static InputStream getSignatureInputStream(String signature, ServletContext ctx) throws Exception {
         try {
             String base64Signature = signature.split(",")[1];
             byte[] imageBytes = Base64.decodeBase64(base64Signature.getBytes());
@@ -929,7 +929,7 @@ public class Utils {
             ImageIO.write(signatureImage, "png", os);
             return new ByteArrayInputStream(os.toByteArray());
         } catch (Exception e) {
-            displayStackTraceArray(e.getStackTrace(), "wmdc.mobilecsa.utils", "IOException", e.toString());
+            displayStackTraceArray(e.getStackTrace(), "wmdc.mobilecsa.utils", "IOException", e.toString(), ctx);
             throw e;
         }
     }
@@ -952,14 +952,14 @@ public class Utils {
             return "Error id "+getRecentId(prepStmt);
         } catch (ClassNotFoundException | SQLException sqe) {
             String errorMessage = sqe.toString() + " >> " + getRelevantTrace(sqe.getStackTrace(), packageRoot);
-            System.err.println("db_exception: "+errorMessage);
+            logError("db_exception: "+errorMessage, servletContext);
             return errorMessage;
         } catch (IOException ioe) {
             String errorMessage = ioe.toString() + " >> " +getRelevantTrace(ioe.getStackTrace(), packageRoot);
-            System.err.println("io_exception: "+errorMessage);
+            logError("io_exception: "+errorMessage, servletContext);
             return errorMessage;
         } finally {
-            closeDBResource(conn, prepStmt, null);
+            closeDBResource(conn, prepStmt, null, servletContext);
         }
     }
 
@@ -1085,193 +1085,194 @@ public class Utils {
             return key;
         } catch (ClassNotFoundException | SQLException sqe) {
             displayStackTraceArray(sqe.getStackTrace(), "wmdc.mobilecsa.utils",
-                    "db_exception", sqe.toString());
+                    "db_exception", sqe.toString(), servletContext);
             return null;
         } catch (Exception e) {
             displayStackTraceArray(e.getStackTrace(), "wmdc.mobilecsa.utils",
-                    "exception", e.toString());
+                    "exception", e.toString(), servletContext);
             return null;
         } finally {
-            closeDBResource(conn, prepStmt, resultSet);
+            closeDBResource(conn, prepStmt, resultSet, servletContext);
         }
     }
 
     public static void checkParameterValue(String csaId, String faxCode, String city, String country, String zip,
                                            String areaCode, String industry, String plant, String er, String mf,
                                            String spareParts, String calib, String province, String signStatus,
-                                           String address, String signature, Part filePart, PrintWriter out) {
+                                           String address, String signature, Part filePart, PrintWriter out,
+                                           ServletContext ctx) {
 
         if (csaId == null) {
-            Utils.logError("\"csaId\" parameter is null.");
+            Utils.logError("\"csaId\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Missing data required. See logs or try again.", out);
             return;
         } else if (csaId.isEmpty()) {
-            Utils.logError("\"csaId\" parameter is empty.");
+            Utils.logError("\"csaId\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Missing data required. See logs or try again.", out);
             return;
         }
 
         if (faxCode == null) {
-            Utils.logError("\"faxCode\" parameter is null.");
+            Utils.logError("\"faxCode\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Fax code required.", out);
             return;
         } else if (faxCode.isEmpty()) {
-            Utils.logError("\"faxCode\" parameter is empty.");
+            Utils.logError("\"faxCode\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Fax code required.", out);
             return;
         }
 
         if (city == null) {
-            Utils.logError("\"city\" parameter is null.");
+            Utils.logError("\"city\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "City required.", out);
             return;
         } else if (city.isEmpty()) {
-            Utils.logError("\"city\" parameter is empty.");
+            Utils.logError("\"city\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "City required.", out);
             return;
         }
 
         if (country == null) {
-            Utils.logError("\"country\" parameter is null.");
+            Utils.logError("\"country\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Country required.", out);
             return;
         } else if (country.isEmpty()) {
-            Utils.logError("\"country\" parameter is empty.");
+            Utils.logError("\"country\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Country required.", out);
             return;
         }
 
         if (zip == null) {
-            Utils.logError("\"zip\" parameter is null.");
+            Utils.logError("\"zip\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Zip required.", out);
             return;
         } else if (zip.isEmpty()) {
-            Utils.logError("\"zip\" parameter is empty.");
+            Utils.logError("\"zip\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Zip required.", out);
             return;
         }
 
         if (areaCode == null) {
-            Utils.logError("\"areaCode\" parameter is null.");
+            Utils.logError("\"areaCode\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Area code required.", out);
             return;
         } else if (areaCode.isEmpty()) {
-            Utils.logError("\"areaCode\" parameter is empty.");
+            Utils.logError("\"areaCode\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Area code required.", out);
             return;
         }
 
         if (industry == null) {
-            Utils.logError("\"industry\" parameter is null.");
+            Utils.logError("\"industry\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Industry required.", out);
             return;
         } else if (industry.isEmpty()) {
-            Utils.logError("\"industry\" parameter is empty.");
+            Utils.logError("\"industry\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Industry required.", out);
             return;
         }
 
         if (plant == null) {
-            Utils.logError("\"plant\" parameter is null.");
+            Utils.logError("\"plant\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Plant required.", out);
             return;
         } else if (plant.isEmpty()) {
-            Utils.logError("\"plant\" parameter is empty.");
+            Utils.logError("\"plant\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Plant required.", out);
             return;
         }
 
         if (er == null) {
-            Utils.logError("\"er\" parameter is null.");
+            Utils.logError("\"er\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "ER required.", out);
             return;
         } else if (er.isEmpty()) {
-            Utils.logError("\"er\" parameter is empty.");
+            Utils.logError("\"er\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "ER required.", out);
             return;
         }
 
         if (mf == null) {
-            Utils.logError("\"mf\" parameter is null.");
+            Utils.logError("\"mf\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "MF required.", out);
             return;
         } else if (mf.isEmpty()) {
-            Utils.logError("\"mf\" parameter is empty.");
+            Utils.logError("\"mf\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "MF required.", out);
             return;
         }
 
         if (spareParts == null) {
-            Utils.logError("\"spareParts\" parameter is null.");
+            Utils.logError("\"spareParts\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Spare parts required.", out);
             return;
         } else if (spareParts.isEmpty()) {
-            Utils.logError("\"spareParts\" parameter is empty.");
+            Utils.logError("\"spareParts\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Spare parts required.", out);
             return;
         }
 
         if (calib == null) {
-            Utils.logError("\"calib\" parameter is null.");
+            Utils.logError("\"calib\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Calib required.", out);
             return;
         } else if (calib.isEmpty()) {
-            Utils.logError("\"calib\" parameter is empty.");
+            Utils.logError("\"calib\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Calib required.", out);
             return;
         }
 
         if (province == null) {
-            Utils.logError("\"province\" parameter is null.");
+            Utils.logError("\"province\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Province required.", out);
             return;
         } else if (province.isEmpty()) {
-            Utils.logError("\"province\" parameter is empty.");
+            Utils.logError("\"province\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Province required.", out);
             return;
         }
 
         if (signStatus == null) {
-            Utils.logError("\"signStatus\" parameter is null.");
+            Utils.logError("\"signStatus\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Signature required.", out);
             return;
         } else if (signStatus.isEmpty()) {
-            Utils.logError("\"signStatus\" parameter is empty.");
+            Utils.logError("\"signStatus\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Signature required.", out);
             return;
         }
 
         if (address == null) {
-            Utils.logError("\"address\" parameter is null.");
+            Utils.logError("\"address\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Address required.", out);
             return;
         } else if (address.isEmpty()) {
-            Utils.logError("\"address\" parameter is empty.");
+            Utils.logError("\"address\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Address required.", out);
             return;
         }
 
         if (signature == null) {
-            Utils.logError("\"signature\" parameter is null.");
+            Utils.logError("\"signature\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Signature required.", out);
             return;
         } else if (signature.isEmpty()) {
-            Utils.logError("\"signature\" parameter is empty.");
+            Utils.logError("\"signature\" parameter is empty.", ctx);
             printJsonException(new JSONObject(), "Signature required.", out);
             return;
         }
 
         if (filePart == null) {
-            Utils.logError("\"filePart\" parameter is null.");
+            Utils.logError("\"filePart\" parameter is null.", ctx);
             printJsonException(new JSONObject(), "Null parameter found. See logs.", out);
         } else if (filePart.getSize() < 1) {
-            Utils.logError("\"filePart\" size is zero.");
+            Utils.logError("\"filePart\" size is zero.", ctx);
             printJsonException(new JSONObject(), "Empty parameter found. See logs.", out);
         }
     }
 
     public static void displayStackTraceArray(StackTraceElement[] stackTraceElements, String packageRoot,
-                                              String exceptionName, String toString) {
+                                              String exceptionName, String toString, ServletContext ctx) {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(exceptionName).append(": ").append(toString);
@@ -1282,7 +1283,7 @@ public class Utils {
             }
         }
 
-        logError(stringBuilder.toString());
+        logError(stringBuilder.toString(), ctx);
     }
 
     private static String getRelevantTrace(StackTraceElement[] traceElements, String packageRoot) {
@@ -1298,12 +1299,6 @@ public class Utils {
     public static void println(Object object) {
         System.out.println(object);
     }
-
-    /*
-    public static void print(String tag, Object object) {
-        String tagObject = "P/"+tag+": "+object.toString();
-        System.out.println(tagObject);
-    }*/
 
     public static String getCorrectJson(String incorrectJsonStr) {
         int start = incorrectJsonStr.indexOf("success");
@@ -1388,36 +1383,11 @@ public class Utils {
         ImageIO.write(bi, "jpg", os);
     }
 
-    public static void logError(String errorText) {
+    public static void logError(String text, ServletContext context) {
+        context.log(text);
+    }
 
-        System.err.println(errorText);
-
-        /*
-        String path = "C:\\Users\\mcsa\\mcsa_log.txt";
-
-        File logFile = new File(path);
-
-        System.out.println("mkdirs= "+logFile.getParentFile().mkdirs());
-
-        FileWriter fileWriter;
-
-        LocalDateTime datetime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        String datetimeNow = datetime.format(formatter);
-
-        if (logFile.createNewFile()) {
-            System.out.println("File is created at "+datetimeNow+" "+path);
-            fileWriter = new FileWriter(logFile, true);
-        } else {
-            System.out.println("Logging error at "+datetimeNow+" "+path);
-            fileWriter = new FileWriter("C:\\Users\\mcsa\\mcsa_log.txt", true);
-        }
-
-        PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.println("["+datetimeNow+"]:");
-        printWriter.println(errorText);
-        printWriter.println();
-        printWriter.close();
-        */
+    public static void logMsg(String text, ServletContext context) {
+        context.log(text);
     }
 }

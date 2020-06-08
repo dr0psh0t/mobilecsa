@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.joborder;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,8 +32,9 @@ public class UpdateInitialJoborderWithoutPhoto extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
@@ -101,20 +103,21 @@ public class UpdateInitialJoborderWithoutPhoto extends HttpServlet {
             prepStmt.setInt(18, initialJoborderIdInt);
             prepStmt.executeUpdate();
 
-            updateSignature(conn, joSignature, initialJoborderIdInt);
+            updateSignature(conn, joSignature, initialJoborderIdInt, ctx);
 
             resJson.put("success", true);
             resJson.put("reason", "Successfully updated joborder");
 
             out.println(resJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException",
+                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
         }
     }
@@ -125,9 +128,9 @@ public class UpdateInitialJoborderWithoutPhoto extends HttpServlet {
         Utils.illegalRequest(response);
     }
 
-    private void updateSignature(Connection conn, String joSignature, int initialJoborderId) throws Exception {
+    private void updateSignature(Connection conn, String joSignature, int initialJoborderId, ServletContext ctx) throws Exception {
         if (!joSignature.isEmpty()) {
-            InputStream signatureStream = Utils.getSignatureInputStream(joSignature);
+            InputStream signatureStream = Utils.getSignatureInputStream(joSignature, ctx);
 
             PreparedStatement prepStmt = conn.prepareStatement("UPDATE initial_joborder SET signature = ? " +
                     "WHERE initial_joborder_id = ?");

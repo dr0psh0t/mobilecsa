@@ -2,6 +2,8 @@ package wmdc.mobilecsa.servlet;
 
 import wmdc.mobilecsa.utils.Utils;
 import org.json.JSONObject;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -33,8 +35,9 @@ public class UpdateCustomerPhoto extends HttpServlet {
         response.setContentType("application/json");
         JSONObject resJson = new JSONObject();
         PrintWriter out = response.getWriter();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login to continue.", out);
             return;
         }
@@ -43,11 +46,11 @@ public class UpdateCustomerPhoto extends HttpServlet {
         Part customerPhoto = request.getPart("customerPhoto");
 
         if (customerIdParam == null) {
-            Utils.logError("\"customerId\" parameter is null.");
+            Utils.logError("\"customerId\" parameter is null.", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         } else if (customerIdParam.isEmpty()) {
-            Utils.logError("\"customerId\" parameter is empty.");
+            Utils.logError("\"customerId\" parameter is empty.", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         }
@@ -66,7 +69,7 @@ public class UpdateCustomerPhoto extends HttpServlet {
 
             int customerId = Integer.parseInt(customerIdParam);
             if (getCustomerCount(conn, customerId) < 1)  {
-                Utils.logError("No customer found to update using customerId: "+customerId);
+                Utils.logError("No customer found to update using customerId: "+customerId, ctx);
                 Utils.printJsonException(resJson, "No customer found to update.", out);
                 return;
             }
@@ -76,7 +79,7 @@ public class UpdateCustomerPhoto extends HttpServlet {
             prepStmt.setInt(2, customerId);
             int updateCount = prepStmt.executeUpdate();
 
-            System.out.println("No# of customers updated photo: "+updateCount);
+            ctx.log("No# of customers updated photo: "+updateCount);
 
             if (updateCount < 1) {
                 Utils.printJsonException(resJson, "No customer photo updated.", out);
@@ -84,20 +87,20 @@ public class UpdateCustomerPhoto extends HttpServlet {
                 Utils.printSuccessJson(resJson, "Successfully updated customer photo.", out);
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
         }
     }
 
     private int getCustomerCount(Connection conn, int customerId) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS customerCount FROM customers WHERE customer_id = ?" );
+                "SELECT COUNT(*) AS customerCount FROM customers WHERE customer_id = ?" );
         prepStmt.setInt(1, customerId);
         ResultSet resultSet = prepStmt.executeQuery();
 

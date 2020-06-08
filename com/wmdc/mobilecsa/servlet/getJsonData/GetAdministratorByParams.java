@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.getJsonData;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,19 +35,20 @@ public class GetAdministratorByParams extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login first.", out);
             return;
         }
 
         String adminIdParam = request.getParameter("adminId");
         if (adminIdParam == null) {
-            Utils.logError("\"adminId\" parameter is null.");
+            Utils.logError("\"adminId\" parameter is null.", ctx);
             Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
             return;
         } else if (adminIdParam.isEmpty()) {
-            Utils.logError("\"adminId\" is empty.");
+            Utils.logError("\"adminId\" is empty.", ctx);
             Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
             return;
         }
@@ -62,7 +64,7 @@ public class GetAdministratorByParams extends HttpServlet {
             int adminId = Integer.parseInt(request.getParameter("adminId"));
 
             if (getAdminCountById(conn, adminId) < 1) {
-                Utils.logError("No admin found using adminId: "+adminId);
+                Utils.logError("No admin found using adminId: "+adminId, ctx);
                 Utils.printJsonException(responseJson, "No admin found.", out);
                 return;
             }
@@ -87,20 +89,20 @@ public class GetAdministratorByParams extends HttpServlet {
             out.println(obj);
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
-                    sqe.toString());
+                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }
 
     private int getAdminCountById(Connection conn, int adminId) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS adminCount FROM admins WHERE admin_id = ?");
+                "SELECT COUNT(*) AS adminCount FROM admins WHERE admin_id = ?");
         prepStmt.setInt(1, adminId);
 
         ResultSet resultSet = prepStmt.executeQuery();

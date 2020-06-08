@@ -31,7 +31,7 @@ public class GetMonths extends HttpServlet {
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, getServletContext())) {
             Utils.printJsonException(responseJson, "Login first.", out);
             return;
         }

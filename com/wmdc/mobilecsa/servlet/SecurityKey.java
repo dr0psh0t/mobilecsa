@@ -4,6 +4,7 @@ import com.warrenstrange.googleauth.GoogleAuthenticator;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +29,7 @@ public class SecurityKey extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
         HttpSession httpSession = request.getSession(false);
 
         Connection conn = null;
@@ -47,19 +49,19 @@ public class SecurityKey extends HttpServlet {
 
             if (usernameObjectSession == null) {
                 Utils.printJsonException(resJson, "Login first.", out);
-                System.err.println("The session \"interimUsername\" is null");
+                Utils.logError("The session \"interimUsername\" is null", ctx);
                 return;
             }
 
             if (isAdminObjectSession == null) {
                 Utils.printJsonException(resJson, "Login first.", out);
-                System.err.println("The session \"isAdmin\" is null");
+                Utils.logError("The session \"isAdmin\" is null", ctx);
                 return;
             }
 
             if (securityKeyStr == null) {
                 Utils.printJsonException(resJson, "Security key is required.", out);
-                System.err.println("The parameter \"securityKey\" is null");
+                Utils.logError("The parameter \"securityKey\" is null", ctx);
                 return;
             }
 
@@ -75,7 +77,7 @@ public class SecurityKey extends HttpServlet {
                 id = Integer.parseInt(httpSession.getAttribute("interimAdminId").toString());
             } else {
                 Utils.printJsonException(resJson, "Security key attempt failed due to missing data.", out);
-                System.err.println("The session \"interimUserId\" or \"interimAdminId\" is null");
+                Utils.logError("The session \"interimUserId\" or \"interimAdminId\" is null", ctx);
                 return;
             }
 
@@ -121,13 +123,13 @@ public class SecurityKey extends HttpServlet {
             }
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }

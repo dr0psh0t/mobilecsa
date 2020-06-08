@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,8 +28,9 @@ public class AddSalesman extends HttpServlet {
         response.setContentType("application/json");
         JSONObject responseJson = new JSONObject();
         PrintWriter out = response.getWriter();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login to continue.", out);
             return;
         }
@@ -47,46 +49,46 @@ public class AddSalesman extends HttpServlet {
             String lastname = request.getParameter("lastname");
 
             if (username == null) {
-                Utils.logError("\"username\" parameter is null");
+                Utils.logError("\"username\" parameter is null", ctx);
                 Utils.printJsonException(responseJson, "Username is required.", out);
                 return;
             } else if (username.isEmpty()) {
-                Utils.logError("\"username\" parameter is empty");
+                Utils.logError("\"username\" parameter is empty", ctx);
                 Utils.printJsonException(responseJson, "Username is required.", out);
                 return;
             }
 
             if (adminUsername == null) {
-                Utils.logError("\"adminUsername\" parameter is null");
+                Utils.logError("\"adminUsername\" parameter is null", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (adminUsername.isEmpty()) {
-                Utils.logError("\"adminUsername\" parameter is empty");
+                Utils.logError("\"adminUsername\" parameter is empty", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             if (firstname == null) {
-                Utils.logError("\"firstname\" parameter is null");
+                Utils.logError("\"firstname\" parameter is null", ctx);
                 Utils.printJsonException(responseJson, "Firstname required.", out);
                 return;
             } else if (firstname.isEmpty()) {
-                Utils.logError("\"firstname\" parameter is empty");
+                Utils.logError("\"firstname\" parameter is empty", ctx);
                 Utils.printJsonException(responseJson, "Firstname required.", out);
                 return;
             }
 
             if (lastname == null) {
-                Utils.logError("\"lastname\" parameter is null");
+                Utils.logError("\"lastname\" parameter is null", ctx);
                 Utils.printJsonException(responseJson, "Lastname required.", out);
                 return;
             } else if (lastname.isEmpty()) {
-                Utils.logError("\"lastname\" parameter is empty");
+                Utils.logError("\"lastname\" parameter is empty", ctx);
                 Utils.printJsonException(responseJson, "Lastname required.", out);
                 return;
             }
 
-            prepStmt = conn.prepareStatement("SELECT COUNT (*) AS userCount FROM users WHERE username = ?");
+            prepStmt = conn.prepareStatement("SELECT COUNT(*) AS userCount FROM users WHERE username = ?");
             prepStmt.setString(1, username);
             resultSet = prepStmt.executeQuery();
 
@@ -95,7 +97,7 @@ public class AddSalesman extends HttpServlet {
                 userCount = resultSet.getInt("userCount");
             }
 
-            prepStmt =  conn.prepareStatement("SELECT COUNT (*) AS adminCount FROM admins WHERE username = ?");
+            prepStmt =  conn.prepareStatement("SELECT COUNT(*) AS adminCount FROM admins WHERE username = ?");
             prepStmt.setString(1, username);
             resultSet = prepStmt.executeQuery();
 
@@ -142,13 +144,14 @@ public class AddSalesman extends HttpServlet {
             out.println(responseJson);
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
+                    ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }

@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.getJsonData;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +33,8 @@ public class GetLocationAndroid extends HttpServlet {
         PreparedStatement prepStmt = null;
         ResultSet resultSet = null;
 
+        ServletContext ctx = getServletContext();
+
         try {
             Utils.databaseForName(getServletContext());
             conn = Utils.getConnection(getServletContext());
@@ -40,21 +43,21 @@ public class GetLocationAndroid extends HttpServlet {
             String isCustomerStr = request.getParameter("isCustomer");
 
             if (idStr == null) {
-                Utils.logError("\"id\" parameter is null");
+                Utils.logError("\"id\" parameter is null", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (idStr.isEmpty()) {
-                Utils.logError("\"id\" parameter is empty");
+                Utils.logError("\"id\" parameter is empty", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             if (isCustomerStr == null) {
-                Utils.logError("\"isCustomer\" parameter is null");
+                Utils.logError("\"isCustomer\" parameter is null", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (isCustomerStr.isEmpty()) {
-                Utils.logError("\"isCustomer\" parameter is empty");
+                Utils.logError("\"isCustomer\" parameter is empty", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             }
@@ -88,13 +91,15 @@ public class GetLocationAndroid extends HttpServlet {
             responseJson.put("success", true);
             out.println(responseJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
+                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString(),
+                    ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, getServletContext());
             out.close();
         }
     }

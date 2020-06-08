@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +26,9 @@ public class UpdateContact extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Session not allowed", out);
             return;
         }
@@ -112,7 +114,7 @@ public class UpdateContact extends HttpServlet {
             oldData.put("address_long", request.getParameter("oldLongitude"));
 
             if (getContactCount(conn, contactId) < 1) {
-                Utils.logError("No contact found to update using contactId: "+contactId);
+                Utils.logError("No contact found to update using contactId: "+contactId, ctx);
                 Utils.printJsonException(responseJson, "No Contact found to update", out);
                 return;
             }
@@ -145,7 +147,7 @@ public class UpdateContact extends HttpServlet {
             prepStmt.setString(5, jobPosition);
 
             prepStmt.setString(6, address);
-            prepStmt.setDate(7, Utils.getDate(year+"-"+month+"-"+day));
+            prepStmt.setDate(7, Utils.getDate(year+"-"+month+"-"+day, ctx));
             prepStmt.setInt(8, plant);
 
             prepStmt.setInt(9, city);
@@ -181,20 +183,20 @@ public class UpdateContact extends HttpServlet {
             responseJson.put("reason", "Successfully updated contact");
             out.println(responseJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
         }
     }
 
     private int getContactCount(Connection conn, int contactId) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS contactCount FROM contacts WHERE contact_id = ?" );
+                "SELECT COUNT(*) AS contactCount FROM contacts WHERE contact_id = ?" );
         prepStmt.setInt(1, contactId);
         ResultSet resultSet = prepStmt.executeQuery();
 

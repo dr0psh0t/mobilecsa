@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,26 +27,27 @@ public class ChangeUserPassword extends HttpServlet {
         response.setContentType("application/json");
         JSONObject resJson = new JSONObject();
         PrintWriter out = response.getWriter();
+        ServletContext ctx = getServletContext();
 
         String newPassword = request.getParameter("newPassword");
         String csaId = request.getParameter("csaId");
 
         if (newPassword == null) {
-            System.err.println("\"newPassword\" parameter is null.");
+            Utils.logError("\"newPassword\" parameter is null.", ctx);
             Utils.printJsonException(resJson, "Password is required.", out);
             return;
         } else if (newPassword.isEmpty()) {
-            System.err.println("\"newPassword\" parameter is empty.");
+            Utils.logError("\"newPassword\" parameter is empty.", ctx);
             Utils.printJsonException(resJson, "Password is required.", out);
             return;
         }
 
         if (csaId == null) {
-            System.err.println("\"csaId\" parameter is null.");
+            Utils.logError("\"csaId\" parameter is null.", ctx);
             Utils.printJsonException(resJson, "CSA is required.", out);
             return;
         } else if (csaId.isEmpty()) {
-            System.err.println("\"csaId\" parameter is empty.");
+            Utils.logError("\"csaId\" parameter is empty.", ctx);
             Utils.printJsonException(resJson, "CSA is required.", out);
             return;
         }
@@ -60,7 +62,7 @@ public class ChangeUserPassword extends HttpServlet {
             Utils.databaseForName(getServletContext());
             conn = Utils.getConnection(getServletContext());
 
-            prepStmt = conn.prepareStatement("SELECT COUNT (*) AS csaCount FROM users WHERE csa_id = ?");
+            prepStmt = conn.prepareStatement("SELECT COUNT(*) AS csaCount FROM users WHERE csa_id = ?");
             prepStmt.setInt(1, csaIdInt);
             resultSet = prepStmt.executeQuery();
 
@@ -85,13 +87,13 @@ public class ChangeUserPassword extends HttpServlet {
             }
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(resJson, "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(resJson, "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }

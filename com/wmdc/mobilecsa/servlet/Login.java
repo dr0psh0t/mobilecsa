@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,12 +28,11 @@ public class Login extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
         HttpSession httpSession = request.getSession();
 
         Connection conn = null;
-        //ResultSet resultSet = null;
-        //PreparedStatement prepStmt = null;
 
         try {
             Utils.databaseForName(getServletContext());
@@ -42,21 +42,21 @@ public class Login extends HttpServlet {
             String password = request.getParameter("password");
 
             if (username == null) {
-                System.err.println("\"username\" parameter is null");
+                Utils.logError("\"username\" parameter is null", ctx);
                 Utils.printJsonException(resJson, "Username required.", out);
                 return;
             } else if (username.isEmpty()) {
-                System.err.println("\"username\" parameter is empty");
+                Utils.logError("\"username\" parameter is empty", ctx);
                 Utils.printJsonException(resJson, "Username required.", out);
                 return;
             }
 
             if (password == null) {
-                System.err.println("\"password\" parameter is null");
+                Utils.logError("\"password\" parameter is null", ctx);
                 Utils.printJsonException(resJson, "Password required.", out);
                 return;
             } else if (password.isEmpty()) {
-                System.err.println("\"password\" parameter is empty");
+                Utils.logError("\"password\" parameter is empty", ctx);
                 Utils.printJsonException(resJson, "Password required.", out);
                 return;
             }
@@ -157,15 +157,15 @@ public class Login extends HttpServlet {
                 Utils.printJsonException(resJson, "Invalid username format.\nPlease try again.", out);
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            System.err.println(sqe.toString());
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.logError(sqe.toString(), ctx);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(resJson, sqe.getMessage(), out);
         } catch (Exception e) {
-            System.err.println(e.toString());
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.logError(e.toString(), ctx);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(resJson, e.getMessage(), out);
         } finally {
-            Utils.closeDBResource(conn, null, null);
+            Utils.closeDBResource(conn, null, null, ctx);
             out.close();
         }
     }

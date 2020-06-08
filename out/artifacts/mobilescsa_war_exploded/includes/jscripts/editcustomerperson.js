@@ -706,7 +706,8 @@ function editCustomer (customerId) {
                                     var assoc = Ext.JSON.decode(action.response.responseText);
                                     Ext.Msg.alert("Success", assoc['reason']);
 
-                                    customerStoreAcquireAll();
+                                    customerPersonStore.load({ url : 'getcustomerperson' });
+
                                     Ext.getCmp('editForm').close();
                                     Ext.getCmp('editCustomerWindow').close();
                                 },

@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.joborder;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,8 +28,9 @@ public class SetTransfer extends HttpServlet {
         response.setContentType("application/json");
         JSONObject resJson = new JSONObject();
         PrintWriter out = response.getWriter();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
@@ -37,21 +39,21 @@ public class SetTransfer extends HttpServlet {
         String initJoId = request.getParameter("initJoId");
 
         if (csaId == null) {
-            Utils.logError("\"csaId\" parameter is null");
+            Utils.logError("\"csaId\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         } else if (csaId.isEmpty()) {
-            Utils.logError("\"csaId\" parameter is empty");
+            Utils.logError("\"csaId\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         }
 
         if (initJoId == null) {
-            Utils.logError("\"initJoId\" parameter is null");
+            Utils.logError("\"initJoId\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         } else if (initJoId.isEmpty()) {
-            Utils.logError("\"initJoId\" parameter is empty");
+            Utils.logError("\"initJoId\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         }
@@ -83,13 +85,14 @@ public class SetTransfer extends HttpServlet {
 
             out.println(resJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException",
+                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
         }
     }
@@ -102,7 +105,7 @@ public class SetTransfer extends HttpServlet {
 
     private boolean doesInitialJoExists(int initJoId, Connection conn) throws SQLException {
 
-        PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT (*) AS initJoCount FROM initial_joborder " +
+        PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT(*) AS initJoCount FROM initial_joborder " +
                 "WHERE initial_joborder_id = ?");
         prepStmt.setInt(1, initJoId);
         ResultSet resultSet = prepStmt.executeQuery();

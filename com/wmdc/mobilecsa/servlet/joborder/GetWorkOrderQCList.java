@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.joborder;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
  */
 @WebServlet("/getworkorderqclist")
 public class GetWorkOrderQCList extends HttpServlet {
-    private String getWoQcList() {
+    private String getWoQcList(ServletContext context) {
         Connection conn = null;
         PreparedStatement prepStmt = null;
         ResultSet resultSet = null;
@@ -41,13 +42,15 @@ public class GetWorkOrderQCList extends HttpServlet {
 
             return key;
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException",
+                    sqe.toString(), context);
             return null;
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception",
+                    e.toString(), context);
             return null;
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, context);
         }
     }
 
@@ -57,17 +60,18 @@ public class GetWorkOrderQCList extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject resJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
 
         String folder = Utils.getJoborderFolderName(getServletContext());
-        String servlet = getWoQcList();
+        String servlet = getWoQcList(ctx);
 
         if (folder == null || servlet == null) {
-            Utils.logError("\"folder\": "+folder+"\"servlet\": "+servlet);
+            Utils.logError("\"folder\": "+folder+"\"servlet\": "+servlet, ctx);
             Utils.printJsonException(resJson, "Cannot find path", out);
             return;
         }
@@ -81,7 +85,7 @@ public class GetWorkOrderQCList extends HttpServlet {
         String source = request.getParameter("source");
         String joid = request.getParameter("joid");
 
-        checkParameters(serverUrl, akey, cid, source, joid, resJson, out);
+        checkParameters(serverUrl, akey, cid, source, joid, resJson, out, ctx);
 
         try {
             url = new URL(serverUrl);
@@ -142,15 +146,15 @@ public class GetWorkOrderQCList extends HttpServlet {
                 out.println(resJson);
 
             } else {
-                Utils.logError("Approve request did not succeed. Status code: "+statusCode);
+                Utils.logError("Approve request did not succeed. Status code: "+statusCode, ctx);
                 Utils.printJsonException(resJson, "Approve request did not succeed.", out);
             }
         } catch (MalformedURLException | ConnectException | SocketTimeoutException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
-                    sqe.toString());
+                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), sqe.toString(), out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
             if (conn != null) {
@@ -165,53 +169,53 @@ public class GetWorkOrderQCList extends HttpServlet {
     }
 
     public void checkParameters(String serverUrl, String akey, String cid, String source, String joid,
-                                JSONObject resJson, PrintWriter out) {
+                                JSONObject resJson, PrintWriter out, ServletContext ctx) {
 
         if (serverUrl == null) {
-            Utils.logError("\"serverUrl\" parameter is empty");
+            Utils.logError("\"serverUrl\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
             return;
         } else if (serverUrl.isEmpty()) {
-            Utils.logError("\"serverUrl\" parameter is empty");
+            Utils.logError("\"serverUrl\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
             return;
         }
 
         if (akey == null) {
-            Utils.logError("\"akey\" parameter is empty");
+            Utils.logError("\"akey\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
             return;
         } else if (akey.isEmpty()) {
-            Utils.logError("\"akey\" parameter is empty");
+            Utils.logError("\"akey\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
             return;
         }
 
         if (cid == null) {
-            Utils.logError("\"cid\" parameter is empty");
+            Utils.logError("\"cid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
             return;
         } else if (cid.isEmpty()) {
-            Utils.logError("\"cid\" parameter is empty");
+            Utils.logError("\"cid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
             return;
         }
 
         if (source == null) {
-            Utils.logError("\"source\" parameter is empty");
+            Utils.logError("\"source\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
             return;
         } else if (source.isEmpty()) {
-            Utils.logError("\"source\" parameter is empty");
+            Utils.logError("\"source\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
             return;
         }
 
         if (joid == null) {
-            Utils.logError("\"joid\" parameter is empty");
+            Utils.logError("\"joid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
         } else if (joid.isEmpty()) {
-            Utils.logError("\"joid\" parameter is empty");
+            Utils.logError("\"joid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
         }
     }

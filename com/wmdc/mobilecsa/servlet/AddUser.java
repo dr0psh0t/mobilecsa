@@ -1,10 +1,5 @@
 package wmdc.mobilecsa.servlet;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 import org.json.JSONObject;
@@ -18,9 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.*;
 
@@ -39,8 +32,9 @@ public class AddUser extends HttpServlet {
         response.setContentType("application/json");
         JSONObject responseJson = new JSONObject();
         PrintWriter out = response.getWriter();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login first", out);
             return;
         }
@@ -63,41 +57,41 @@ public class AddUser extends HttpServlet {
             String username = request.getParameter("username");
 
             if (name == null) {
-                System.err.println("\"name\" parameter is null");
+                Utils.logError("\"name\" parameter is null", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (name.isEmpty()) {
-                System.err.println("\"name\" parameter is empty");
+                Utils.logError("\"name\" parameter is empty", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             if (password == null) {
-                System.err.println("\"password\" parameter is null");
+                Utils.logError("\"password\" parameter is null", ctx);
                 Utils.printJsonException(responseJson, "Password is required.", out);
                 return;
             } else if (password.isEmpty()) {
-                System.err.println("\"password\" parameter is empty");
+                Utils.logError("\"password\" parameter is empty", ctx);
                 Utils.printJsonException(responseJson, "Password is required.", out);
                 return;
             }
 
             if (adminUsername == null) {
-                System.err.println("\"adminUsername\" parameter is null");
+                Utils.logError("\"adminUsername\" parameter is null", null);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (adminUsername.isEmpty()) {
-                System.err.println("\"adminUsername\" parameter is empty");
+                Utils.logError("\"adminUsername\" parameter is empty", null);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             if (username == null) {
-                System.err.println("\"username\" parameter is null");
+                Utils.logError("\"username\" parameter is null", null);
                 Utils.printJsonException(responseJson, "Username is required.", out);
                 return;
             } else if (username.isEmpty()) {
-                System.err.println("\"username\" parameter is empty");
+                Utils.logError("\"username\" parameter is empty", null);
                 Utils.printJsonException(responseJson, "Username required.", out);
                 return;
             }
@@ -157,13 +151,13 @@ public class AddUser extends HttpServlet {
             out.println(responseJson);
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
         }
     }
@@ -186,7 +180,7 @@ public class AddUser extends HttpServlet {
 
     private int getAdminCount(Connection conn, String username) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS adminCount FROM admins WHERE username = ?");
+                "SELECT COUNT(*) AS adminCount FROM admins WHERE username = ?");
         prepStmt.setString(1, username);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -203,7 +197,7 @@ public class AddUser extends HttpServlet {
 
     private int getUserCount(Connection conn, String username) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS userCount FROM users WHERE username = ?");
+                "SELECT COUNT(*) AS userCount FROM users WHERE username = ?");
         prepStmt.setString(1, username);
         ResultSet resultSet = prepStmt.executeQuery();
 
@@ -223,14 +217,4 @@ public class AddUser extends HttpServlet {
             throws ServletException, IOException {
         Utils.illegalRequest(response);
     }
-
-    /*
-    public static InputStream getQrCode(String barcodeData, int height, int width)
-        throws WriterException, IOException {
-
-        BitMatrix matrix = new MultiFormatWriter().encode(barcodeData,
-                BarcodeFormat.QR_CODE, width, height);
-
-        BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(matrix);
-    }*/
 }

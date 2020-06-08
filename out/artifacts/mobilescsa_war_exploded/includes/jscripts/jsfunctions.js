@@ -573,15 +573,15 @@ function showMap(latitude, longitude, entity, stretched) {
                         return false;
                     }
 
-                    /*var marker = new google.maps.Marker({
+                    var marker = new google.maps.Marker({
                         position : new google.maps.LatLng(lat, lng),
-                        map : me.map,
+                        map : me.map
                         //label : entity
-                    });*/
+                    });
 
                     me.infowindow = new google.maps.InfoWindow();
-                    //me.infowindow.setContent(entity);
-                    //me.infowindow.open(me.map, marker);
+                    me.infowindow.setContent(entity);
+                    me.infowindow.open(me.map, marker);
                 };
 
                 me.listeners = {

@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +25,9 @@ public class LockUser extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login first.", out);
             return;
         }
@@ -41,18 +43,18 @@ public class LockUser extends HttpServlet {
             String csaIdParam = request.getParameter("csaId");
 
             if (csaIdParam == null) {
-                Utils.logError("\"csaId\" parameter is null.");
+                Utils.logError("\"csaId\" parameter is null.", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (csaIdParam.isEmpty()) {
-                Utils.logError("\"csaId\" parameter is empty.");
+                Utils.logError("\"csaId\" parameter is empty.", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             }
 
             int csaId = Integer.parseInt(csaIdParam);
 
-            prepStmt = conn.prepareStatement("SELECT COUNT (*) AS userCount FROM users WHERE csa_id = ?");
+            prepStmt = conn.prepareStatement("SELECT COUNT(*) AS userCount FROM users WHERE csa_id = ?");
             prepStmt.setInt(1, csaId);
             resultSet = prepStmt.executeQuery();
 
@@ -61,7 +63,7 @@ public class LockUser extends HttpServlet {
                 count = resultSet.getInt("userCount");
             }
             if (count < 1) {
-                Utils.logError("No user found using id: "+csaId);
+                Utils.logError("No user found using id: "+csaId, ctx);
                 Utils.printJsonException(responseJson, "User not found", out);
                 return;
             }
@@ -88,13 +90,13 @@ public class LockUser extends HttpServlet {
             responseJson.put("reason", "Successfully locked user");
             out.println(responseJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }

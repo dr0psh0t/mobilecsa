@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -35,8 +36,9 @@ public class UpdateContactPhoto extends HttpServlet {
         response.setContentType("application/json");
         JSONObject resJson = new JSONObject();
         PrintWriter out = response.getWriter();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login to continue.", out);
             return;
         }
@@ -45,11 +47,11 @@ public class UpdateContactPhoto extends HttpServlet {
         Part contactPhoto = request.getPart("contactPhoto");
 
         if (contactIdParam == null) {
-            Utils.logError("\"contactId\" parameter is null");
+            Utils.logError("\"contactId\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         } else if (contactIdParam.isEmpty()) {
-            Utils.logError("\"contactId\" parameter is empty");
+            Utils.logError("\"contactId\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         }
@@ -68,7 +70,7 @@ public class UpdateContactPhoto extends HttpServlet {
 
             int contactId = Integer.parseInt(contactIdParam);
             if (getContactCount(conn, contactId) < 1)  {
-                Utils.logError("No contact found to update using contactId: "+contactId);
+                Utils.logError("No contact found to update using contactId: "+contactId, ctx);
                 Utils.printJsonException(resJson, "No contact found to update.", out);
                 return;
             }
@@ -78,7 +80,7 @@ public class UpdateContactPhoto extends HttpServlet {
             prepStmt.setInt(2, contactId);
             int updateCount = prepStmt.executeUpdate();
 
-            System.out.println("No# of contacts updated photo: "+updateCount);
+            Utils.logMsg("No# of contacts updated photo: "+updateCount, ctx);
 
             if (updateCount < 1) {
                 Utils.printJsonException(resJson, "No contact photo updated.", out);
@@ -86,20 +88,20 @@ public class UpdateContactPhoto extends HttpServlet {
                 Utils.printSuccessJson(resJson, "Successfully updated contact photo.", out);
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(resJson, sqe.toString(), out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(resJson, e.toString(), out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
         }
     }
 
     private int getContactCount(Connection conn, int contactId) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS contactCount FROM contacts WHERE contact_id = ?" );
+                "SELECT COUNT(*) AS contactCount FROM contacts WHERE contact_id = ?" );
         prepStmt.setInt(1, contactId);
         ResultSet resultSet = prepStmt.executeQuery();
 

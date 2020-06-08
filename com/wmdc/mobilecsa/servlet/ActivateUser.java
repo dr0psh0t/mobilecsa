@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +28,7 @@ public class ActivateUser extends HttpServlet {
         response.setContentType("application/json");
         JSONObject responseJson = new JSONObject();
         PrintWriter out = response.getWriter();
+        ServletContext ctx = getServletContext();
 
         Connection conn = null;
         PreparedStatement prepStmt = null;
@@ -42,7 +44,7 @@ public class ActivateUser extends HttpServlet {
             String retypePassword = request.getParameter("retypepassword");
             String username = (String) httpSession.getAttribute("interimUsername");
 
-            checkParameters(lockedUsername, password, retypePassword, username, responseJson, out);
+            checkParameters(lockedUsername, password, retypePassword, username, responseJson, out, ctx);
 
             if (password.equals(retypePassword)) {
                 int passwordLen = password.length();
@@ -106,13 +108,13 @@ public class ActivateUser extends HttpServlet {
             }
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
         }
     }
@@ -156,43 +158,43 @@ public class ActivateUser extends HttpServlet {
     }
 
     public void checkParameters(String lockedUsername, String password, String retypePassword, String username,
-                                JSONObject responseJson, PrintWriter out) {
+                                JSONObject responseJson, PrintWriter out, ServletContext ctx) {
 
         if (lockedUsername == null) {
-            Utils.logError("\"lockedUsername\" parameter is null");
+            Utils.logError("\"lockedUsername\" parameter is null", ctx);
             Utils.printJsonException(responseJson, "Missing data. See logs or try again.", out);
             return;
         } else if (lockedUsername.isEmpty()) {
-            Utils.logError("\"lockedUsername\" parameter is empty");
+            Utils.logError("\"lockedUsername\" parameter is empty", ctx);
             Utils.printJsonException(responseJson, "Missing data. See logs or try again.", out);
             return;
         }
 
         if (password == null) {
-            Utils.logError("\"password\" parameter is null");
+            Utils.logError("\"password\" parameter is null", ctx);
             Utils.printJsonException(responseJson, "Password required.", out);
             return;
         } else if (password.isEmpty()) {
-            Utils.logError("\"password\" parameter is empty");
+            Utils.logError("\"password\" parameter is empty", ctx);
             Utils.printJsonException(responseJson, "Password required.", out);
             return;
         }
 
         if (retypePassword == null) {
-            Utils.logError("\"retypePassword\" parameter is null");
+            Utils.logError("\"retypePassword\" parameter is null", ctx);
             Utils.printJsonException(responseJson, "Retype password required.", out);
             return;
         } else if (retypePassword.isEmpty()) {
-            Utils.logError("\"retypePassword\" parameter is empty");
+            Utils.logError("\"retypePassword\" parameter is empty", ctx);
             Utils.printJsonException(responseJson, "Retype password required.", out);
             return;
         }
 
         if (username == null) {
-            Utils.logError("\"username\" parameter is null");
+            Utils.logError("\"username\" parameter is null", ctx);
             Utils.printJsonException(responseJson, "Username required.", out);
         } else if (username.isEmpty()) {
-            Utils.logError("\"username\" parameter is empty");
+            Utils.logError("\"username\" parameter is empty", ctx);
             Utils.printJsonException(responseJson, "Username required.", out);
         }
     }

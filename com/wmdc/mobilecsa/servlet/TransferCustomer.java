@@ -4,6 +4,7 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,19 +26,20 @@ public class TransferCustomer extends HttpServlet {
         response.setContentType("application/json");
         JSONObject resJson = new JSONObject();
         PrintWriter out = response.getWriter();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login first.", out);
             return;
         }
 
         String customerIdStr = request.getParameter("customerId");
         if (customerIdStr == null) {
-            Utils.logError("\"customerId\" parameter is null.");
+            Utils.logError("\"customerId\" parameter is null.", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         } else if (customerIdStr.isEmpty()) {
-            Utils.logError("\"customerId\" parameter is empty.");
+            Utils.logError("\"customerId\" parameter is empty.", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
             return;
         }
@@ -54,7 +56,7 @@ public class TransferCustomer extends HttpServlet {
 
             int customerId = Integer.parseInt(customerIdStr);
             if (getCustomerCount(customerId, conn) < 1) {
-                Utils.logError("No customer found to transfer using customerId: "+customerId);
+                Utils.logError("No customer found to transfer using customerId: "+customerId, ctx);
                 Utils.printJsonException(resJson, "No customer found to transfer.", out);
                 return;
             }
@@ -221,7 +223,7 @@ public class TransferCustomer extends HttpServlet {
 
             prepStmt.setInt(39, calibration);                           //  calibration
             prepStmt.setInt(40, assignedCsa);                           //  assigned_csa
-            prepStmt.setDate(41, Utils.getDate(dateAdded));     //  date_associated
+            prepStmt.setDate(41, Utils.getDate(dateAdded, ctx));     //  date_associated
             prepStmt.setString(42, classification);                     //  classification
             prepStmt.setString(43, plant);                              //  plant
 
@@ -271,21 +273,21 @@ public class TransferCustomer extends HttpServlet {
             signature.close();
             Utils.printSuccessJson(resJson, "Successfully Transferred customer", out);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(resJson, "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(resJson, "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
-            Utils.closeDBResource(connCRM, null, null);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
+            Utils.closeDBResource(connCRM, null, null, ctx);
             out.close();
         }
     }
 
     private int getCustomerCount(String lastname, String firstname, Connection conn) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) as customerCount FROM customers WHERE lname = ? AND fname = ?");
+                "SELECT COUNT(*) as customerCount FROM customers WHERE lname = ? AND fname = ?");
         prepStmt.setString(1, lastname);
         prepStmt.setString(2, firstname);
         ResultSet resultSet = prepStmt.executeQuery();
@@ -328,7 +330,7 @@ public class TransferCustomer extends HttpServlet {
 
     private int getCustomerCount(int customerId, Connection conn) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS customerCount FROM customers WHERE customer_id = ?");
+                "SELECT COUNT(*) AS customerCount FROM customers WHERE customer_id = ?");
         prepStmt.setInt(1, customerId);
         ResultSet resultSet = prepStmt.executeQuery();
 

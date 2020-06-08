@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +25,9 @@ public class AddContacts extends HttpServlet {
         response.setContentType("application/json");
         JSONObject resJson = new JSONObject();
         PrintWriter out = response.getWriter();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(resJson, "Login to continue.", out);
             return;
         }
@@ -55,9 +57,9 @@ public class AddContacts extends HttpServlet {
                 request.getParameter("areaCode"), request.getParameter("industry"), request.getParameter("plant"),
                 request.getParameter("er"), request.getParameter("mf"), request.getParameter("spareParts"),
                 request.getParameter("calib"), request.getParameter("province"), request.getParameter("signStatus"),
-                address, signature, filePart, out);
+                address, signature, filePart, out, ctx);
 
-        checkParameters(lastname, firstname, birthDate, mi, mobile, company, jobPosition, out);
+        checkParameters(lastname, firstname, birthDate, mi, mobile, company, jobPosition, out, ctx);
 
         Connection connCRM = null;
         Connection conn = null;
@@ -111,7 +113,7 @@ public class AddContacts extends HttpServlet {
                 return;
             }
 
-            InputStream signatureInputStream = Utils.getSignatureInputStream(signature);
+            InputStream signatureInputStream = Utils.getSignatureInputStream(signature, ctx);
             InputStream photoStream = filePart.getInputStream();
 
             if (filePart.getSize() > (Utils.REQUIRED_IMAGE_BYTES-100_000)) {
@@ -119,13 +121,13 @@ public class AddContacts extends HttpServlet {
             }
 
             if (photoStream == null) {
-                Utils.logError("Getting photo input stream from filePart returns null.");
+                Utils.logError("Getting photo input stream from filePart returns null.", ctx);
                 Utils.printJsonException(resJson, "Photo problem occured. Try again or see logs.", out);
                 return;
             }
 
             if (signatureInputStream == null) {
-                Utils.logError("Getting signature input stream from signature string returns null.");
+                Utils.logError("Getting signature input stream from signature string returns null.", ctx);
                 Utils.printJsonException(resJson, "Signature problem occured. Try again or see logs.", out);
                 return;
             }
@@ -167,7 +169,7 @@ public class AddContacts extends HttpServlet {
             prepStmt.setString(5, firstname);
 
             prepStmt.setString(6, mi);
-            prepStmt.setDate(7, Utils.getDate(birthDate));
+            prepStmt.setDate(7, Utils.getDate(birthDate, ctx));
             prepStmt.setString(8, address);
             prepStmt.setInt(9, city);
             prepStmt.setInt(10, province);
@@ -217,21 +219,22 @@ public class AddContacts extends HttpServlet {
             signatureInputStream.close();
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
+                    ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
-            Utils.closeDBResource(connCRM, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
+            Utils.closeDBResource(connCRM, prepStmt, resultSet, ctx);
             out.close();
         }
     }
 
     private int getContactCount(String lastname, String firstname, Connection conn) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS contactCount FROM contacts WHERE lastname = ? AND firstname = ?");
+                "SELECT COUNT(*) AS contactCount FROM contacts WHERE lastname = ? AND firstname = ?");
 
         prepStmt.setString(1, lastname);
         prepStmt.setString(2, firstname);
@@ -250,7 +253,7 @@ public class AddContacts extends HttpServlet {
 
     private int getContactCountCRM(String lastname, String firstname, Connection conn) throws SQLException {
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS contactCount FROM contacts WHERE lname = ? AND fname = ?");
+                "SELECT COUNT(*) AS contactCount FROM contacts WHERE lname = ? AND fname = ?");
 
         String lastname2 = Utils.omitSpaces(lastname);
         String firstname2 = Utils.omitSpaces(firstname);
@@ -291,73 +294,73 @@ public class AddContacts extends HttpServlet {
     }
 
     public void checkParameters(String lastname, String firstname, String birthDate, String mi, String mobile,
-                                String company, String jobPosition, PrintWriter out) {
+                                String company, String jobPosition, PrintWriter out, ServletContext ctx) {
 
         if (lastname == null) {
-            Utils.logError("\"lastname\" parameter is null.");
+            Utils.logError("\"lastname\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Lastname is required.", out);
             return;
         } else if (lastname.isEmpty()) {
-            Utils.logError("\"lastname\" parameter is empty.");
+            Utils.logError("\"lastname\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Lastname is required.", out);
             return;
         }
 
         if (firstname == null) {
-            Utils.logError("\"firstname\" parameter is null.");
+            Utils.logError("\"firstname\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Firstname is required.", out);
             return;
         } else if (firstname.isEmpty()) {
-            Utils.logError("\"firstname\" parameter is empty.");
+            Utils.logError("\"firstname\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Firstname is required.", out);
             return;
         }
 
         if (birthDate == null) {
-            Utils.logError("\"birthDate\" parameter is null.");
+            Utils.logError("\"birthDate\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Birthdate is required.", out);
             return;
         } else if (birthDate.isEmpty()) {
-            Utils.logError("\"birthDate\" parameter is empty.");
+            Utils.logError("\"birthDate\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Birthdate is required.", out);
             return;
         }
 
         if (mi == null) {
-            Utils.logError("\"mi\" parameter is null.");
+            Utils.logError("\"mi\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "MI is required.", out);
             return;
         } else if (mi.isEmpty()) {
-            Utils.logError("\"mi\" parameter is empty.");
+            Utils.logError("\"mi\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "MI is required.", out);
             return;
         }
 
         if (mobile == null) {
-            Utils.logError("\"mobile\" parameter is null.");
+            Utils.logError("\"mobile\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Mobile is required.", out);
             return;
         } else if (mobile.isEmpty()) {
-            Utils.logError("\"mobile\" parameter is empty.");
+            Utils.logError("\"mobile\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Mobile is required.", out);
             return;
         }
 
         if (company == null) {
-            Utils.logError("\"company\" parameter is null.");
+            Utils.logError("\"company\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Company is required.", out);
             return;
         } else if (company.isEmpty()) {
-            Utils.logError("\"company\" parameter is empty.");
+            Utils.logError("\"company\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Company is required.", out);
             return;
         }
 
         if (jobPosition == null) {
-            Utils.logError("\"jobPosition\" parameter is null.");
+            Utils.logError("\"jobPosition\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Job position is required.", out);
         } else if (jobPosition.isEmpty()) {
-            Utils.logError("\"jobPosition\" parameter is empty.");
+            Utils.logError("\"jobPosition\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Job position is required.", out);
         }
     }

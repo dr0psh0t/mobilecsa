@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.getJsonData;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +27,9 @@ public class GetZipcodeByCityid extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login", out);
             return;
         }
@@ -41,11 +43,11 @@ public class GetZipcodeByCityid extends HttpServlet {
             conn = Utils.getConnectionFromCRM(getServletContext());
 
             if (request.getParameter("city") == null) {
-                Utils.logError("\"city\" parameter is null");
+                Utils.logError("\"city\" parameter is null", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             } else if (request.getParameter("city").isEmpty()) {
-                Utils.logError("\"city\" parameter is empty");
+                Utils.logError("\"city\" parameter is empty", ctx);
                 Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
                 return;
             }
@@ -53,7 +55,7 @@ public class GetZipcodeByCityid extends HttpServlet {
             cityId = Integer.parseInt(request.getParameter("city"));
 
             if (getCityCount(cityId, conn) < 1) {
-                Utils.logError("No city found with cityId: "+cityId);
+                Utils.logError("No city found with cityId: "+cityId, ctx);
                 return;
             }
 
@@ -65,7 +67,7 @@ public class GetZipcodeByCityid extends HttpServlet {
             out.println(responseJson);
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(),
-                    Utils.GET_JSON_DATA_PACKAGE, "db_exception", sqe.toString());
+                    Utils.GET_JSON_DATA_PACKAGE, "db_exception", sqe.toString(), ctx);
             responseJson.put("success", false);
             responseJson.put("reason", "An error occured in zip code");
             responseJson.put("zipCode", 0);
@@ -73,14 +75,14 @@ public class GetZipcodeByCityid extends HttpServlet {
             out.println(responseJson);
         } catch (Exception e) {
             Utils.displayStackTraceArray(e.getStackTrace(),
-                    Utils.GET_JSON_DATA_PACKAGE, "exception", e.toString());
+                    Utils.GET_JSON_DATA_PACKAGE, "exception", e.toString(), ctx);
             responseJson.put("success", false);
             responseJson.put("reason", e.getMessage());
             responseJson.put("zipCode", 0);
             responseJson.put("cityId", cityId);
             out.println(responseJson);
         } finally {
-            Utils.closeDBResource(conn, null, null);
+            Utils.closeDBResource(conn, null, null, getServletContext());
             out.close();
         }
     }
@@ -108,7 +110,7 @@ public class GetZipcodeByCityid extends HttpServlet {
     }
 
     private int getCityCount(int cityId, Connection conn) throws SQLException {
-        PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT (*) AS cityCount FROM city WHERE city_id = ?");
+        PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT(*) AS cityCount FROM city WHERE city_id = ?");
         prepStmt.setInt(1, cityId);
 
         ResultSet resultSet = prepStmt.executeQuery();

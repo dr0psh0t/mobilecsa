@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +30,9 @@ public class InitialJobOrder extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login first.", out);
             return;
         }
@@ -62,7 +64,7 @@ public class InitialJobOrder extends HttpServlet {
             checkParameter(customer, mobile, serialNo, poDate, dateReceive, category, remarks, make,
                     request.getParameter("customerId"), request.getParameter("modelId"),
                     request.getParameter("preparedBy"), referenceNo, joSignature, source, purchaseOrder, joNumber,
-                    photoPart, out);
+                    photoPart, out, ctx);
 
             int customerId = Integer.parseInt(request.getParameter("customerId"));
             int modelId = Integer.parseInt(request.getParameter("modelId"));
@@ -70,7 +72,7 @@ public class InitialJobOrder extends HttpServlet {
 
             if (isJoNumberExists(joNumber, conn)) {
                 Utils.printJsonException(responseJson, "JO Number already exists.", out);
-                Utils.logError("Joborder is already saved in mcsa database");
+                Utils.logError("Joborder is already saved in mcsa database", ctx);
                 return;
             }
 
@@ -80,7 +82,7 @@ public class InitialJobOrder extends HttpServlet {
             }
 
             InputStream photoStream = photoPart.getInputStream();
-            InputStream signatureStream = Utils.getSignatureInputStream(joSignature);
+            InputStream signatureStream = Utils.getSignatureInputStream(joSignature, ctx);
 
             if (photoPart.getSize() > (Utils.REQUIRED_IMAGE_BYTES-100_000)) {
                 photoStream = Utils.reduceImage(photoStream);
@@ -146,16 +148,18 @@ public class InitialJobOrder extends HttpServlet {
             }
             photoStream.close();
         } catch (SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "SQLException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "SQLException",
+                    sqe.toString(), ctx);
             Utils.printJsonException(responseJson, "Database error occurred.", out);
         } catch (ClassNotFoundException classE) {
-            Utils.displayStackTraceArray(classE.getStackTrace(), Utils.JOBORDER_PACKAGE, "ClassException", classE.toString());
+            Utils.displayStackTraceArray(classE.getStackTrace(), Utils.JOBORDER_PACKAGE, "ClassException",
+                    classE.toString(), ctx);
             Utils.printJsonException(responseJson, "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(responseJson, "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, null);
+            Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
         }
     }
@@ -185,7 +189,7 @@ public class InitialJobOrder extends HttpServlet {
     private boolean isPictureSaved(int initialJoId, Connection conn) throws SQLException {
 
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS pictureCount FROM initial_joborder_image WHERE initial_joborder_id = ?");
+                "SELECT COUNT(*) AS pictureCount FROM initial_joborder_image WHERE initial_joborder_id = ?");
 
         prepStmt.setInt(1, initialJoId);
         ResultSet resultSet = prepStmt.executeQuery();
@@ -204,7 +208,7 @@ public class InitialJobOrder extends HttpServlet {
     private boolean isJoNumberExists(String joNo, Connection conn) throws SQLException {
 
         PreparedStatement prepStmt = conn.prepareStatement(
-                "SELECT COUNT (*) AS joNoCount FROM initial_joborder WHERE jo_number = ?");
+                "SELECT COUNT(*) AS joNoCount FROM initial_joborder WHERE jo_number = ?");
 
         prepStmt.setString(1, joNo);
         ResultSet resultSet = prepStmt.executeQuery();
@@ -223,176 +227,177 @@ public class InitialJobOrder extends HttpServlet {
     private void checkParameter(String customer, String mobile, String serialNo, String poDate, String dateReceive,
                                String category, String remarks, String make, String customerId,
                                String modelId, String preparedBy, String referenceNo, String joSignature,
-                               String source, String purchaseOrder, String joNumber, Part photoPart, PrintWriter out) {
+                               String source, String purchaseOrder, String joNumber, Part photoPart, PrintWriter out,
+                                ServletContext ctx) {
 
         if (customer == null) {
-            Utils.logError("\"customer\" parameter is null.");
+            Utils.logError("\"customer\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Customer is required. See logs or try again.", out);
             return;
         } else if (customer.isEmpty()) {
-            Utils.logError("\"customer\" parameter is empty.");
+            Utils.logError("\"customer\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Customer is required. See logs or try again.", out);
             return;
         }
 
         if (mobile == null) {
-            Utils.logError("\"mobile\" parameter is null.");
+            Utils.logError("\"mobile\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Mobile is required. See logs or try again.", out);
             return;
         } else if (mobile.isEmpty()) {
-            Utils.logError("\"mobile\" parameter is empty.");
+            Utils.logError("\"mobile\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Mobile is required. See logs or try again.", out);
             return;
         }
 
         if (serialNo == null) {
-            Utils.logError("\"serialNo\" parameter is null.");
+            Utils.logError("\"serialNo\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Serial is required. See logs or try again.", out);
             return;
         } else if (serialNo.isEmpty()) {
-            Utils.logError("\"serialNo\" parameter is empty.");
+            Utils.logError("\"serialNo\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Serial is required. See logs or try again.", out);
             return;
         }
 
         if (poDate == null) {
-            Utils.logError("\"poDate\" parameter is null.");
+            Utils.logError("\"poDate\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "PO Date is required. See logs or try again.", out);
             return;
         } else if (poDate.isEmpty()) {
-            Utils.logError("\"poDate\" parameter is empty.");
+            Utils.logError("\"poDate\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "PO Date is required. See logs or try again.", out);
             return;
         }
 
         if (dateReceive == null) {
-            Utils.logError("\"dateReceive\" parameter is null.");
+            Utils.logError("\"dateReceive\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Date receive is required. See logs or try again.", out);
             return;
         } else if (dateReceive.isEmpty()) {
-            Utils.logError("\"dateReceive\" parameter is empty.");
+            Utils.logError("\"dateReceive\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Date receive is required. See logs or try again.", out);
             return;
 
         }
 
         if (category == null) {
-            Utils.logError("\"category\" parameter is null.");
+            Utils.logError("\"category\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Category is required. See logs or try again.", out);
             return;
         } else if (category.isEmpty()) {
-            Utils.logError("\"category\" parameter is empty.");
+            Utils.logError("\"category\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Category is required. See logs or try again.", out);
             return;
         }
 
         if (remarks == null) {
-            Utils.logError("\"remarks\" parameter is null.");
+            Utils.logError("\"remarks\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Remarks is required. See logs or try again.", out);
             return;
         } else if (remarks.isEmpty()) {
-            Utils.logError("\"remarks\" parameter is empty.");
+            Utils.logError("\"remarks\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Remarks is required. See logs or try again.", out);
             return;
         }
 
         if (make == null) {
-            Utils.logError("\"make\" parameter is null.");
+            Utils.logError("\"make\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Make is required. See logs or try again.", out);
             return;
         } else if (make.isEmpty()) {
-            Utils.logError("\"make\" parameter is empty.");
+            Utils.logError("\"make\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Make is required. See logs or try again.", out);
             return;
         }
 
         if (customerId == null) {
-            Utils.logError("\"customerId\" parameter is null.");
+            Utils.logError("\"customerId\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Customer required. See logs or try again.", out);
             return;
         } else if (customerId.isEmpty()) {
-            Utils.logError("\"customerId\" parameter is empty.");
+            Utils.logError("\"customerId\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Customer required. See logs or try again.", out);
             return;
         }
 
         if (modelId == null) {
-            Utils.logError("\"modelId\" parameter is null.");
+            Utils.logError("\"modelId\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Model is required. See logs or try again.", out);
             return;
         } else if (modelId.isEmpty()) {
-            Utils.logError("\"modelId\" parameter is empty.");
+            Utils.logError("\"modelId\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Model is required. See logs or try again.", out);
             return;
         }
 
         if (preparedBy == null) {
-            Utils.logError("\"preparedBy\" parameter is null.");
+            Utils.logError("\"preparedBy\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Prepared by is required. See logs or try again.", out);
             return;
         } else if (preparedBy.isEmpty()) {
-            Utils.logError("\"preparedBy\" parameter is empty.");
+            Utils.logError("\"preparedBy\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Prepared by is required. See logs or try again.", out);
             return;
         }
 
         if (referenceNo == null) {
-            Utils.logError("\"referenceNo\" parameter is null.");
+            Utils.logError("\"referenceNo\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Reference is required. See logs or try again.", out);
             return;
         } else if (referenceNo.isEmpty()) {
-            Utils.logError("\"referenceNo\" parameter is empty.");
+            Utils.logError("\"referenceNo\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Reference is required. See logs or try again.", out);
             return;
         }
 
         if (joSignature == null) {
-            Utils.logError("\"joSignature\" parameter is null.");
+            Utils.logError("\"joSignature\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Signature is required. See logs or try again.", out);
             return;
         } else if (joSignature.isEmpty()) {
-            Utils.logError("\"joSignature\" parameter is empty.");
+            Utils.logError("\"joSignature\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Signature is required. See logs or try again.", out);
             return;
         }
 
         if (source == null) {
-            Utils.logError("\"source\" parameter is null.");
+            Utils.logError("\"source\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Source is required. See logs or try again.", out);
             return;
         } else if (source.isEmpty()) {
-            Utils.logError("\"source\" parameter is empty.");
+            Utils.logError("\"source\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Source is required. See logs or try again.", out);
             return;
         }
 
         if (purchaseOrder == null) {
-            Utils.logError("\"purchaseOrder\" parameter is null.");
+            Utils.logError("\"purchaseOrder\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Purchase order is required. See logs or try again.",
                     out);
             return;
         } else if (purchaseOrder.isEmpty()) {
-            Utils.logError("\"purchaseOrder\" parameter is empty.");
+            Utils.logError("\"purchaseOrder\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Purchase order is required. See logs or try again.",
                     out);
             return;
         }
 
         if (joNumber == null) {
-            Utils.logError("\"joNumber\" parameter is null.");
+            Utils.logError("\"joNumber\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "JO Number is required. See logs or try again.", out);
             return;
         } else if (joNumber.isEmpty()) {
-            Utils.logError("\"joNumber\" parameter is empty.");
+            Utils.logError("\"joNumber\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "JO Number is required. See logs or try again.", out);
             return;
         }
 
         if (photoPart == null) {
-            Utils.logError("\"photoPart\" parameter is null.");
+            Utils.logError("\"photoPart\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Photo is required. See logs or try again.", out);
         } else if (photoPart.getSize() < 1) {
-            Utils.logError("\"photoPart\" parameter is empty.");
+            Utils.logError("\"photoPart\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Photo is required. See logs or try again.", out);
         }
     }

@@ -30,7 +30,7 @@ public class GetUsernameFromCRM extends HttpServlet {
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, getServletContext())) {
             Utils.printJsonException(responseJson, "Login first", out);
             return;
         }
@@ -63,14 +63,15 @@ public class GetUsernameFromCRM extends HttpServlet {
             out.println(responseJson);
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
-                    sqe.toString());
+                    sqe.toString(), getServletContext());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception",
+                    e.toString(), getServletContext());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(connCRM, prepStmt, resultSet);
-            Utils.closeDBResource(conn, null, null);
+            Utils.closeDBResource(connCRM, prepStmt, resultSet, getServletContext());
+            Utils.closeDBResource(conn, null, null, getServletContext());
             out.close();
         }
     }
@@ -78,6 +79,6 @@ public class GetUsernameFromCRM extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Utils.illegalRequest(response);
+        doPost(request, response);
     }
 }

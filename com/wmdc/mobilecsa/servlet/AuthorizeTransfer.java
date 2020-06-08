@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,8 +30,9 @@ public class AuthorizeTransfer extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login first.", out);
             return;
         }
@@ -45,21 +47,21 @@ public class AuthorizeTransfer extends HttpServlet {
             String rawPassword = request.getParameter("password");
 
             if (username == null) {
-                Utils.logError("\"username\" parameter is null.");
+                Utils.logError("\"username\" parameter is null.", ctx);
                 Utils.printJsonException(responseJson, "Username is required.", out);
                 return;
             } else if (username.isEmpty()) {
-                Utils.logError("\"username\" parameter is empty.");
+                Utils.logError("\"username\" parameter is empty.", ctx);
                 Utils.printJsonException(responseJson, "Username is required.", out);
                 return;
             }
 
             if (rawPassword == null) {
-                Utils.logError("\"rawPassword\" parameter is null.");
+                Utils.logError("\"rawPassword\" parameter is null.", ctx);
                 Utils.printJsonException(responseJson, "Password is required.", out);
                 return;
             } else if (rawPassword.isEmpty()) {
-                Utils.logError("\"rawPassword\" parameter is empty.");
+                Utils.logError("\"rawPassword\" parameter is empty.", ctx);
                 Utils.printJsonException(responseJson, "Password is required.", out);
                 return;
             }
@@ -78,7 +80,7 @@ public class AuthorizeTransfer extends HttpServlet {
 
                 int adminId = getAdministratorId(username, conn);
                 if (adminId < 1) {
-                    Utils.logError("No administrator found with id: "+adminId);
+                    Utils.logError("No administrator found with id: "+adminId, ctx);
                     Utils.printJsonException(responseJson, "No administrator found", out);
                     return;
                 }
@@ -92,20 +94,20 @@ public class AuthorizeTransfer extends HttpServlet {
                                 "Invalid credentials. Not authorized to transfer contact.", out);
                     }
                 } else {
-                    Utils.logError("Administrator password is empty.");
+                    Utils.logError("Administrator password is empty.", ctx);
                     Utils.printJsonException(responseJson, "Administrator password problem", out);
                 }
             } else {
                 Utils.printJsonException(responseJson, "Password should be 8-32 characters in length.", out);
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, null, null);
+            Utils.closeDBResource(conn, null, null, ctx);
             out.close();
         }
     }

@@ -2,6 +2,7 @@ package wmdc.mobilecsa.servlet;
 
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -30,7 +31,9 @@ public class GetContactsSignature extends HttpServlet {
     private void procRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
-        if (!Utils.isOnline(request)) {
+        ServletContext ctx = getServletContext();
+
+        if (!Utils.isOnline(request, ctx)) {
             Utils.invalidImage(response, getServletContext());
             return;
         }
@@ -47,17 +50,17 @@ public class GetContactsSignature extends HttpServlet {
             conn = Utils.getConnection(getServletContext());
 
             if (request.getParameter("contactId") == null) {
-                Utils.logError("\"contactId\" parameter is null");
+                Utils.logError("\"contactId\" parameter is null", ctx);
                 Utils.invalidImage(response, getServletContext());
                 return;
             } else if (request.getParameter("contactId").isEmpty()) {
-                Utils.logError("\"contactId\" parameter is empty");
+                Utils.logError("\"contactId\" parameter is empty", ctx);
                 Utils.invalidImage(response, getServletContext());
                 return;
             }
 
             int contactId = Integer.parseInt(request.getParameter("contactId"));
-            prepStmt = conn.prepareStatement("SELECT COUNT (*) AS contactCount FROM contacts WHERE contact_id = ?");
+            prepStmt = conn.prepareStatement("SELECT COUNT(*) AS contactCount FROM contacts WHERE contact_id = ?");
             prepStmt.setInt(1, contactId);
             resultSet = prepStmt.executeQuery();
 
@@ -101,13 +104,13 @@ public class GetContactsSignature extends HttpServlet {
                 Utils.invalidImage(response, getServletContext());
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.invalidImage(response, getServletContext());
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.invalidImage(response, getServletContext());
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             if (!success) {
                 Utils.invalidImage(response, getServletContext());
             }

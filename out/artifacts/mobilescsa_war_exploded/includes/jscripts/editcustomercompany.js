@@ -691,6 +691,8 @@ function editCompany(customerId) {
                                     var assoc = Ext.JSON.decode(action.response.responseText);
                                     Ext.Msg.alert("Success", assoc['reason']);
 
+                                    customerCompanyStore.load({ url : 'getcustomercompany' });
+
                                     Ext.getCmp('editForm').destroy();
                                     Ext.getCmp('editCustomerWindow').destroy();
                                 },

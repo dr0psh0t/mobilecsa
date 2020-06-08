@@ -3,6 +3,7 @@ package wmdc.mobilecsa.servlet.getJsonData;
 import org.json.JSONObject;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,21 +22,22 @@ public class GetIndividualCustomerByParams extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         JSONObject responseJson = new JSONObject();
+        ServletContext ctx = getServletContext();
 
-        if (!Utils.isOnline(request)) {
+        if (!Utils.isOnline(request, ctx)) {
             Utils.printJsonException(responseJson, "Login.", out);
             return;
         }
 
         String customerIdParam = request.getParameter("customerId");
         if (customerIdParam == null) {
-            Utils.logError("\"customerId\" parameter is null");
+            Utils.logError("\"customerId\" parameter is null", ctx);
             Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
             return;
         }
 
         if (customerIdParam.isEmpty()) {
-            Utils.logError("\"customerId\" parameter is empty");
+            Utils.logError("\"customerId\" parameter is empty", ctx);
             Utils.printJsonException(responseJson, "Missing data required. See logs or try again.", out);
             return;
         }
@@ -52,7 +54,7 @@ public class GetIndividualCustomerByParams extends HttpServlet {
 
             int customerId = Integer.parseInt(customerIdParam);
             if (getCustomerCount(conn, customerId) < 1) {
-                Utils.logError("No customer found with id: "+customerId);
+                Utils.logError("No customer found with id: "+customerId, ctx);
                 Utils.printJsonException(responseJson, "No customer found", out);
                 return;
             }
@@ -167,13 +169,14 @@ public class GetIndividualCustomerByParams extends HttpServlet {
 
             out.println(obj);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
+                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             out.close();
         }
     }
@@ -185,7 +188,7 @@ public class GetIndividualCustomerByParams extends HttpServlet {
     }
 
     public int getCustomerCount(Connection conn, int customerId) throws SQLException {
-        PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT (*) AS customerCount FROM customers " +
+        PreparedStatement prepStmt = conn.prepareStatement("SELECT COUNT(*) AS customerCount FROM customers " +
                 "WHERE customer_id = ?");
         prepStmt.setInt(1, customerId);
 

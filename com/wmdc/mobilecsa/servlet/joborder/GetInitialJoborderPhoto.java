@@ -2,6 +2,7 @@ package wmdc.mobilecsa.servlet.joborder;
 
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +32,9 @@ public class GetInitialJoborderPhoto extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
-        if (!Utils.isOnline(request)) {
+        ServletContext ctx = getServletContext();
+
+        if (!Utils.isOnline(request, ctx)) {
             Utils.invalidImage(response, getServletContext());
             return;
         }
@@ -39,11 +42,11 @@ public class GetInitialJoborderPhoto extends HttpServlet {
         String initialJoborderIdStr = request.getParameter("initialJoborderId");
 
         if (initialJoborderIdStr == null) {
-            Utils.logError("\"initialJoborderId\" parameter is null");
+            Utils.logError("\"initialJoborderId\" parameter is null", ctx);
             Utils.invalidImage(response, getServletContext());
             return;
         } else if (initialJoborderIdStr.isEmpty()) {
-            Utils.logError("\"initialJoborderId\" parameter is empty");
+            Utils.logError("\"initialJoborderId\" parameter is empty", ctx);
             Utils.invalidImage(response, getServletContext());
             return;
         }
@@ -58,7 +61,7 @@ public class GetInitialJoborderPhoto extends HttpServlet {
 
             int initialJoborderId = Integer.parseInt(initialJoborderIdStr);
 
-            prepStmt = conn.prepareStatement("SELECT COUNT (*) AS joCount FROM initial_joborder_image WHERE " +
+            prepStmt = conn.prepareStatement("SELECT COUNT(*) AS joCount FROM initial_joborder_image WHERE " +
                     "initial_joborder_id = ?");
             prepStmt.setInt(1, initialJoborderId);
             resultSet = prepStmt.executeQuery();
@@ -69,7 +72,7 @@ public class GetInitialJoborderPhoto extends HttpServlet {
             }
 
             if (joCount < 1) {
-                Utils.logError("No image found using initial_joborder_id: "+initialJoborderId);
+                Utils.logError("No image found using initial_joborder_id: "+initialJoborderId, ctx);
                 Utils.invalidImage(response, getServletContext());
             }
 
@@ -98,13 +101,14 @@ public class GetInitialJoborderPhoto extends HttpServlet {
                 Utils.invalidImage(response, getServletContext());
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException",
+                    sqe.toString(), ctx);
             Utils.invalidImage(response, getServletContext());
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.invalidImage(response, getServletContext());
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet);
+            Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
         }
     }
 }
