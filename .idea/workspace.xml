@@ -7,10 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7f8b586-c097-4367-b983-313524ac8894" name="Default" comment="commit for jan 18">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/tests/SavePhoto.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.class" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.class" afterPath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,27 +41,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SavePhoto.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/tests/SavePhoto.java">
+      <file leaf-file-name="ApproveMcsaDateCommit.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaDateCommit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="65" column="31" lean-forward="true" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
+            <state relative-caret-position="15">
+              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1592184729458" expanded="true" signature="1745:1802" ph="INSERT INTO qc_photos... " />
+                <marker date="1592287507656" expanded="true" signature="1023:1068" ph="SELECT `valu... configs" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApproveMcsaQC.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.java">
+      <file leaf-file-name="GetDateCommitList.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetDateCommitList.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-150">
-              <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+            <state relative-caret-position="-135">
+              <caret line="18" column="3" lean-forward="true" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1591340145315" expanded="true" signature="1279:1324" ph="SELECT `valu... configs" />
+                <marker date="1592287509960" expanded="true" signature="1000:1045" ph="SELECT `valu... configs" />
               </folding>
             </state>
           </provider>
@@ -148,8 +148,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetMcsaEngineModelList.java" />
-        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetMCSAJOImage.java" />
         <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetQualityCheckList.java" />
         <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetWorkOrderQCList.java" />
         <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/InitialJobOrder.java" />
@@ -197,8 +195,10 @@
         <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateCustomerPhoto.java" />
         <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UploadPhoto.java" />
         <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/utils/Loggers.java" />
-        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.java" />
         <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/tests/SavePhoto.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaDateCommit.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetDateCommitList.java" />
       </list>
     </option>
   </component>
@@ -376,8 +376,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -2024,7 +2024,9 @@
       <workItem from="1591593855320" duration="1823000" />
       <workItem from="1591758781559" duration="2775000" />
       <workItem from="1591843654353" duration="3105000" />
-      <workItem from="1592182771635" duration="3264000" />
+      <workItem from="1592182771635" duration="9922000" />
+      <workItem from="1592267135122" duration="809000" />
+      <workItem from="1592285282472" duration="2754000" />
     </task>
     <task id="LOCAL-00024" summary="Added asterisk for Date of birth to be not ignored.&#10;&#10;file : addcontacts.js line 459">
       <created>1508736019100</created>
@@ -2373,7 +2375,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7098675000" />
+    <option name="totallyTimeSpent" value="7108896000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2398,8 +2400,8 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1105919" sideWeight="0.431918" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25897035" sideWeight="0.568082" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16062993" sideWeight="0.6770045" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1700468" sideWeight="0.568082" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.63388807" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2410,8 +2412,8 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20204978" sideWeight="0.5055118" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2531,52 +2533,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SearchJoborderFromAdmin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="109" column="64" lean-forward="false" selection-start-line="109" selection-start-column="64" selection-end-line="109" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SetTransfer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="94" column="59" lean-forward="false" selection-start-line="94" selection-start-column="59" selection-end-line="94" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/UpdateInitialJoborder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="132" column="59" lean-forward="false" selection-start-line="132" selection-start-column="59" selection-end-line="132" selection-end-column="59" />
-          <folding>
-            <marker date="1591161845929" expanded="true" signature="3156:3556" ph="UPDATE initi... " />
-            <marker date="1591161845929" expanded="true" signature="6707:6803" ph="UPDATE initi... " />
-            <marker date="1591161845929" expanded="true" signature="7382:7503" ph="UPDATE initi... " />
-            <marker date="1591161845929" expanded="true" signature="7880:8053" ph="INSERT INTO initial_joborder_image... " />
-            <marker date="1591161845929" expanded="true" signature="8783:8872" ph="SELECT COUNT... initial_joborder_image" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/UpdateInitialJoborderWithoutPhoto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="119" column="59" lean-forward="false" selection-start-line="119" selection-start-column="59" selection-end-line="119" selection-end-column="59" />
-          <folding>
-            <marker date="1591161846027" expanded="true" signature="3332:3732" ph="UPDATE initi... " />
-            <marker date="1591161846027" expanded="true" signature="5996:6092" ph="UPDATE initi... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ActivateUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="116" column="59" lean-forward="false" selection-start-line="116" selection-start-column="59" selection-end-line="116" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddCustomerCompany.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
@@ -2765,13 +2721,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchContactFromUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="137" column="64" lean-forward="false" selection-start-line="137" selection-start-column="64" selection-end-line="137" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchCustomerFromAdmin.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
@@ -2786,18 +2735,6 @@
           <folding>
             <element signature="imports" expanded="false" />
             <marker date="1591161846170" expanded="true" signature="2468:2736" ph="SELECT custo... customers" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SecurityKey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="131" column="64" lean-forward="false" selection-start-line="131" selection-start-column="64" selection-end-line="131" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <marker date="1591161847231" expanded="true" signature="3326:3374" ph="SELECT secre... admins" />
-            <marker date="1591161847231" expanded="true" signature="3449:3494" ph="SELECT secre... users" />
           </folding>
         </state>
       </provider>
@@ -2968,7 +2905,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="16" lean-forward="false" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2977,7 +2913,7 @@
         <state relative-caret-position="-817">
           <caret line="179" column="30" lean-forward="true" selection-start-line="179" selection-start-column="30" selection-end-line="179" selection-end-column="30" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <marker date="1591161845794" expanded="true" signature="8645:8697" ph="SELECT admin... admins" />
             <marker date="1591161845794" expanded="true" signature="9235:9281" ph="SELECT admin... admins" />
             <marker date="1591161845794" expanded="true" signature="9794:9837" ph="SELECT csa_i... users" />
@@ -2992,7 +2928,7 @@
         <state relative-caret-position="202">
           <caret line="886" column="0" lean-forward="true" selection-start-line="886" selection-start-column="0" selection-end-line="886" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <marker date="1591156651381" expanded="true" signature="5683:5708" ph="SELECT value... configs" />
             <marker date="1591156651381" expanded="true" signature="6452:6500" ph="SELECT count... country" />
             <marker date="1591156651381" expanded="true" signature="7072:7118" ph="SELECT next_... industry" />
@@ -3042,24 +2978,98 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.java">
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchContactFromUser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-150">
-          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+        <state relative-caret-position="30">
+          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1591340145315" expanded="true" signature="1279:1324" ph="SELECT `valu... configs" />
+            <marker date="1591161847043" expanded="true" signature="2468:2633" ph="SELECT lastn... contacts" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/tests/SavePhoto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="65" column="31" lean-forward="true" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
+        <state relative-caret-position="540">
+          <caret line="65" column="25" lean-forward="false" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
             <marker date="1592184729458" expanded="true" signature="1745:1802" ph="INSERT INTO qc_photos... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="97" column="50" lean-forward="false" selection-start-line="97" selection-start-column="50" selection-end-line="97" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1592285380706" expanded="true" signature="1279:1324" ph="SELECT `valu... configs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SecurityKey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="103" column="33" lean-forward="false" selection-start-line="103" selection-start-column="33" selection-end-line="103" selection-end-column="33" />
+          <folding>
+            <marker date="1591161847231" expanded="true" signature="3326:3374" ph="SELECT secre... admins" />
+            <marker date="1591161847231" expanded="true" signature="3449:3494" ph="SELECT secre... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetMcsaEngineModelList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding>
+            <marker date="1591161847617" expanded="true" signature="1074:1119" ph="SELECT `valu... configs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-681">
+          <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+          <folding>
+            <marker date="1591161845771" expanded="true" signature="2175:2460" ph="SELECT initi... initial_joborder" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetJoWoStatusList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2098">
+          <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding>
+            <marker date="1591161846384" expanded="true" signature="1003:1048" ph="SELECT `valu... configs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaDateCommit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1592287507656" expanded="true" signature="1023:1068" ph="SELECT `valu... configs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetDateCommitList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-135">
+          <caret line="18" column="3" lean-forward="true" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1592287509960" expanded="true" signature="1000:1045" ph="SELECT `valu... configs" />
           </folding>
         </state>
       </provider>

@@ -97,8 +97,6 @@ public class ApproveMcsaQC extends HttpServlet {
         String woid = request.getParameter("woid");
         Part wophoto = request.getPart("wophoto");
 
-
-
         //  check wophoto parameter
         if (wophoto == null) {
             Utils.printJsonException(resJson, "Workorder photo null. Try again.", out);
