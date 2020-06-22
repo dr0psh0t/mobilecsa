@@ -31,9 +31,12 @@ public class ConfirmMomentarySessions extends HttpServlet {
             }
 
             out.println(responseJson);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", e.toString(), getServletContext());
             Utils.printJsonException(responseJson, e.toString(), out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", e.toString(),
+                    getServletContext(), null);
+
         }
     }
 

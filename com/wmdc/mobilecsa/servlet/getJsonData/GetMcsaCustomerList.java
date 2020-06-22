@@ -43,11 +43,11 @@ public class GetMcsaCustomerList extends HttpServlet {
             return key;
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE,
-                    "db_exception", sqe.toString(), context);
+                    "db_exception", sqe.toString(), context, conn);
             return null;
         } catch (Exception e) {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE,
-                    "exception", e.toString(), context);
+                    "exception", e.toString(), context, conn);
             return null;
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet, getServletContext());
@@ -178,17 +178,19 @@ public class GetMcsaCustomerList extends HttpServlet {
                 out.println(resJson);
 
             } else {
-                System.err.println("Approve request did not succeed. Status code: "+statusCode);
                 Utils.printJsonException(resJson, "Request did not succeed.", out);
             }
+
         } catch (MalformedURLException | ConnectException | SocketTimeoutException e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE,
-                    "DBException", e.toString(), ctx);
-            Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.printJsonException(new JSONObject(), e.toString(), out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Network Exception",
+                    e.toString(), ctx, null);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE,
-                    "Exception", e.toString(), ctx);
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), e.toString(), out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString(),
+                    ctx, null);
+
         } finally {
             if (conn != null) {
                 conn.disconnect();

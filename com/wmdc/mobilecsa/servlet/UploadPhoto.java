@@ -15,7 +15,6 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @MultipartConfig(fileSizeThreshold = 1024*1024*6,   //  6MB
@@ -58,12 +57,8 @@ public class UploadPhoto extends HttpServlet {
 
             photoStream = photoPart.getInputStream();
 
-            if (photoPart.getSize() > (Utils.REQUIRED_IMAGE_BYTES-100_000)) {
-                photoStream = Utils.reduceImage(photoStream);
-            }
-
             if (photoStream == null) {
-                Utils.printJsonException(resJson, "File resource is empty. Try again or see logs.", out);
+                Utils.printJsonException(resJson, "Photo stream is null. Try again or see logs.", out);
                 return;
             }
 
@@ -76,13 +71,14 @@ public class UploadPhoto extends HttpServlet {
                 Utils.printJsonException(resJson, "No photo was uploaded", out);
             }
         } catch (SQLException | ClassNotFoundException sqe) {
+            Utils.printJsonException(resJson, "DB exception raised", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "SQLException", sqe.toString(),
-                    getServletContext());
-            Utils.printJsonException(resJson, "Database error occurred.", out);
+                    getServletContext(), conn);
+
         } catch (Exception e) {
+            Utils.printJsonException(resJson, "Exception raised", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(),
-                    getServletContext());
-            Utils.printJsonException(resJson, "Exception has occurred.", out);
+                    getServletContext(), conn);
         } finally {
             Utils.closeDBResource(conn, prepStmt, null, getServletContext());
             if (photoStream != null) {

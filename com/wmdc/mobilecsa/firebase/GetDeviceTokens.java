@@ -54,11 +54,11 @@ public class GetDeviceTokens extends HttpServlet {
             out.println(obj);
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
-                    sqe.toString(), getServletContext());
+                    sqe.toString(), getServletContext(), conn);
             Utils.printJsonException(new JSONObject(), sqe.toString(), out);
         } catch (Exception e) {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception",
-                    e.toString(), getServletContext());
+                    e.toString(), getServletContext(), conn);
             Utils.printJsonException(new JSONObject(), e.toString(), out);
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet, getServletContext());

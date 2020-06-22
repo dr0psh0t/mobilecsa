@@ -223,7 +223,7 @@ public class TransferCustomer extends HttpServlet {
 
             prepStmt.setInt(39, calibration);                           //  calibration
             prepStmt.setInt(40, assignedCsa);                           //  assigned_csa
-            prepStmt.setDate(41, Utils.getDate(dateAdded, ctx));     //  date_associated
+            prepStmt.setDate(41, Utils.getDate(dateAdded, ctx, conn));     //  date_associated
             prepStmt.setString(42, classification);                     //  classification
             prepStmt.setString(43, plant);                              //  plant
 
@@ -272,12 +272,16 @@ public class TransferCustomer extends HttpServlet {
             profilePhoto.close();
             signature.close();
             Utils.printSuccessJson(resJson, "Successfully Transferred customer", out);
+
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(resJson, "Database error occurred.", out);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
+                    ctx, conn);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(resJson, "Exception has occurred.", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
+                    conn);
+
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             Utils.closeDBResource(connCRM, null, null, ctx);

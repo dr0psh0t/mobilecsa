@@ -106,15 +106,20 @@ public class GetInitialJoborderSignature extends HttpServlet {
             } else {
                 Utils.printJsonException(resJson, "System cannot find signature", response.getWriter());
             }
+
         } catch (ClassNotFoundException | SQLException sqe) {
             response.setContentType("application/json");
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString(),ctx);
             Utils.printJsonException(new JSONObject(), sqe.toString(), response.getWriter());
+
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString(),
+                    ctx, conn);
 
         } catch (Exception e) {
             response.setContentType("application/json");
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", response.getWriter());
+
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx,
+                    conn);
 
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet, ctx);

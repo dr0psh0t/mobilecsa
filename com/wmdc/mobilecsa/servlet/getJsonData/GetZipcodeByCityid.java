@@ -65,22 +65,29 @@ public class GetZipcodeByCityid extends HttpServlet {
             responseJson.put("cityId", cityId);
 
             out.println(responseJson);
+
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(),
-                    Utils.GET_JSON_DATA_PACKAGE, "db_exception", sqe.toString(), ctx);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "db_exception",
+                    sqe.toString(), ctx, conn);
+
             responseJson.put("success", false);
             responseJson.put("reason", "An error occured in zip code");
             responseJson.put("zipCode", 0);
             responseJson.put("cityId", cityId);
+
             out.println(responseJson);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(),
-                    Utils.GET_JSON_DATA_PACKAGE, "exception", e.toString(), ctx);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "exception", e.toString(),
+                    ctx, conn);
+
             responseJson.put("success", false);
             responseJson.put("reason", e.getMessage());
             responseJson.put("zipCode", 0);
             responseJson.put("cityId", cityId);
+
             out.println(responseJson);
+
         } finally {
             Utils.closeDBResource(conn, null, null, getServletContext());
             out.close();

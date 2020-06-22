@@ -46,7 +46,7 @@ public class SendNotification extends HttpServlet {
         {
             Utils.printJsonException(resJson, e.toString(), out);
             Utils.displayStackTraceArray(e.getStackTrace(), "wmdc.mobilecsa.firebase",
-                    "Exception", e.toString(), getServletContext());
+                    "Exception", e.toString(), getServletContext(), null);
         }
     }
 
@@ -88,7 +88,7 @@ public class SendNotification extends HttpServlet {
         {
             Utils.printJsonException(resJson, e.toString(), out);
             Utils.displayStackTraceArray(e.getStackTrace(), "wmdc.mobilecsa.firebase",
-                    "Exception", e.toString(), getServletContext());
+                    "Exception", e.toString(), getServletContext(), null);
         }
         finally
         {

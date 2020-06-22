@@ -161,7 +161,8 @@ public class Utils {
             }
             return "jdbc:mysql://" + result.get(1) + ":" + result.get(2) + "/" + result.get(0);
         } catch (ClassNotFoundException | SQLException sqe) {
-            displayStackTraceArray(sqe.getStackTrace(), "wmdc.mobilecsa.utils", "DBException", sqe.toString(), servletContext);
+            displayStackTraceArray(sqe.getStackTrace(), "wmdc.mobilecsa.utils", "DBException", sqe.toString(),
+                    servletContext, conn);
             return null;
         } finally {
             closeDBResource(conn, prepStmt, resultSet, servletContext);
@@ -442,7 +443,7 @@ public class Utils {
         }
     }
 
-    public static Date getDate(String dateStr, ServletContext ctx) throws ParseException {
+    public static Date getDate(String dateStr, ServletContext ctx, Connection conn) throws ParseException {
         if (dateStr == null) {
             return null;
         }
@@ -453,7 +454,8 @@ public class Utils {
             java.util.Date date = dateFormat.parse(dateStr);
             return new java.sql.Date(date.getTime());
         } catch (ParseException pe) {
-            displayStackTraceArray(pe.getStackTrace(), "wmdc.mobilecsa.utils", "ParseException", pe.toString(), ctx);
+            displayStackTraceArray(pe.getStackTrace(), "wmdc.mobilecsa.utils", "ParseException", pe.toString(), ctx,
+                    conn);
             return null;
         }
     }
@@ -687,7 +689,7 @@ public class Utils {
             }
         } catch (NullPointerException npe) {
             displayStackTraceArray(npe.getStackTrace(), "wmdc.mobilecsa.utils", "NullPointerException",
-                    npe.toString(), ctx);
+                    npe.toString(), ctx, null);
             return false;
         }
         return true;
@@ -918,7 +920,9 @@ public class Utils {
         }
     }
 
-    public static InputStream getSignatureInputStream(String signature, ServletContext ctx) throws Exception {
+    public static InputStream getSignatureInputStream(String signature, ServletContext ctx, Connection conn)
+            throws Exception {
+
         try {
             String base64Signature = signature.split(",")[1];
             byte[] imageBytes = Base64.decodeBase64(base64Signature.getBytes());
@@ -929,37 +933,8 @@ public class Utils {
             ImageIO.write(signatureImage, "png", os);
             return new ByteArrayInputStream(os.toByteArray());
         } catch (Exception e) {
-            displayStackTraceArray(e.getStackTrace(), "wmdc.mobilecsa.utils", "IOException", e.toString(), ctx);
+            displayStackTraceArray(e.getStackTrace(), "wmdc.mobilecsa.utils", "IOException", e.toString(), ctx, conn);
             throw e;
-        }
-    }
-
-    public static String logError(String stackErrMsg, ServletContext servletContext, String packageRoot) {
-
-        Connection conn = null;
-        PreparedStatement prepStmt = null;
-
-        try {
-            databaseForName(servletContext);
-            conn = getConnection(servletContext);
-
-            prepStmt = conn.prepareStatement("INSERT INTO error_logs (error_message) VALUES (?)",
-                    Statement.RETURN_GENERATED_KEYS);
-
-            prepStmt.setString(1, stackErrMsg);
-            prepStmt.execute();
-
-            return "Error id "+getRecentId(prepStmt);
-        } catch (ClassNotFoundException | SQLException sqe) {
-            String errorMessage = sqe.toString() + " >> " + getRelevantTrace(sqe.getStackTrace(), packageRoot);
-            logError("db_exception: "+errorMessage, servletContext);
-            return errorMessage;
-        } catch (IOException ioe) {
-            String errorMessage = ioe.toString() + " >> " +getRelevantTrace(ioe.getStackTrace(), packageRoot);
-            logError("io_exception: "+errorMessage, servletContext);
-            return errorMessage;
-        } finally {
-            closeDBResource(conn, prepStmt, null, servletContext);
         }
     }
 
@@ -1036,7 +1011,7 @@ public class Utils {
 
             File fileOut = new File("pic.jpg");
             if (fileOut.exists()) {
-                System.out.println("fileOut.delete()= "+fileOut.delete());
+                fileOut.delete();
             }
             FileImageOutputStream output = new FileImageOutputStream(fileOut);
 
@@ -1084,12 +1059,12 @@ public class Utils {
 
             return key;
         } catch (ClassNotFoundException | SQLException sqe) {
-            displayStackTraceArray(sqe.getStackTrace(), "wmdc.mobilecsa.utils",
-                    "db_exception", sqe.toString(), servletContext);
+            displayStackTraceArray(sqe.getStackTrace(), "wmdc.mobilecsa.utils", "db_exception", sqe.toString(),
+                    servletContext, conn);
             return null;
         } catch (Exception e) {
-            displayStackTraceArray(e.getStackTrace(), "wmdc.mobilecsa.utils",
-                    "exception", e.toString(), servletContext);
+            displayStackTraceArray(e.getStackTrace(), "wmdc.mobilecsa.utils", "exception", e.toString(),
+                    servletContext, conn);
             return null;
         } finally {
             closeDBResource(conn, prepStmt, resultSet, servletContext);
@@ -1271,33 +1246,53 @@ public class Utils {
         }
     }
 
+    public static String getStackTrace(StackTraceElement[] traceElements, String packageRoot) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (StackTraceElement elem : traceElements) {
+            if (elem.toString().contains(packageRoot)) {
+                stringBuilder.append(" Source: ").append(elem.toString()).append(" ");
+            }
+        }
+
+        return stringBuilder.toString();
+    }
+
     public static void displayStackTraceArray(StackTraceElement[] stackTraceElements, String packageRoot,
-                                              String exceptionName, String toString, ServletContext ctx) {
+                                              String exceptionName, String toString, ServletContext ctx,
+                                              Connection conn) {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(exceptionName).append(": ").append(toString);
 
         for (StackTraceElement elem : stackTraceElements) {
             if (elem.toString().contains(packageRoot)) {
-                stringBuilder.append(" Source: ").append(elem.toString()).append(" ");
+                stringBuilder.append(elem.toString()).append(" ");
             }
         }
 
         logError(stringBuilder.toString(), ctx);
-    }
 
-    private static String getRelevantTrace(StackTraceElement[] traceElements, String packageRoot) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (StackTraceElement elem : traceElements) {
-            if (elem.toString().contains(packageRoot)) {
-                stringBuilder.append(packageRoot).append("\n");
+        PreparedStatement prepStmt = null;
+
+        try {
+
+            if (conn == null) {
+                Utils.databaseForName(ctx);
+                conn = Utils.getConnection(ctx);
             }
-        }
-        return stringBuilder.toString();
-    }
 
-    public static void println(Object object) {
-        System.out.println(object);
+            prepStmt = conn.prepareStatement("INSERT INTO error_logs (error_message) VALUES (?)");
+            prepStmt.setString(1, stringBuilder.toString());
+            prepStmt.execute();
+
+        } catch (ClassNotFoundException | SQLException sqe) {
+            logError(sqe.toString(), ctx);
+        } catch (Exception e) {
+            logError(e.toString(), ctx);
+        } finally {
+            closeDBResource(conn, prepStmt, null, ctx);
+        }
     }
 
     public static String getCorrectJson(String incorrectJsonStr) {

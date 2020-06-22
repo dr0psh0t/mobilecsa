@@ -113,12 +113,8 @@ public class AddContacts extends HttpServlet {
                 return;
             }
 
-            InputStream signatureInputStream = Utils.getSignatureInputStream(signature, ctx);
+            InputStream signatureInputStream = Utils.getSignatureInputStream(signature, ctx, conn);
             InputStream photoStream = filePart.getInputStream();
-
-            if (filePart.getSize() > (Utils.REQUIRED_IMAGE_BYTES-100_000)) {
-                photoStream = Utils.reduceImage(photoStream);
-            }
 
             if (photoStream == null) {
                 Utils.logError("Getting photo input stream from filePart returns null.", ctx);
@@ -169,7 +165,7 @@ public class AddContacts extends HttpServlet {
             prepStmt.setString(5, firstname);
 
             prepStmt.setString(6, mi);
-            prepStmt.setDate(7, Utils.getDate(birthDate, ctx));
+            prepStmt.setDate(7, Utils.getDate(birthDate, ctx, conn));
             prepStmt.setString(8, address);
             prepStmt.setInt(9, city);
             prepStmt.setInt(10, province);
@@ -219,12 +215,15 @@ public class AddContacts extends HttpServlet {
             signatureInputStream.close();
 
         } catch (ClassNotFoundException | SQLException sqe) {
+            Utils.printJsonException(new JSONObject(), "DB exception raised", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
-                    ctx);
-            Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+                    ctx, conn);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Exception raised", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(),
+                    ctx, conn);
+
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             Utils.closeDBResource(connCRM, prepStmt, resultSet, ctx);

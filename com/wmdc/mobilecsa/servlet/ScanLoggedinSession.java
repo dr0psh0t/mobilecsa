@@ -62,14 +62,17 @@ public class ScanLoggedinSession extends HttpServlet {
             responseJson.put("reason", "session is active");
 
             out.println(responseJson);
+
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
-                    getServletContext());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
+                    getServletContext(), conn);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(),
-                    getServletContext());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(),
+                    getServletContext(), conn);
+
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet, getServletContext());
             out.close();

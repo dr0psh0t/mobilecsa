@@ -57,13 +57,15 @@ public class GetErrorLogs extends HttpServlet {
 
             out.println(resJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException",
-                    sqe.toString(), getServletContext());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException",
+                    sqe.toString(), getServletContext(), conn);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(),
-                    getServletContext());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(),
+                    getServletContext(), conn);
+
         } finally {
             Utils.closeDBResource(conn, prepStmt, result, getServletContext());
             out.close();
@@ -82,10 +84,11 @@ public class GetErrorLogs extends HttpServlet {
         PreparedStatement prepStmt = null;
         ResultSet result = null;
 
+        /*
         if (request.getParameter("errorId") == null) {
             Utils.printJsonException(resJson, "Null parameters fond.", out);
             return;
-        }
+        }*/
 
         try {
             int errorId = Integer.parseInt(request.getParameter("errorId"));
@@ -109,13 +112,15 @@ public class GetErrorLogs extends HttpServlet {
 
             out.println(resJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
-                    sqe.toString(), getServletContext());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
+                    sqe.toString(), getServletContext(), conn);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString(),
-                    getServletContext());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString(),
+                    getServletContext(), conn);
+
         } finally {
             Utils.closeDBResource(conn, prepStmt, result, getServletContext());
             out.close();

@@ -122,13 +122,17 @@ public class UpdateInitialJoborder extends HttpServlet {
             updateSignature(conn, joSignature, initialJoborderIdInt, ctx);
 
             Utils.printSuccessJson(resJson, "Initial joborder has been updated "+updatePhotoStr, out);
+
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException",
-                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException",
+                    sqe.toString(), ctx, conn);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx,
+                    conn);
+
         } finally {
             Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
@@ -148,7 +152,7 @@ public class UpdateInitialJoborder extends HttpServlet {
 
     private void updateSignature(Connection conn, String joSignature, int initialJoborderId, ServletContext ctx) throws Exception {
         if (!joSignature.isEmpty()) {
-            InputStream signatureStream = Utils.getSignatureInputStream(joSignature, ctx);
+            InputStream signatureStream = Utils.getSignatureInputStream(joSignature, ctx, conn);
 
             PreparedStatement prepStmt = conn.prepareStatement("UPDATE initial_joborder SET signature = ? " +
                     "WHERE initial_joborder_id = ?");

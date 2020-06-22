@@ -106,11 +106,14 @@ public class GetCustomerPhoto extends HttpServlet {
                 Utils.invalidImage(response, getServletContext());
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.invalidImage(response, getServletContext());
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
+                    ctx, conn);
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.invalidImage(response, getServletContext());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
+                    conn);
+
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet, ctx);
             if (!success) {

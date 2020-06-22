@@ -156,14 +156,17 @@ public class Login extends HttpServlet {
             } else {
                 Utils.printJsonException(resJson, "Invalid username format.\nPlease try again.", out);
             }
+
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.logError(sqe.toString(), ctx);
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
             Utils.printJsonException(resJson, sqe.getMessage(), out);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
+                    ctx, conn);
+
         } catch (Exception e) {
-            Utils.logError(e.toString(), ctx);
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(resJson, e.getMessage(), out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
+                    conn);
+
         } finally {
             Utils.closeDBResource(conn, null, null, ctx);
             out.close();

@@ -42,11 +42,11 @@ public class GetCsaJoList extends HttpServlet {
             return key;
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString(),
-                    context);
+                    context, conn);
             return null;
         } catch (Exception e) {
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", e.toString(),
-                    context);
+                    context, conn);
             return null;
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet, getServletContext());
@@ -152,12 +152,15 @@ public class GetCsaJoList extends HttpServlet {
             }
 
         } catch (MalformedURLException | ConnectException | SocketTimeoutException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
-                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), sqe.toString(), out);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
+                    sqe.toString(), ctx, null);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx,
+                    null);
+
         } finally {
             if (conn != null) {
                 conn.disconnect();

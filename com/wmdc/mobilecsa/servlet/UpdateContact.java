@@ -147,7 +147,7 @@ public class UpdateContact extends HttpServlet {
             prepStmt.setString(5, jobPosition);
 
             prepStmt.setString(6, address);
-            prepStmt.setDate(7, Utils.getDate(year+"-"+month+"-"+day, ctx));
+            prepStmt.setDate(7, Utils.getDate(year+"-"+month+"-"+day, ctx, conn));
             prepStmt.setInt(8, plant);
 
             prepStmt.setInt(9, city);
@@ -182,12 +182,17 @@ public class UpdateContact extends HttpServlet {
             responseJson.put("success", true);
             responseJson.put("reason", "Successfully updated contact");
             out.println(responseJson);
+
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
-            Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.printJsonException(responseJson, "DB exception raised", out);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
+                    ctx, conn);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(responseJson, "Exception raised", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
+                    conn);
+
         } finally {
             Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();

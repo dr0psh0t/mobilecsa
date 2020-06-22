@@ -55,14 +55,17 @@ public class GetUsernames extends HttpServlet {
             responseJson.put("success", true);
 
             out.println(responseJson);
+
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
-                    sqe.toString(), getServletContext());
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
+                    sqe.toString(), getServletContext(), conn);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception",
-                    e.toString(), getServletContext());
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception",
+                    e.toString(), getServletContext(), conn);
+
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet, getServletContext());
             out.close();

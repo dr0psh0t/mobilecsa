@@ -21,7 +21,8 @@ public class Logout extends HttpServlet {
             HttpSession httpSession = request.getSession(false);
             httpSession.invalidate();
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), getServletContext());
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(),
+                    getServletContext(), null);
         } finally {
             response.sendRedirect("index.jsp");
         }

@@ -44,12 +44,12 @@ public class GetJoWoStatusList extends HttpServlet {
 
             return key;
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException",
-                    sqe.toString(), context);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString(),
+                    context, conn);
             return null;
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception",
-                    e.toString(), context);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), context,
+                    conn);
             return null;
         } finally {
             Utils.closeDBResource(conn, prepStmt, resultSet, context);
@@ -148,13 +148,17 @@ public class GetJoWoStatusList extends HttpServlet {
                 Utils.logError("Request did not succeed. Status code: "+statusCode, ctx);
                 Utils.printJsonException(resJson, "Request did not succeed. See logs or try again.", out);
             }
+
         } catch (MalformedURLException | ConnectException | SocketTimeoutException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
-                    sqe.toString(), ctx);
             Utils.printJsonException(new JSONObject(), sqe.toString(), out);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
+                    sqe.toString(), ctx, null);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx,
+                    null);
+
         } finally {
             if (conn != null) {
                 conn.disconnect();

@@ -82,14 +82,10 @@ public class InitialJobOrder extends HttpServlet {
             }
 
             InputStream photoStream = photoPart.getInputStream();
-            InputStream signatureStream = Utils.getSignatureInputStream(joSignature, ctx);
-
-            if (photoPart.getSize() > (Utils.REQUIRED_IMAGE_BYTES-100_000)) {
-                photoStream = Utils.reduceImage(photoStream);
-            }
+            InputStream signatureStream = Utils.getSignatureInputStream(joSignature, ctx, conn);
 
             if (photoStream == null) {
-                Utils.printJsonException(responseJson, "File stream is null. Cannot upload your photo.", out);
+                Utils.printJsonException(responseJson, "Photo stream is null. Cannot upload your photo.", out);
                 return;
             }
 
@@ -146,18 +142,24 @@ public class InitialJobOrder extends HttpServlet {
                 Utils.printSuccessJson(responseJson,
                         "Initial Joborder added but no picture was saved. Must update the joborder with photo.", out);
             }
+
             photoStream.close();
+
         } catch (SQLException sqe) {
+            Utils.printJsonException(responseJson, "DB exception raised.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "SQLException",
-                    sqe.toString(), ctx);
-            Utils.printJsonException(responseJson, "Database error occurred.", out);
+                    sqe.toString(), ctx, conn);
+
         } catch (ClassNotFoundException classE) {
+            Utils.printJsonException(responseJson, "DB exception raised.", out);
             Utils.displayStackTraceArray(classE.getStackTrace(), Utils.JOBORDER_PACKAGE, "ClassException",
-                    classE.toString(), ctx);
-            Utils.printJsonException(responseJson, "Database error occurred.", out);
+                    classE.toString(), ctx, conn);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx);
-            Utils.printJsonException(responseJson, "Exception has occurred.", out);
+            Utils.printJsonException(responseJson, "Exception raised.", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx,
+                    conn);
+
         } finally {
             Utils.closeDBResource(conn, prepStmt, null, ctx);
             out.close();
@@ -205,7 +207,7 @@ public class InitialJobOrder extends HttpServlet {
         return pictureCount > 0;
     }
 
-    private boolean isJoNumberExists(String joNo, Connection conn) throws SQLException {
+    private boolean isJoNumberExists(String joNo,  Connection conn) throws SQLException {
 
         PreparedStatement prepStmt = conn.prepareStatement(
                 "SELECT COUNT(*) AS joNoCount FROM initial_joborder WHERE jo_number = ?");

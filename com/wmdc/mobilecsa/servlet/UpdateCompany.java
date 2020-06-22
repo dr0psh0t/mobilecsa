@@ -171,12 +171,17 @@ public class UpdateCompany extends HttpServlet {
             responseJson.put("reason", "Successfully updated customer.");
 
             out.println(responseJson);
+
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx);
-            Utils.printJsonException(responseJson, "Database error occurred.", out);
+            Utils.printJsonException(responseJson, "DB exception raised", out);
+            Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
+                    ctx, conn);
+
         } catch (Exception e) {
-            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx);
-            Utils.printJsonException(responseJson, "Exception has occurred.", out);
+            Utils.printJsonException(responseJson, "Exception raised", out);
+            Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
+                    conn);
+
         } finally {
             Utils.closeDBResource(conn, prepStmt, null, ctx);
             Utils.closeDBResource(connCRM, null, null, ctx);
