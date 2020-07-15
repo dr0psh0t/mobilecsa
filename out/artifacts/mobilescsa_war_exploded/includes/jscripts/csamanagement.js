@@ -279,6 +279,7 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
                                 formBind : true,
                                 disabled : true,
                                 handler : function() {
+
                                     var form = this.up('form');
 
                                     if(form.isValid()) {
@@ -297,9 +298,27 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
                                                     callback : function(btn) {
 
                                                         if (btn === 'yes') {
+
+                                                            Ext.MessageBox.show({
+                                                                msg : 'Transfer',
+                                                                progressText : 'Transferring Customer...',
+                                                                width : 300,
+                                                                wait : true,
+                                                                waitConfig :
+                                                                    {
+                                                                        duration : 60000,
+                                                                        text : 'Transferring Customer...',
+                                                                        scope : this,
+                                                                        fn : function() {
+                                                                            Ext.MessageBox.hide();
+                                                                        }
+                                                                    }
+                                                            });
+
                                                             sendRequest('transfercontact', 'post', { contactId : records[0].data.contactId },
                                                                 function(o, s, response) {
                                                                     var assoc = Ext.decode(response.responseText);
+                                                                    Ext.MessageBox.hide();
 
                                                                     if (assoc['success']) {
                                                                         contactsStore.load({ url : 'getcontacts' });
@@ -360,10 +379,28 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
                     callback : function(btn) {
 
                         if (btn === 'yes') {
+
+                            Ext.MessageBox.show({
+                                msg : 'Delete',
+                                progressText : 'Deleting Contact...',
+                                width : 300,
+                                wait : true,
+                                waitConfig :
+                                    {
+                                        duration : 60000,
+                                        text : 'Deleting Contact...',
+                                        scope : this,
+                                        fn : function() {
+                                            Ext.MessageBox.hide();
+                                        }
+                                    }
+                            });
+
                             sendRequest('deletecontact', 'post', { contactId : records[0].data.contactId },
 
                                 function(o, s, response) {
                                     var assoc = Ext.decode(response.responseText);
+                                    Ext.MessageBox.hide();
 
                                     if (assoc['success']) {
                                         contactsStore.load({ url : 'getcontacts' });
@@ -612,9 +649,27 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
                                             buttons : Ext.Msg.YESNO,
                                             callback : function(btn) {
                                                 if (btn === 'yes') {
+
+                                                    Ext.MessageBox.show({
+                                                        msg : 'Transfer',
+                                                        progressText : 'Transferring Customer...',
+                                                        width : 300,
+                                                        wait : true,
+                                                        waitConfig :
+                                                            {
+                                                                duration : 60000,
+                                                                text : 'Transferring Customer...',
+                                                                scope : this,
+                                                                fn : function() {
+                                                                    Ext.MessageBox.hide();
+                                                                }
+                                                            }
+                                                    });
+
                                                     sendRequest('transfercompany', 'post', { customerId : records[0].data.customerId },
                                                         function(o, s, response) {
                                                         var assoc = Ext.decode(response.responseText);
+                                                        Ext.MessageBox.hide();
 
                                                         if (assoc['success']) {
                                                             customerCompanyStore.load({ url : 'getcustomercompany' });
@@ -628,7 +683,7 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
                                         });
                                     },
                                     failure	: function(form, action) {  //  not authorized
-                                        var assoc = Ext.JSON.decode(action.response.responseText);
+                                        var assoc = Ext.decode(action.response.responseText);
                                         Ext.Msg.alert('Warning', assoc['reason']);
                                     }
                                 });
@@ -684,9 +739,27 @@ var customerCompanyGrid = Ext.create('Ext.grid.Panel', {
                     buttons : Ext.Msg.YESNO,
                     callback : function(btn) {
                         if (btn === 'yes') {
+
+                            Ext.MessageBox.show({
+                                msg : 'Delete',
+                                progressText : 'Deleting Customer...',
+                                width : 300,
+                                wait : true,
+                                waitConfig :
+                                    {
+                                        duration : 60000,
+                                        text : 'Deleting Customer...',
+                                        scope : this,
+                                        fn : function() {
+                                            Ext.MessageBox.hide();
+                                        }
+                                    }
+                            });
+
                             sendRequest('deletecustomer', 'post', { customerId : records[0].data.customerId },
                                 function(o, s, response) {
                                     var assoc = Ext.decode(response.responseText);
+                                    Ext.MessageBox.hide();
 
                                     if (assoc['success']) {
                                         customerCompanyStore.load({ url : 'getcustomercompany' });
@@ -839,7 +912,7 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
         flex : 1,
         renderer : function(value) {
             if (value === 1) {
-                return '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
+                return '<img style="width: 20px;"src="includes/images/icons/check2.png" />';
             } else {
                 return '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
             }
@@ -945,9 +1018,27 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
                                             buttons : Ext.Msg.YESNO,
                                             callback : function(btn) {
                                                 if ('yes' === btn) {
+                                                    Ext.MessageBox.show({
+                                                        msg : 'Transfer',
+                                                        progressText : 'Transferring Customer...',
+                                                        width : 300,
+                                                        wait : true,
+                                                        waitConfig :
+                                                            {
+                                                                duration : 60000,
+                                                                text : 'Transferring Customer...',
+                                                                scope : this,
+                                                                fn : function() {
+                                                                    Ext.MessageBox.hide();
+                                                                }
+                                                            }
+                                                    });
+
                                                     sendRequest('transfercustomer', 'post', { customerId : records[0].data.customerId },
                                                         function(o, s, response) {
                                                             var assoc = Ext.decode(response.responseText);
+                                                            Ext.MessageBox.hide();
+
                                                             if (assoc['success']) {
                                                                 customerPersonStore.load({ url : 'getcustomerperson' });
                                                                 Ext.Msg.alert('Success', assoc['reason']);
@@ -1016,9 +1107,27 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
                     buttons : Ext.Msg.YESNO,
                     callback : function(btn) {
                         if (btn === 'yes') {
+
+                            Ext.MessageBox.show({
+                                msg : 'Delete',
+                                progressText : 'Deleting Customer...',
+                                width : 300,
+                                wait : true,
+                                waitConfig :
+                                    {
+                                        duration : 60000,
+                                        text : 'Deleting Customer...',
+                                        scope : this,
+                                        fn : function() {
+                                            Ext.MessageBox.hide();
+                                        }
+                                    }
+                            });
+
                             sendRequest('deletecustomer', 'post', { customerId : records[0].data.customerId },
                                 function(o, s, response) {
                                     var assoc = Ext.decode(response.responseText);
+                                    Ext.MessageBox.hide();
 
                                     if (assoc['success']) {
                                         customerPersonStore.load({ url : 'getcustomerperson' });
@@ -1429,6 +1538,23 @@ var joborderGridPanel = Ext.create('Ext.grid.Panel', {
                     callback : function(btn) {
 
                         if ('yes' === btn) {
+
+                            Ext.MessageBox.show({
+                                msg : 'Delete',
+                                progressText : 'Deleting Joborder...',
+                                width : 300,
+                                wait : true,
+                                waitConfig :
+                                    {
+                                        duration : 60000,
+                                        text : 'Deleting Joborder...',
+                                        scope : this,
+                                        fn : function() {
+                                            Ext.MessageBox.hide();
+                                        }
+                                    }
+                            });
+
                             sendRequest(
                                 'deleteinitialjoborder',
                                 'post', {
@@ -1436,6 +1562,7 @@ var joborderGridPanel = Ext.create('Ext.grid.Panel', {
                                 },
                                 function(o, s, response) {
                                     var assoc = Ext.decode(response.responseText);
+                                    Ext.MessageBox.hide();
                                     Ext.Msg.alert(assoc['success'] ? 'Success' : 'Failed', assoc['reason']);
                                     joborderStore.reload();
                                 }

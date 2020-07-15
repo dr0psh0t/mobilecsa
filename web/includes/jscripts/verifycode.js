@@ -66,25 +66,46 @@ var verifyCodeForm = Ext.create('Ext.form.Panel', {
         text : 'Submit',
         id : 'totpButton',
         handler: function() {
+
+            Ext.MessageBox.show({
+                msg : 'Security Key',
+                progressText : 'Verifying...',
+                width : 300,
+                wait : true,
+                waitConfig :
+                    {
+                        duration : 60000,
+                        text : 'Verifying...',
+                        scope : this,
+                        fn : function() {
+                            Ext.MessageBox.hide();
+                        }
+                    }
+            });
+
             var form = this.up('form').getForm();
 
             if(form.isValid()) {
-
                 form.submit({
                     url : 'securitykey',
                     method : 'post',
                     success: function(form, action) {
-                        var assoc = Ext.JSON.decode(action.response.responseText);
+                        var assoc = Ext.decode(action.response.responseText);
 
-                        if (assoc['isAdmin']) {
-                            location.assign("csamanagement.jsp");
-                        } else {
-                            location.assign("homeuser.jsp");
-                        }
+                        Ext.MessageBox.hide();
+
+                        setTimeout(function() {
+                            if (assoc['isAdmin']) {
+                                location.assign("csamanagement.jsp");
+                            } else {
+                                location.assign("homeuser.jsp");
+                            }
+                        }, 250);
                     },
                     failure: function(form, action) {
-                        var assoc = Ext.JSON.decode(action.response.responseText);
+                        var assoc = Ext.decode(action.response.responseText);
 
+                        Ext.MessageBox.hide();
                         Ext.MessageBox.show({
                             title : 'Fail',
                             message : assoc['reason'] + ". Go back to login page to generate the code.",

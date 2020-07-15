@@ -2,8 +2,6 @@
  * Created by wmdcprog on 9/5/2017.
  */
 
-// Stephanie Emma Jahboy Pilones
-
 sendRequest('scanloggedinsession', 'post', { source : '9' }, function (o, s, response) {
     var assoc = Ext.JSON.decode(response.responseText);
 
@@ -18,6 +16,7 @@ sendRequest('scanloggedinsession', 'post', { source : '9' }, function (o, s, res
 
 Ext.onReady(function() {
     Ext.QuickTips.init();
+
     Ext.create('Ext.container.Viewport', {
         renderTo : Ext.getBody(),
         items : [formLogin],
@@ -106,16 +105,42 @@ var formLogin = Ext.create('Ext.form.Panel', {
         formBind: true,
         disabled: true,
         handler: function() {
+
+            Ext.MessageBox.show({
+                msg : 'Login',
+                progressText : 'Logging in...',
+                width : 300,
+                wait : true,
+                waitConfig :
+                    {
+                        duration : 60000,
+                        text : 'Logging in...',
+                        scope : this,
+                        fn : function() {
+                            Ext.MessageBox.hide();
+                        }
+                    }
+            });
+
             var form = this.up('form').getForm();
-            if(form.isValid()) {
+
+            if (form.isValid()) {
                 form.submit({
                     success	: function() {
-                        location.assign('verifycode.jsp');
+                        Ext.MessageBox.hide();
+
+                        setTimeout(function() {
+                            location.assign('verifycode.jsp');
+                        }, 250);
                     },
-                    failure	: function(form, action) {
-                        var assoc = Ext.JSON.decode(action.response.responseText);
+                    failure: function(form, action) {
+                        var assoc = Ext.decode(action.response.responseText);
+                        Ext.MessageBox.hide();
+
                         if (assoc['isLocked']) {
-                            location.assign('createpassword.jsp');
+                            setTimeout(function() {
+                                location.assign('createpassword.jsp');
+                            }, 250);
                         } else {
                             Ext.MessageBox.alert('Failed', assoc["reason"]);
                         }

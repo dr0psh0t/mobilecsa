@@ -658,6 +658,23 @@ function editCustomer (customerId) {
                     text: 'Submit',
                     formBind: true,
                     handler: function() {
+
+                        Ext.MessageBox.show({
+                            msg : 'Update',
+                            progressText : 'Updating...',
+                            width : 300,
+                            wait : true,
+                            waitConfig :
+                                {
+                                    duration : 60000,
+                                    text : 'Updating...',
+                                    scope : this,
+                                    fn : function() {
+                                        Ext.MessageBox.hide();
+                                    }
+                                }
+                        });
+
                         var form = this.up('form');
 
                         if (form.isValid()) {
@@ -704,6 +721,8 @@ function editCustomer (customerId) {
                                 },
                                 success: function (form, action) {
                                     var assoc = Ext.JSON.decode(action.response.responseText);
+
+                                    Ext.MessageBox.hide();
                                     Ext.Msg.alert("Success", assoc['reason']);
 
                                     customerPersonStore.load({ url : 'getcustomerperson' });
@@ -713,6 +732,7 @@ function editCustomer (customerId) {
                                 },
                                 failure: function (form, action) {
                                     var assoc = Ext.JSON.decode(action.response.responseText);
+                                    Ext.MessageBox.hide();
                                     Ext.Msg.alert("Failed", assoc['reason']);
                                 }
                             });
