@@ -56,7 +56,7 @@ public class GetQualityCheckList extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         Utils.illegalRequest(response);
     }
 
@@ -92,7 +92,9 @@ public class GetQualityCheckList extends HttpServlet {
         String source = request.getParameter("source");
         String page = request.getParameter("page");
 
-        checkParameters(serverUrl, akey, cid, source, page, resJson, out, ctx);
+        if (!checkParameters(serverUrl, akey, cid, source, page, resJson, out, ctx)) {
+            return;
+        }
 
         try {
             url = new URL(serverUrl);
@@ -117,10 +119,10 @@ public class GetQualityCheckList extends HttpServlet {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
 
             writer.write(
-                "akey="+akey+
-                "&cid="+cid+
-                "&source="+source+
-                "&page="+page);
+                    "akey="+akey+
+                            "&cid="+cid+
+                            "&source="+source+
+                            "&page="+page);
 
             writer.flush();
             writer.close();
@@ -175,55 +177,59 @@ public class GetQualityCheckList extends HttpServlet {
         }
     }
 
-    public void checkParameters(String serverUrl, String akey, String cid, String source, String page,
+    public boolean checkParameters(String serverUrl, String akey, String cid, String source, String page,
                                 JSONObject resJson, PrintWriter out, ServletContext ctx) {
 
         if (serverUrl == null) {
             Utils.logError("\"serverUrl\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
-            return;
+            return false;
         } else if (serverUrl.isEmpty()) {
             Utils.logError("\"serverUrl\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
-            return;
+            return false;
         }
 
         if (akey == null) {
             Utils.logError("\"akey\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
-            return;
+            return false;
         } else if (akey.isEmpty()) {
             Utils.logError("\"akey\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
-            return;
+            return false;
         }
 
         if (cid == null) {
             Utils.logError("\"cid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
-            return;
+            return false;
         } else if (cid.isEmpty()) {
             Utils.logError("\"cid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
-            return;
+            return false;
         }
 
         if (source == null) {
             Utils.logError("\"source\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
-            return;
+            return false;
         } else if (source.isEmpty()) {
             Utils.logError("\"source\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
-            return;
+            return false;
         }
 
         if (page == null) {
             Utils.logError("\"page\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
+            return false;
         } else if (page.isEmpty()) {
             Utils.logError("\"page\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. Try again or see logs.", out);
+            return false;
         }
+
+        return true;
     }
 }

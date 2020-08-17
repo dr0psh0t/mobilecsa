@@ -3,7 +3,6 @@
  */
 
 sendRequest('confirmmomentarysessions', 'post', { source : '9' }, function(o, s, response) {
-
     var assoc = Ext.decode(response.responseText);
 
     if (!assoc['success']) {
@@ -33,7 +32,7 @@ var verifyCodeForm = Ext.create('Ext.form.Panel', {
     },
     items : [{
         xtype: 'textfield',
-        inputType : 'number',
+        //inputType : 'number',
         emptyText : 'Security Key',
         id : 'totp',
         name: 'securityKey',
@@ -72,15 +71,14 @@ var verifyCodeForm = Ext.create('Ext.form.Panel', {
                 progressText : 'Verifying...',
                 width : 300,
                 wait : true,
-                waitConfig :
-                    {
-                        duration : 60000,
-                        text : 'Verifying...',
-                        scope : this,
-                        fn : function() {
-                            Ext.MessageBox.hide();
-                        }
+                waitConfig: {
+                    duration : 60000,
+                    text : 'Verifying...',
+                    scope : this,
+                    fn : function() {
+                        Ext.MessageBox.hide();
                     }
+                }
             });
 
             var form = this.up('form').getForm();
@@ -98,7 +96,7 @@ var verifyCodeForm = Ext.create('Ext.form.Panel', {
                             if (assoc['isAdmin']) {
                                 location.assign("csamanagement.jsp");
                             } else {
-                                location.assign("homeuser.jsp");
+                                location.assign("home.jsp");
                             }
                         }, 250);
                     },
@@ -138,9 +136,5 @@ Ext.onReady(function () {
             pack : 'center'
         },
         items : [verifyCodeForm]
-    });
-
-    Ext.get('back').on('touchstart', function(){
-        location.assign('homeuser.jsp');
     });
 });

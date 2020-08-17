@@ -1,3 +1,7 @@
+<!--
+This file is deprecated
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

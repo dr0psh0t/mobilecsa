@@ -1,3 +1,7 @@
+<!--
+This file is deprecated
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,7 +121,12 @@
     <script src="includes/jscripts/signaturepad.js"></script>
 
     <!-- google maps -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYFvxckMZhyF9gTARyejjvT_rTKShiwG4&callback=initMap"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiyeaao7ku6pPuv_MBuJ8HwujLdJSHnYk&callback=initMap">
+        function initMap() {
+            console.log('google maps initialized.');
+        }
+    </script>
 
     <!-- utility scripts -->
     <script src="includes/jscripts/jsfunctions.js"></script>

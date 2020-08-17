@@ -113,7 +113,9 @@ public class ApproveMcsaQC extends HttpServlet {
         HashMap<String, String> params = new HashMap<>();
 
         //  check string parameters
-        checkParameters(serverUrl, akey, cid, source, joid, woid, resJson, out, params, ctx);
+        if (!checkParameters(serverUrl, akey, cid, source, joid, woid, resJson, out, params, ctx)) {
+            return;
+        }
 
         HttpURLConnection conn = null;
         URL url;
@@ -157,17 +159,6 @@ public class ApproveMcsaQC extends HttpServlet {
             outputStream.writeBytes("Content-Disposition: " +
                     "form-data; name=\"wophoto\";filename=\"wophotofilename\"" + lineEnd);
             outputStream.writeBytes(lineEnd);
-
-            /* comment this first, because it does not set the content-type of photo
-            outputStream.writeBytes(twoHyphens+boundary+lineEnd);
-            outputStream.writeBytes("Content-Disposition: form-data; name=\"reference\""+lineEnd);
-            outputStream.writeBytes(lineEnd);
-            outputStream.writeBytes("my_reference_text");
-            outputStream.writeBytes(lineEnd);
-            outputStream.writeBytes(twoHyphens + boundary + lineEnd);
-            outputStream.writeBytes("Content-Disposition: " +
-                    "form-data; name=\"wophoto\";filename=\"wophotofilename\"" + lineEnd);
-            outputStream.writeBytes(lineEnd);*/
 
             bytesAvailable = fileInputStream.available();
             bufferSize = Math.min(bytesAvailable, maxBufferSize);
@@ -290,66 +281,68 @@ public class ApproveMcsaQC extends HttpServlet {
         Utils.illegalRequest(response);
     }
 
-    public void checkParameters(String serverUrl, String akey, String cid, String source, String joid, String woid,
+    public boolean checkParameters(String serverUrl, String akey, String cid, String source, String joid, String woid,
                                 JSONObject resJson, PrintWriter out, HashMap<String, String> params,
                                 ServletContext ctx) {
 
         if (cid == null) {
             Utils.logError("\"cid\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-            return;
+            return false;
         } else if (cid.isEmpty()) {
             Utils.logError("\"cid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-            return;
+            return false;
         }
 
         if (source == null) {
             Utils.logError("\"source\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-            return;
+            return false;
         } else if (source.isEmpty()) {
             Utils.logError("\"source\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-            return;
+            return false;
         }
 
         if (joid == null) {
             Utils.logError("\"joid\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-            return;
+            return false;
         } else if (joid.isEmpty()) {
             Utils.logError("\"joid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-            return;
+            return false;
         }
 
         if (akey == null) {
             Utils.logError("\"akey\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-            return;
+            return false;
         } else if (akey.isEmpty()) {
             Utils.logError("\"akey\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-            return;
+            return false;
         }
 
         if (serverUrl == null) {
             Utils.logError("\"serverUrl\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-            return;
+            return false;
         } else if (serverUrl.isEmpty()) {
             Utils.logError("\"serverUrl\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
-            return;
+            return false;
         }
 
         if (woid == null) {
             Utils.logError("\"woid\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return false;
         } else if (woid.isEmpty()) {
             Utils.logError("\"woid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Rejected. Missing data required. See logs or try again.", out);
+            return false;
         }
 
         params.put("cid", cid);
@@ -357,5 +350,7 @@ public class ApproveMcsaQC extends HttpServlet {
         params.put("source", source);
         params.put("joid", joid);
         params.put("woid", woid);
+
+        return true;
     }
 }

@@ -112,6 +112,7 @@ public class SecurityKey extends HttpServlet {
                 resJson.put("apiKey", Utils.getAPIKey(getServletContext()));
                 resJson.put("localAddressNorth", Utils.getPropertyValue("localAddressNorth", getServletContext()));
                 resJson.put("publicAddressNorth", Utils.getPropertyValue("publicAddressNorth", getServletContext()));
+                resJson.put("serverAddress", Utils.getPropertyValue("serverAddress", getServletContext()));
 
                 if (!isAdmin) {
                     resJson.put("csaFullName", Utils.getCsaNameById(id, conn));

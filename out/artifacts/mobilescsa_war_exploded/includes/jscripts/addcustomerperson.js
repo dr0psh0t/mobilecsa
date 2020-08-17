@@ -1,6 +1,6 @@
 /**
- *
- * this is the js script for the page addcustomerperson.jsp
+ * Created by wmdcprog on 3/11/2017.
+ * This file is deprecated
  */
 
 const MAX_IMAGE_SIZE = 3000000;
@@ -10,16 +10,13 @@ var date = new Date();
 var currentDate = new Date();
 
 sendRequest('scanloggedinsession', 'post', { source : '5' }, function(o, s, response) {
-
     var assoc = Ext.decode(response.responseText);
 
-    if (assoc['success'])
-    {
+    if (assoc['success']) {
         if (assoc['isAdmin']) {
             location.assign('csamanagement.jsp');
         }
-    }
-    else {
+    } else {
         location.assign('index.jsp');
     }
 });
@@ -279,7 +276,8 @@ Ext.define('SignpadComponent', {
     height : 350,
     id: 'test',
     html : "<div class='wrapper'>" +
-    "<img src='includes/images/signarea.jpg' id='signImage' width="+(window.innerWidth - 50)+" height=350' />" +
+    //"<img src='includes/images/signarea.jpg' id='signImage' width="+(window.innerWidth - 50)+" height=350' />" +
+    "<img src='includes/images/signpad.png' id='signImage' width="+(window.innerWidth - 50)+" height=350' />" +
     "<canvas id='signature-pad' class='signature-pad' width="+(window.innerWidth - 50)+" height='350' style='touch-action: none;'></canvas>" +
     "</div>"
 });
@@ -1693,11 +1691,6 @@ Ext.onReady(function() {
         Ext.getCmp('lng').focus(false, 200);
     });
 
-    //  gesture listener for back arrow icon
-    Ext.get('back').on('touchstart', function(){
-        location.assign('addchoices.jsp');
-    });
-
     //  gesture listener for menu icon
     Ext.get('menuId').on('touchstart', function() {
 
@@ -1721,7 +1714,6 @@ function enableOnPageLoad()
     }
     else
     {
-        //location.assign('addchoices.jsp');
         Ext.getCmp('lat').setValue('0');
         Ext.getCmp('lng').setValue('0');
     }

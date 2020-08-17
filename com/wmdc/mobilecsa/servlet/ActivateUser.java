@@ -44,7 +44,9 @@ public class ActivateUser extends HttpServlet {
             String retypePassword = request.getParameter("retypepassword");
             String username = (String) httpSession.getAttribute("interimUsername");
 
-            checkParameters(lockedUsername, password, retypePassword, username, responseJson, out, ctx);
+            if (!checkParameters(lockedUsername, password, retypePassword, username, responseJson, out, ctx)) {
+                return;
+            }
 
             if (password.equals(retypePassword)) {
                 int passwordLen = password.length();
@@ -161,45 +163,49 @@ public class ActivateUser extends HttpServlet {
         Utils.illegalRequest(response);
     }
 
-    public void checkParameters(String lockedUsername, String password, String retypePassword, String username,
+    public boolean checkParameters(String lockedUsername, String password, String retypePassword, String username,
                                 JSONObject responseJson, PrintWriter out, ServletContext ctx) {
 
         if (lockedUsername == null) {
             Utils.logError("\"lockedUsername\" parameter is null", ctx);
             Utils.printJsonException(responseJson, "Missing data. See logs or try again.", out);
-            return;
+            return false;
         } else if (lockedUsername.isEmpty()) {
             Utils.logError("\"lockedUsername\" parameter is empty", ctx);
             Utils.printJsonException(responseJson, "Missing data. See logs or try again.", out);
-            return;
+            return false;
         }
 
         if (password == null) {
             Utils.logError("\"password\" parameter is null", ctx);
             Utils.printJsonException(responseJson, "Password required.", out);
-            return;
+            return false;
         } else if (password.isEmpty()) {
             Utils.logError("\"password\" parameter is empty", ctx);
             Utils.printJsonException(responseJson, "Password required.", out);
-            return;
+            return false;
         }
 
         if (retypePassword == null) {
             Utils.logError("\"retypePassword\" parameter is null", ctx);
             Utils.printJsonException(responseJson, "Retype password required.", out);
-            return;
+            return false;
         } else if (retypePassword.isEmpty()) {
             Utils.logError("\"retypePassword\" parameter is empty", ctx);
             Utils.printJsonException(responseJson, "Retype password required.", out);
-            return;
+            return false;
         }
 
         if (username == null) {
             Utils.logError("\"username\" parameter is null", ctx);
             Utils.printJsonException(responseJson, "Username required.", out);
+            return false;
         } else if (username.isEmpty()) {
             Utils.logError("\"username\" parameter is empty", ctx);
             Utils.printJsonException(responseJson, "Username required.", out);
+            return false;
         }
+
+        return true;
     }
 }

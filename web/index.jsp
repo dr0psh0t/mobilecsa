@@ -13,17 +13,7 @@
 <body>
 
 <script>
-
-    /*
-    if (typeof window.orientation !== 'undefined') {
-        location.assign('mlogin.jsp');
-    }
-    else {
-        location.assign('login.jsp');
-    }*/
-
     location.assign('login.jsp');
-
 </script>
 
 </body>

@@ -82,7 +82,9 @@ public class GetMCSAJOImage extends HttpServlet {
         String source = "mcsa";
         String jid = request.getParameter("joId");
 
-        checkParameters(serverUrl, akey, cid, source, jid, new JSONObject(), response.getWriter(), ctx);
+        if (!checkParameters(serverUrl, akey, cid, source, jid, new JSONObject(), response.getWriter(), ctx)) {
+            return;
+        }
 
         try {
             url = new URL(serverUrl);
@@ -139,55 +141,59 @@ public class GetMCSAJOImage extends HttpServlet {
         }
     }
 
-    public void checkParameters(String serverUrl, String akey, String cid, String source, String jid,
+    public boolean checkParameters(String serverUrl, String akey, String cid, String source, String jid,
                                 JSONObject resJson, PrintWriter out, ServletContext ctx) {
 
         if (serverUrl == null) {
             Utils.logError("\"serverUrl\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
-            return;
+            return false;
         } else if (serverUrl.isEmpty()) {
             Utils.logError("\"serverUrl\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
-            return;
+            return false;
         }
 
         if (akey == null) {
             Utils.logError("\"akey\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
-            return;
+            return false;
         } else if (akey.isEmpty()) {
             Utils.logError("\"akey\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
-            return;
+            return false;
         }
 
         if (source == null) {
             Utils.logError("\"source\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
-            return;
+            return false;
         } else if (source.isEmpty()) {
             Utils.logError("\"source\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
-            return;
+            return false;
         }
 
         if (jid == null) {
             Utils.logError("\"jid\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
-            return;
+            return false;
         } else if (jid.isEmpty()) {
             Utils.logError("\"jid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
-            return;
+            return false;
         }
 
         if (cid == null) {
             Utils.logError("\"cid\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
+            return false;
         } else if (cid.isEmpty()) {
             Utils.logError("\"cid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data. Try again or see logs.", out);
+            return false;
         }
+
+        return true;
     }
 }

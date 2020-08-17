@@ -109,16 +109,9 @@
 
     <script src="includes/jscripts/jsfunctions.js"></script>
 
-    <script src="includes/jscripts/csamanagement.js"></script>
+    <script src="includes/jscripts/utils.js"></script>
 
-    <!--
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYFvxckMZhyF9gTARyejjvT_rTKShiwG4&callback=initMap">
-        function initMap() {
-            console.log('google maps initialized.');
-        }
-    </script>
-    -->
+    <script src="includes/jscripts/csamanagement.js"></script>
 
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiyeaao7ku6pPuv_MBuJ8HwujLdJSHnYk&callback=initMap">

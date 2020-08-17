@@ -1,6 +1,6 @@
 /**
- *
- * this is the js script for the page addcontacts.jsp
+ * Created by wmdcprog on 3/11/2017.
+ * This file is deprecated
  */
 
 const MAX_IMAGE_SIZE = 3000000;
@@ -1665,7 +1665,7 @@ Ext.onReady(function() {
 
     //  gesture listener for back arrow icon
     Ext.get('back').on('touchstart', function(){
-        location.assign('../../mcsa/homeuser.jsp');
+        location.assign('../../mcsa/home.jsp');
     });
 
     //  gesture listener for menu icon

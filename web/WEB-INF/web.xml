@@ -649,16 +649,6 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>GetDateCommitList</servlet-name>
-        <servlet-class>wmdc.mobilecsa.servlet.joborder.GetDateCommitList</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>GetDateCommitList</servlet-name>
-        <url-pattern>/getdclist</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>GetInitialJoborderList</servlet-name>
         <servlet-class>wmdc.mobilecsa.servlet.joborder.GetInitialJoborderList</servlet-class>
     </servlet>

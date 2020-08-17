@@ -8,7 +8,7 @@
 
     <meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <title>Verfy code</title>
+    <title>Verify code</title>
 
     <link rel="stylesheet" href="includes/css/themes/theme-triton-all.css">
 

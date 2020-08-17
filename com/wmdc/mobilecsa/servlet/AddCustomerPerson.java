@@ -52,15 +52,19 @@ public class AddCustomerPerson extends HttpServlet {
         String mobile = request.getParameter("mobile");
         Part filePart = request.getPart("photo");
 
-        Utils.checkParameterValue(request.getParameter("csaId"), request.getParameter("faxCode"),
+        if (!Utils.checkParameterValue(request.getParameter("csaId"), request.getParameter("faxCode"),
                 request.getParameter("city"), request.getParameter("country"), request.getParameter("zip"),
                 request.getParameter("areaCode"), request.getParameter("industry"), request.getParameter("plant"),
                 request.getParameter("er"), request.getParameter("mf"), request.getParameter("spareParts"),
                 request.getParameter("calib"), request.getParameter("province"), request.getParameter("signStatus"),
-                address, signature, filePart, out, ctx);
+                address, signature, filePart, out, ctx)) {
+            return;
+        }
 
-        checkParameters(request.getParameter("faxCountryCode"), request.getParameter("countryCode"), lastname,
-                firstname, birthDate, mi, mobile, out, ctx);
+        if (!checkParameters(request.getParameter("faxCountryCode"), request.getParameter("countryCode"), lastname,
+                firstname, birthDate, mi, mobile, out, ctx)) {
+            return;
+        }
 
         Connection connCRM = null;
         Connection conn = null;
@@ -293,75 +297,80 @@ public class AddCustomerPerson extends HttpServlet {
         return customerCount;
     }
 
-    public void checkParameters(String faxCountryCode, String countryCode, String lastname, String firstname,
+    //  if true, some parameters are empty or null.
+    public boolean checkParameters(String faxCountryCode, String countryCode, String lastname, String firstname,
                                 String birthDate, String mi, String mobile, PrintWriter out, ServletContext ctx) {
 
         if (faxCountryCode == null) {
             Utils.logError("\"faxCountryCode\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Fax country code is required.", out);
-            return;
+            return false;
         } else if (faxCountryCode.isEmpty()) {
             Utils.logError("\"faxCountryCode\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Fax country code is required.", out);
-            return;
+            return false;
         }
 
         if (countryCode == null) {
             Utils.logError("\"countryCode\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Country code is required.", out);
-            return;
+            return false;
         } else if (countryCode.isEmpty()) {
             Utils.logError("\"countryCode\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Country code is required.", out);
-            return;
+            return false;
         }
 
         if (lastname == null) {
             Utils.logError("\"lastname\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Lastname is required.", out);
-            return;
+            return false;
         } else if (lastname.isEmpty()) {
             Utils.logError("\"lastname\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Lastname is required.", out);
-            return;
+            return false;
         }
 
         if (firstname == null) {
             Utils.logError("\"firstname\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Firstname is required.", out);
-            return;
+            return false;
         } else if (firstname.isEmpty()) {
             Utils.logError("\"firstname\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Firstname is required.", out);
-            return;
+            return false;
         }
 
         if (birthDate == null) {
             Utils.logError("\"birthDate\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Birthdate is required.", out);
-            return;
+            return false;
         } else if (birthDate.isEmpty()) {
             Utils.logError("\"birthDate\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Birthdate is required.", out);
-            return;
+            return false;
         }
 
         if (mi == null) {
             Utils.logError("\"mi\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "MI is required.", out);
-            return;
+            return false;
         } else if (mi.isEmpty()) {
             Utils.logError("\"mi\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "MI is required.", out);
-            return;
+            return false;
         }
 
         if (mobile == null) {
             Utils.logError("\"mobile\" parameter is null.", ctx);
             Utils.printJsonException(new JSONObject(), "Mobile is required.", out);
+            return false;
         } else if (mobile.isEmpty()) {
             Utils.logError("\"mobile\" parameter is empty.", ctx);
             Utils.printJsonException(new JSONObject(), "Mobile is required.", out);
+            return false;
         }
+
+        return true;
     }
 }

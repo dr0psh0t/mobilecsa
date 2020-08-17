@@ -88,7 +88,9 @@ public class GetJoWoStatusList extends HttpServlet {
         String source = "mcsa";
         String joId = request.getParameter("joId");
 
-        checkParameters(serverUrl, akey, cid, source, joId, resJson, out, ctx);
+        if (!checkParameters(serverUrl, akey, cid, source, joId, resJson, out, ctx)) {
+            return;
+        }
 
         try {
             url = new URL(serverUrl);
@@ -172,55 +174,59 @@ public class GetJoWoStatusList extends HttpServlet {
         Utils.illegalRequest(response);
     }
 
-    public void checkParameters(String serverUrl, String akey, String cid, String source, String joId,
+    public boolean checkParameters(String serverUrl, String akey, String cid, String source, String joId,
                                 JSONObject resJson, PrintWriter out, ServletContext ctx) {
 
         if (cid == null) {
             Utils.logError("\"cid\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-            return;
+            return false;
         } else if (cid.isEmpty()) {
             Utils.logError("\"cid\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-            return;
+            return false;
         }
 
         if (source == null) {
             Utils.logError("\"source\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-            return;
+            return false;
         } else if (source.isEmpty()) {
             Utils.logError("\"source\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-            return;
+            return false;
         }
 
         if (akey == null) {
             Utils.logError("\"akey\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-            return;
+            return false;
         } else if (akey.isEmpty()) {
             Utils.logError("\"akey\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-            return;
+            return false;
         }
 
         if (joId == null) {
             Utils.logError("\"joId\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-            return;
+            return false;
         } else if (joId.isEmpty()) {
             Utils.logError("\"joId\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
-            return;
+            return false;
         }
 
         if (serverUrl == null) {
             Utils.logError("\"serverUrl\" parameter is null", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
+            return false;
         } else if (serverUrl.isEmpty()) {
             Utils.logError("\"serverUrl\" parameter is empty", ctx);
             Utils.printJsonException(resJson, "Missing data required. See logs or try again.", out);
+            return false;
         }
+
+        return true;
     }
 }

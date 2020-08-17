@@ -1,6 +1,6 @@
 /**
- *
- * this is the js script for the page addcustomercompany.jsp
+ * Created by wmdcprog on 3/11/2017.
+ * This file is deprecated
  */
 
 const MAX_IMAGE_SIZE = 3000000;
@@ -1496,10 +1496,6 @@ Ext.onReady(function() {
         Ext.getCmp('lng').focus(false, 200);
     });
 
-    Ext.get('back').on('touchstart', function(){
-        location.assign('addchoices.jsp');
-    });
-
     Ext.get('menuId').on('touchstart', function(){
 
         if (navClose) {
@@ -1522,7 +1518,6 @@ function enableOnPageLoad()
     }
     else
     {
-        //location.assign('addchoices.jsp');
         Ext.getCmp('lat').setValue('0');
         Ext.getCmp('lng').setValue('0');
     }
