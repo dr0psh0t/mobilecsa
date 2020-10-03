@@ -2,7 +2,7 @@
  * Created by wmdcprog on 3/11/2017.
  */
 
-sendRequest('scanloggedinsession', 'post', { source : '8' }, function(o, s, response) {
+sendRequest('scanloggedinsession', 'post', { source: '8' }, function(o, s, response) {
     var assoc = Ext.decode(response.responseText);
 
     if (assoc['success']) {
@@ -70,7 +70,7 @@ var topMostPanel = Ext.create('Ext.panel.Panel', {
             cls: 'x-button',
             width: 140,
             height: 140,
-            margin : '5 5 5 5',
+            margin: '5 5 5 5',
             html: '<span class="bigBtn">Company</span>',
             listeners: {
                 click: function() {

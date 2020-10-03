@@ -2,7 +2,7 @@
  * Created by wmdcprog on 3/11/2017.
  */
 
-sendRequest('scanloggedinsession', 'post', { source : '5' }, function(o, s, response) {
+sendRequest('scanloggedinsession', 'post', { source: '5' }, function(o, s, response) {
     var assoc = Ext.decode(response.responseText);
 
     if (assoc['success']) {
@@ -88,7 +88,7 @@ Ext.onReady(function() {
                         html: '<span class="bigBtn">Joborder</span>',
                         listeners: {
                             click: function() {
-                                location.assign('initialjoborder.jsp');
+                                location.assign('johome.jsp');
                             }
                         }
                     }]

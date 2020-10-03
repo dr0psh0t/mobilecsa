@@ -1,5 +1,5 @@
 <!--
-This file is deprecated
+deprecated
 -->
 
 <!DOCTYPE html>

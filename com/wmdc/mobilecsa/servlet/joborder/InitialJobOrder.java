@@ -232,7 +232,7 @@ public class InitialJobOrder extends HttpServlet {
                                String category, String remarks, String make, String customerId,
                                String modelId, String preparedBy, String referenceNo, String joSignature,
                                String source, String purchaseOrder, String joNumber, Part photoPart, PrintWriter out,
-                                ServletContext ctx) {
+                                   ServletContext ctx) {
 
         if (customer == null) {
             Utils.logError("\"customer\" parameter is null.", ctx);

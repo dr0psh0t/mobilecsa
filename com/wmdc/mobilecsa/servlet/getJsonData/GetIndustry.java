@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 @WebServlet("/getindustries")
 public class GetIndustry extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,15 +32,15 @@ public class GetIndustry extends HttpServlet {
         ArrayList<JSONObject> arrayList = new ArrayList<>();
         JSONObject obj;
 
-        Connection conn = null;
+        Connection connCrm = null;
         PreparedStatement prepStmt = null;
         ResultSet resultSet = null;
 
         try {
             Utils.databaseForName(getServletContext());
-            conn = Utils.getConnectionFromCRM(getServletContext());
+            connCrm = Utils.getConnectionFromCRM(getServletContext());
 
-            prepStmt = conn.prepareStatement("SELECT industry_id, id1, id2, industry FROM industry");
+            prepStmt = connCrm.prepareStatement("SELECT industry_id, id1, id2, industry FROM industry");
             resultSet = prepStmt.executeQuery();
 
             while (resultSet.next()) {
@@ -56,15 +57,15 @@ public class GetIndustry extends HttpServlet {
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
-                    sqe.toString(), getServletContext(), conn);
+                    sqe.toString(), getServletContext(), connCrm);
 
         } catch (Exception e) {
             Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString(),
-                    getServletContext(), conn);
+                    getServletContext(), connCrm);
 
         } finally {
-            Utils.closeDBResource(conn, prepStmt, resultSet, getServletContext());
+            Utils.closeDBResource(connCrm, prepStmt, resultSet, getServletContext());
             out.close();
         }
     }

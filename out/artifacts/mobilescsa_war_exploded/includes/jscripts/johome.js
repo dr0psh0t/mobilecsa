@@ -25,7 +25,7 @@ Ext.onReady(function() {
                 xtype: 'panel',
                 region: 'center',
                 layout: 'border',
-                title: 'Home',
+                title: 'JO Home',
                 titleAlign: 'center',
                 header: {
                     titlePosition: 1,
@@ -39,6 +39,13 @@ Ext.onReady(function() {
                         height: 25,
                         cls: ['my-field-cls'],
                         id: 'menuId'
+                    },{
+                        xtype: 'image',
+                        src: 'includes/images/icons/backarrow.png',
+                        width: 25,
+                        height: 25,
+                        cls: ['my-field-cls'],
+                        id: 'back'
                     }]
                 },
                 items: [{
@@ -57,10 +64,10 @@ Ext.onReady(function() {
                         width: 140,
                         height: 140,
                         margin: '5 5 5 5',
-                        html: '<span class="bigBtn">Customer</span>',
+                        html: '<span class="bigBtn">Initial JO</span>',
                         listeners: {
                             click: function() {
-                                location.assign('customer.jsp');
+                                location.assign('initialjoborder.jsp');
                             }
                         }
                     },{
@@ -71,29 +78,23 @@ Ext.onReady(function() {
                         width: 140,
                         height: 140,
                         margin: '5 5 5 5',
-                        html: '<span class="bigBtn">Contacts</span>',
+                        html: '<span class="bigBtn">Initial JO List</span>',
                         listeners: {
                             click: function() {
-                                location.assign('contacts.jsp');
-                            }
-                        }
-                    },{
-                        xtype: 'button',
-                        iconCls: 'customer',
-                        iconAlign: 'top',
-                        cls: 'x-button',
-                        width: 140,
-                        height: 140,
-                        margin: '5 5 5 5',
-                        html: '<span class="bigBtn">Joborder</span>',
-                        listeners: {
-                            click: function() {
-                                location.assign('johome.jsp');
+                                location.assign('initialjolist.jsp');
                             }
                         }
                     }]
                 }]
             })
         ]
+    });
+
+    Ext.get('back').on('touchstart', function(){
+        location.assign('home.jsp');
+    });
+
+    Ext.get('menuId').on('touchstart', function() {
+        location.assign('home.jsp');
     });
 });

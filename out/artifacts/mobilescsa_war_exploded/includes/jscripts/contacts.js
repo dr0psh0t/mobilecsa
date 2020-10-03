@@ -2,7 +2,7 @@
  * Created by wmdcprog on 3/11/2017.
  */
 
-sendRequest('scanloggedinsession', 'post', { source : '8' }, function(o, s, response) {
+sendRequest('scanloggedinsession', 'post', { source: '8' }, function(o, s, response) {
     var assoc = Ext.decode(response.responseText);
 
     if (assoc['success']) {

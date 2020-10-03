@@ -2,7 +2,7 @@
  * Created by wmdcprog on 3/11/2017.
  */
 
-sendRequest('scanloggedinsession', 'post', { source : '8' }, function(o, s, response) {
+sendRequest('scanloggedinsession', 'post', { source: '8' }, function(o, s, response) {
     var assoc = Ext.decode(response.responseText);
 
     if (assoc['success']) {
@@ -27,23 +27,23 @@ Ext.define('Customer', {
 var customerStore = Ext.create('Ext.data.Store', {
     model: 'Customer',
     autoLoad: false/*,
-    proxy : {
-        type : 'ajax',
-        url : 'getmcsacustomerlist',
-        method : 'post',
-        extraParams : {
-            cid : csaId,
+    proxy: {
+        type: 'ajax',
+        url: 'getmcsacustomerlist',
+        method: 'post',
+        extraParams: {
+            cid: csaId,
             filter: customerFilter
         },
-        actionMethods : {
-            create : 'post',
-            read : 'post',
-            update : 'post',
-            destroy : 'post'
+        actionMethods: {
+            create: 'post',
+            read: 'post',
+            update: 'post',
+            destroy: 'post'
         },
-        reader : {
-            type : 'json',
-            rootProperty : 'customers'
+        reader: {
+            type: 'json',
+            rootProperty: 'customers'
         }
     }*/
 });
@@ -63,19 +63,19 @@ Ext.define('Engine', {
 var engineStore = Ext.create('Ext.data.Store', {
     model: 'Engine',
     autoLoad: false,
-    /*proxy : {
-        type : 'ajax',
-        url : 'getmcsaenginemodellist',
-        method : 'post',
-        actionMethods : {
-            create : 'post',
-            read : 'post',
-            update : 'post',
-            destroy : 'post'
+    /*proxy: {
+        type: 'ajax',
+        url: 'getmcsaenginemodellist',
+        method: 'post',
+        actionMethods: {
+            create: 'post',
+            read: 'post',
+            update: 'post',
+            destroy: 'post'
         },
-        reader : {
-            type : 'json',
-            rootProperty : 'models'
+        reader: {
+            type: 'json',
+            rootProperty: 'models'
         }
     }*/
 });
@@ -94,11 +94,10 @@ Ext.onReady(function() {
         items: [
             Ext.create('Ext.form.Panel', {
                 region: 'center',
-                title: 'New Company',
+                title: 'Initial Joborder',
                 titleAlign: 'center',
                 id: 'formId',
                 autoScroll: true,
-                url: 'addcustomercompany',
                 header: {
                     titlePosition: 1,
                     defaults: {
@@ -149,7 +148,7 @@ Ext.onReady(function() {
                     //name: 'customerId',
                     id: 'customer',
                     displayField: 'customer',
-                    //valueField : 'cId',
+                    //valueField: 'cId',
                     width: 300,
                     store: customerStore,
                     queryMode: 'remote',
@@ -437,8 +436,8 @@ Ext.onReady(function() {
                                     Ext.MessageBox.show({
                                         title: 'Message',
                                         msg: 'Successfully added initial joborder',
-                                        icon: Ext.MessageBox.WARNING,
-                                        buttons: Ext.MessageBox.OKCANCEL,
+                                        icon: Ext.MessageBox.INFO,
+                                        buttons: Ext.MessageBox.OK,
                                         fn: function() {
                                             window.location.reload(true);
                                         }
@@ -461,7 +460,7 @@ Ext.onReady(function() {
     });
 
     Ext.get('back').on('touchstart', function(){
-        location.assign('home.jsp');
+        location.assign('johome.jsp');
     });
 
     Ext.get('menuId').on('touchstart', function() {

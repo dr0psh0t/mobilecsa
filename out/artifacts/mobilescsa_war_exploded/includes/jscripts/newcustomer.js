@@ -626,13 +626,19 @@ Ext.onReady(function() {
                                 success: function(form, action) {
                                     try {
                                         var assoc = Ext.decode(action.response.responseText);
-                                        Ext.Msg.alert('Success', assoc['reason']);
+
+                                        Ext.MessageBox.show({
+                                            title: '',
+                                            msg: assoc['reason'],
+                                            icon: Ext.MessageBox.INFO,
+                                            buttons: Ext.MessageBox.OK,
+                                            fn: function() {
+                                                window.location.reload(true);
+                                            }
+                                        });
                                     } catch (err) {
                                         Ext.Msg.alert('Fail', err.toString());
                                     }
-
-                                    form.reset();
-                                    Ext.getCmp('photo').inputEl.dom.value = '';
                                 },
                                 failure: function(form, action) {
                                     try {

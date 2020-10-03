@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -118,6 +119,12 @@ public class Login extends HttpServlet {
 
                                     httpSession.setAttribute("isAdmin", true);
                                     out.println(resJson);
+
+                                    /*response.sendRedirect("/verifycode.jsp");
+                                    RequestDispatcher dispatcher = getServletContext()
+                                            .getRequestDispatcher("/verifycode.jsp");
+                                    dispatcher.forward(request, response);*/
+
                                 } else {
                                     Utils.printJsonException(resJson, "Login credentials incorrect.", out);
                                 }
@@ -139,6 +146,12 @@ public class Login extends HttpServlet {
                                         httpSession.setAttribute("lockedUsername", username);
 
                                         out.println(resJson);
+
+                                        /*response.sendRedirect("/verifycode.jsp");
+                                        RequestDispatcher dispatcher = getServletContext()
+                                                .getRequestDispatcher("/verifycode.jsp");
+                                        dispatcher.forward(request, response);*/
+
                                     } else {
                                         Utils.printJsonException(resJson, "Login credentials incorrect.", out);
                                     }

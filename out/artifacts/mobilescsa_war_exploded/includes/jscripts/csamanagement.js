@@ -163,11 +163,8 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
         align: 'center',
         flex: 1,
         renderer: function(value) {
-            if (value === 1) {
-                return '<img style="width: 20px;"src="includes/images/icons/check2.png" />';
-            } else {
-                return '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
-            }
+            return (value === 1) ? '<img style="width: 20px;"src="includes/images/icons/check2.png" />'
+                : '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
         }
     },{
         text: '<b>Deleted</b>',
@@ -175,11 +172,8 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
         align: 'center',
         flex: 1,
         renderer: function(value) {
-            if (value === 1) {
-                return '<img style="width: 20px;"src="includes/images/icons/check2.png" />';
-            } else {
-                return '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
-            }
+            return (value === 1) ? '<img style="width: 20px;"src="includes/images/icons/check2.png" />'
+                : '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
         }
     }],
     dockedItems: [{
@@ -331,7 +325,7 @@ var contactsGrid = Ext.create('Ext.grid.Panel', {
                                                     }
                                                 });
                                             },
-                                            failure	: function(form, action) {  //  not authorized
+                                            failure : function(form, action) {  //  not authorized
                                                 var assoc = Ext.JSON.decode(action.response.responseText);
                                                 Ext.Msg.alert('Warning', assoc['reason']);
                                             }
