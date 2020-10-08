@@ -47,7 +47,7 @@ public class GetAllInitialJoborderList extends HttpServlet {
             conn = Utils.getConnection(getServletContext());
 
             prepStmt = conn.prepareStatement("SELECT initial_joborder_id, customer_source, customer, date_stamp, " +
-                    "serial_num, model_id, make, jo_number, is_added FROM initial_joborder " +
+                    "serial_num, model_id, make, jo_number, is_added, cancelled FROM initial_joborder " +
                     "ORDER BY YEAR(date_stamp) DESC, MONTH(date_stamp) DESC, DAY(date_stamp) DESC ");
             resultSet = prepStmt.executeQuery();
 
@@ -66,6 +66,7 @@ public class GetAllInitialJoborderList extends HttpServlet {
                 resJson.put("make", resultSet.getString("make"));
                 resJson.put("joNumber", resultSet.getString("jo_number"));
                 resJson.put("added", resultSet.getInt("is_added"));
+                resJson.put("cancelled", resultSet.getInt("cancelled"));
 
                 initialJoborderList.add(resJson);
             }
@@ -77,12 +78,12 @@ public class GetAllInitialJoborderList extends HttpServlet {
 
             out.println(resJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot get initial joborders at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "DBException", sqe.toString(),
                     getServletContext(), conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot get initial joborders at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(),
                     getServletContext(), conn);
 

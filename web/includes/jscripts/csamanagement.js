@@ -1410,7 +1410,8 @@ Ext.define('Joborder', {
         { name: 'model', type: 'int' },
         { name: 'make', type: 'string' },
         { name: 'joNumber', type: 'string' },
-        { name: 'added', type: 'int' }
+        { name: 'added', type: 'int' },
+        { name: 'cancelled', type: 'int' }
     ]
 });
 
@@ -1494,6 +1495,18 @@ var joborderGridPanel = Ext.create('Ext.grid.Panel', {
                 return '<img style="width: 20px;"src="includes/images/icons/check2.png" />';
             }
         }
+    },{
+        text: '<b>Cancelled</b>',
+        dataIndex: 'cancelled',
+        cls: ['grid-column-align-center'],
+        flex: 0.3,
+        renderer: function(value) {
+            if (value === 0) {
+                return '<img style="width: 20px;"src="includes/images/icons/cross.png" />';
+            } else {
+                return '<img style="width: 20px;"src="includes/images/icons/check2.png" />';
+            }
+        }
     }],
     dockedItems: [{
         xtype: 'toolbar',
@@ -1506,6 +1519,67 @@ var joborderGridPanel = Ext.create('Ext.grid.Panel', {
             iconCls: 'refresh-icon',
             handler: function() {
                 joborderStore.reload();
+            }
+        },{
+            xtype: 'button',
+            text: '<b>Cancel</b>',
+            id: 'cancelJo',
+            iconCls: 'lock-icon',
+            handler: function() {
+                var records = Ext.getCmp('joborderGrid').getSelectionModel().getSelection();
+
+                if (records === null) {
+                    Ext.Msg.alert('Warning', 'Select joborder to cancel.');
+                    return;
+                }
+
+                if (records.length < 1) {
+                    Ext.Msg.alert('Warning', 'Select joborder to cancel.');
+                    return;
+                }
+
+                if (records[0].data.cancelled < 1) {
+
+                    Ext.Msg.show({
+                        title: 'Cancel Joborder',
+                        msg: 'Confirm cancellation of initial joborder',
+                        buttons: Ext.Msg.YESNO,
+                        callback: function(btn) {
+
+                            if ('yes' === btn) {
+
+                                Ext.MessageBox.show({
+                                    msg: 'Cancel',
+                                    progressText: 'Cancelling Joborder...',
+                                    width: 300,
+                                    wait: true,
+                                    waitConfig:
+                                        {
+                                            duration: 60000,
+                                            text: 'Cancelling Joborder...',
+                                            scope: this,
+                                            fn: function() {
+                                                Ext.MessageBox.hide();
+                                            }
+                                        }
+                                });
+
+                                sendRequest(
+                                    'canceljoborder',
+                                    'post', {
+                                        initialJoborderId: records[0].data.initialJoborderId
+                                    },
+                                    function(o, s, response) {
+                                        var assoc = Ext.decode(response.responseText);
+                                        Ext.MessageBox.hide();
+                                        Ext.Msg.alert(assoc['success'] ? 'Success': 'Failed', assoc['reason']);
+                                        joborderStore.reload();
+                                    }
+                                );
+                            }
+                        }
+                    });
+                }
             }
         },{
             xtype: 'button',

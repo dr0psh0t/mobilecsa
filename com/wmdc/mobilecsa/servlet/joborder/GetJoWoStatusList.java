@@ -152,12 +152,12 @@ public class GetJoWoStatusList extends HttpServlet {
             }
 
         } catch (MalformedURLException | ConnectException | SocketTimeoutException sqe) {
-            Utils.printJsonException(new JSONObject(), sqe.toString(), out);
+            Utils.printJsonException(new JSONObject(), "Cannot get workorder status list at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
                     sqe.toString(), ctx, null);
 
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot get workorder status list at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx,
                     null);
 

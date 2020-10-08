@@ -180,12 +180,12 @@ public class UpdateCustomer extends HttpServlet {
             out.println(responseJson);
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.printJsonException(responseJson, "DB exception raised", out);
+            Utils.printJsonException(responseJson, "Cannot update customer at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
                     ctx, conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(responseJson, "Exception raised", out);
+            Utils.printJsonException(responseJson, "Cannot update customer at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
                     conn);
 

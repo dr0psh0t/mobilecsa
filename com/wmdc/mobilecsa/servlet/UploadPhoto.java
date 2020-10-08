@@ -71,12 +71,12 @@ public class UploadPhoto extends HttpServlet {
                 Utils.printJsonException(resJson, "No photo was uploaded", out);
             }
         } catch (SQLException | ClassNotFoundException sqe) {
-            Utils.printJsonException(resJson, "DB exception raised", out);
+            Utils.printJsonException(resJson, "Cannot upload photo at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "SQLException", sqe.toString(),
                     getServletContext(), conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(resJson, "Exception raised", out);
+            Utils.printJsonException(resJson, "Cannot update photo at this moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(),
                     getServletContext(), conn);
         } finally {

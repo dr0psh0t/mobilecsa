@@ -72,11 +72,32 @@ public class InitialJobOrder extends HttpServlet {
             int modelId = Integer.parseInt(request.getParameter("modelId"));
             int preparedBy = Integer.parseInt(request.getParameter("preparedBy"));
 
+            //  change if jonumber exist and its not cancelled
+            /*
+            if jo exist
+                if jo is cancelled
+                    encode joborder
+                else if jo is not cancelled
+                    show message to tab. no encode.
+            else
+                encode joborder
+             */
+
+            if (isJoNumberExists(joNumber, conn)) {
+
+                if (!isCancelled(joNumber, conn)) {
+
+                    Utils.printJsonException(responseJson, "JO Number already exists.", out);
+                    return;
+                }
+            }
+
+            /*
             if (isJoNumberExists(joNumber, conn)) {
                 Utils.printJsonException(responseJson, "JO Number already exists.", out);
                 Utils.logError("Joborder is already saved in mcsa database", ctx);
                 return;
-            }
+            }*/
 
             if (make.equals("-Select Engine-") || category.equals("-Select Engine-")) {
                 Utils.printJsonException(responseJson, "Include Engine Model.", out);
@@ -148,17 +169,17 @@ public class InitialJobOrder extends HttpServlet {
             photoStream.close();
 
         } catch (SQLException sqe) {
-            Utils.printJsonException(responseJson, "DB exception raised.", out);
+            Utils.printJsonException(responseJson, "Cannot add initial jo at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "SQLException",
                     sqe.toString(), ctx, conn);
 
         } catch (ClassNotFoundException classE) {
-            Utils.printJsonException(responseJson, "DB exception raised.", out);
+            Utils.printJsonException(responseJson, "Cannot add initial jo at this time.", out);
             Utils.displayStackTraceArray(classE.getStackTrace(), Utils.JOBORDER_PACKAGE, "ClassException",
                     classE.toString(), ctx, conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(responseJson, "Exception raised.", out);
+            Utils.printJsonException(responseJson, "Cannot add initial jo at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx,
                     conn);
 
@@ -207,6 +228,31 @@ public class InitialJobOrder extends HttpServlet {
         resultSet.close();
 
         return pictureCount > 0;
+    }
+
+    private boolean isCancelled(String joNo, Connection conn) throws SQLException {
+
+        PreparedStatement prepStmt = conn.prepareStatement(
+                "SELECT cancelled FROM initial_joborder WHERE jo_number = ?");
+        prepStmt.setString(1, joNo);
+
+        ResultSet resultSet = prepStmt.executeQuery();
+
+        int cancelled = 0;
+        while (resultSet.next()) {
+            cancelled = resultSet.getInt("cancelled");
+
+            //  break loop if found 0 of all cancelled searches
+            //  will return false if at least one 0-cancelled found
+            if (cancelled == 0) {
+                break;
+            }
+        }
+
+        prepStmt.close();
+        resultSet.close();
+
+        return cancelled == 1;
     }
 
     private boolean isJoNumberExists(String joNo,  Connection conn) throws SQLException {

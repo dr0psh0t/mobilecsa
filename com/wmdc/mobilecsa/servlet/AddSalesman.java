@@ -121,7 +121,7 @@ public class AddSalesman extends HttpServlet {
             }
 
             if (adminId < 1) {
-                Utils.printJsonException(responseJson, "Cannot find csa / admin id with that username", out);
+                Utils.printJsonException(responseJson, "Cannot find csa / admin with username", out);
                 return;
             }
 
@@ -144,12 +144,12 @@ public class AddSalesman extends HttpServlet {
             out.println(responseJson);
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.printJsonException(new JSONObject(), "DB exception raised.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot add csa at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
                     ctx, conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), "Exception raised.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot add csa at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
                     conn);
 

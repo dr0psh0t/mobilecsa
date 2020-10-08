@@ -20,6 +20,7 @@ import java.sql.SQLException;
  * Created by wmdcprog on 9/5/2018.
  */
 @WebServlet("/getcsajolist")
+
 public class GetCsaJoList extends HttpServlet {
     private String getCsaJoList(ServletContext context) {
         Connection conn = null;
@@ -154,12 +155,12 @@ public class GetCsaJoList extends HttpServlet {
             }
 
         } catch (MalformedURLException | ConnectException | SocketTimeoutException sqe) {
-            Utils.printJsonException(new JSONObject(), sqe.toString(), out);
+            Utils.printJsonException(new JSONObject(), "Cannot get joborders at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
                     sqe.toString(), ctx, null);
 
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot get joborders at this moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx,
                     null);
 

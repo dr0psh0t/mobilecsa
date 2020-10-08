@@ -19,6 +19,7 @@ import java.sql.*;
  * Created by wmdcprog on 2/17/2017.
  */
 @WebServlet("/securitykey")
+
 public class SecurityKey extends HttpServlet {
 
     @Override
@@ -124,12 +125,12 @@ public class SecurityKey extends HttpServlet {
             }
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot verify security key at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
                     ctx, conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot verify security key at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
                     conn);
 

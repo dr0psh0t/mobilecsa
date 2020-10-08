@@ -4,7 +4,6 @@ import org.json.JSONObject;
 import wmdc.mobilecsa.utils.BCrypt;
 import wmdc.mobilecsa.utils.Utils;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -171,12 +170,12 @@ public class Login extends HttpServlet {
             }
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.printJsonException(resJson, sqe.getMessage(), out);
+            Utils.printJsonException(resJson, "Cannot login at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
                     ctx, conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(resJson, e.getMessage(), out);
+            Utils.printJsonException(resJson, "Cannot login at the moement.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
                     conn);
 

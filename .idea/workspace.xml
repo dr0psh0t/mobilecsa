@@ -2,58 +2,103 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="mobilescsa:war exploded" />
+      <artifact name="mcsa" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7f8b586-c097-4367-b983-313524ac8894" name="Default" comment="commit for jan 18">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/tests/IoTCheckWorkQueue.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/includes/jscripts/initialjolist.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/includes/jscripts/johome.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/initialjolist.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/johome.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/Login.class" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/Login.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/getJsonData/GetCountry.class" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/getJsonData/GetCountry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.class" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderSignature.class" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderSignature.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/CancelJoborder.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/artifacts/mobilescsa_war_exploded.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/GetAllInitialJoborderList.class" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/GetAllInitialJoborderList.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/InitialJobOrder.class" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/InitialJobOrder.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/SearchInitialJobOrder.class" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/SearchInitialJobOrder.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/SearchJoborderFromAdmin.class" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/joborder/SearchJoborderFromAdmin.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/Login.class" afterPath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/Login.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/getJsonData/GetCountry.class" afterPath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/getJsonData/GetCountry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.class" afterPath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderSignature.class" afterPath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderSignature.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/GetAllInitialJoborderList.class" afterPath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/GetAllInitialJoborderList.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/InitialJobOrder.class" afterPath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/InitialJobOrder.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/SearchInitialJobOrder.class" afterPath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/SearchInitialJobOrder.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/SearchJoborderFromAdmin.class" afterPath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/joborder/SearchJoborderFromAdmin.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ActivateUser.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ActivateUser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddContacts.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddContacts.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddCustomerCompany.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddCustomerCompany.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddCustomerPerson.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddCustomerPerson.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddSalesman.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddSalesman.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddUser.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddUser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AuthorizeTransfer.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AuthorizeTransfer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ChangeAdminPassword.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ChangeAdminPassword.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ChangeUserPassword.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ChangeUserPassword.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/CheckMcsaAndroidAdminPassword.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/CheckMcsaAndroidAdminPassword.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ConfirmMomentarySessions.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ConfirmMomentarySessions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/CreateAdministrator.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/CreateAdministrator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/DeleteContact.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/DeleteContact.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/DeleteCustomer.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/DeleteCustomer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/DeleteInitialJoborder.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/DeleteInitialJoborder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/EditUser.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/EditUser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/LockUser.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/LockUser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/Login.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/Login.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ScanLoggedinSession.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ScanLoggedinSession.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchCompanyFromAdmin.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchCompanyFromAdmin.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchContactFromAdmin.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchContactFromAdmin.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchContactFromUser.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchContactFromUser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchCustomerFromAdmin.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchCustomerFromAdmin.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchCustomerFromUser.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchCustomerFromUser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SecurityKey.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SecurityKey.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/TransferCompany.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/TransferCompany.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/TransferContacts.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/TransferContacts.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/TransferCustomer.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/TransferCustomer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateCompany.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateCompany.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateContact.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateContact.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateContactPhoto.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateContactPhoto.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateCustomer.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateCustomer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateCustomerPhoto.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateCustomerPhoto.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UploadPhoto.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UploadPhoto.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAdministratorByParams.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAdministratorByParams.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAdministrators.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAdministrators.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAllCustomers.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAllCustomers.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAreaCode.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAreaCode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCSAs.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCSAs.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCity.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetContacts.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetContacts.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetContactsByParams.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetContactsByParams.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCountry.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCountry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCountryCode.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCountryCode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCsaByParams.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCsaByParams.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerCompany.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerCompany.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerCompanyByParams.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerCompanyByParams.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerPerson.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerPerson.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetErrorLogs.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetErrorLogs.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndividualCustomerByParams.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndividualCustomerByParams.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderSignature.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderSignature.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetLocationAndroid.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetLocationAndroid.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetLogs.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetLogs.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetMcsaCustomerList.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetMcsaCustomerList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetPlantAssociated.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetPlantAssociated.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetProvinces.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetProvinces.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetUsernameFromCRM.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetUsernameFromCRM.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetUsernames.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetUsernames.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaDateCommit.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaDateCommit.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/CheckExistingJONumber.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/CheckExistingJONumber.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/CheckInitial.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/CheckInitial.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetAllInitialJoborderList.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetAllInitialJoborderList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetCsaJoList.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetCsaJoList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetDateCommitList.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetDateCommitList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborder.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderList.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetJoWoStatusList.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetJoWoStatusList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetMcsaEngineModelList.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetMcsaEngineModelList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetQualityCheckList.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetQualityCheckList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetWorkOrderQCList.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetWorkOrderQCList.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/InitialJobOrder.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/InitialJobOrder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/addcontacts.jsp" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/addcontacts.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/addcustomercompany.jsp" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/addcustomercompany.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/addcustomerperson.jsp" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/addcustomerperson.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/contacts.js" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/contacts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SearchInitialJobOrder.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SearchInitialJobOrder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SearchJoborderFromAdmin.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SearchJoborderFromAdmin.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SetTransfer.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SetTransfer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/UpdateInitialJoborder.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/UpdateInitialJoborder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/UpdateInitialJoborderWithoutPhoto.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/UpdateInitialJoborderWithoutPhoto.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/csamanagement.js" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/csamanagement.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/customer.js" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/customer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/dataconnection.js" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/dataconnection.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/home.js" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/initialjoborder.js" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/initialjoborder.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/newcompany.js" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/newcompany.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/newcontacts.js" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/newcontacts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/newcustomer.js" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/newcustomer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/sendnotification.js" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/sendnotification.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/verifycode.js" afterPath="$PROJECT_DIR$/out/artifacts/mobilescsa_war_exploded/includes/jscripts/verifycode.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/addcontacts.jsp" afterPath="$PROJECT_DIR$/web/addcontacts.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/addcustomercompany.jsp" afterPath="$PROJECT_DIR$/web/addcustomercompany.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/addcustomerperson.jsp" afterPath="$PROJECT_DIR$/web/addcustomerperson.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/contacts.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/contacts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/mobilecsa.properties" afterPath="$PROJECT_DIR$/web/WEB-INF/mobilecsa.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/csamanagement.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/csamanagement.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/customer.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/customer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/dataconnection.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/dataconnection.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/home.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/initialjoborder.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/initialjoborder.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/newcompany.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/newcompany.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/newcontacts.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/newcontacts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/newcustomer.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/newcustomer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/sendnotification.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/sendnotification.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/verifycode.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/verifycode.js" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -83,7 +128,86 @@
     </favorites_list>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="GetCity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+              <folding>
+                <marker date="1602134897954" expanded="true" signature="1622:1662" ph="SELECT city_... city" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/utils/Utils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="183">
+              <caret line="137" column="0" lean-forward="true" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+              <folding>
+                <marker date="1597368699875" expanded="true" signature="5683:5708" ph="SELECT value... configs" />
+                <marker date="1597368699875" expanded="true" signature="6478:6526" ph="SELECT count... country" />
+                <marker date="1597368699875" expanded="true" signature="7098:7144" ph="SELECT next_... industry" />
+                <marker date="1597368699875" expanded="true" signature="7513:7562" ph="UPDATE indus... " />
+                <marker date="1597368699875" expanded="true" signature="8259:8305" ph="SELECT next_... industry" />
+                <marker date="1597368699875" expanded="true" signature="8912:8979" ph="SELECT COUNT... plant" />
+                <marker date="1597368699875" expanded="true" signature="9439:9492" ph="SELECT plant... plant" />
+                <marker date="1597368699875" expanded="true" signature="10153:10218" ph="SELECT COUNT... industry" />
+                <marker date="1597368699875" expanded="true" signature="10690:10741" ph="SELECT indus... industry" />
+                <marker date="1597368699875" expanded="true" signature="11427:11473" ph="SELECT indus... industry" />
+                <marker date="1597368699875" expanded="true" signature="12095:12146" ph="SELECT indus... industry" />
+                <marker date="1597368699875" expanded="true" signature="12830:12881" ph="SELECT provi... province" />
+                <marker date="1597368699875" expanded="true" signature="13528:13567" ph="SELECT city city" />
+                <marker date="1597368699875" expanded="true" signature="14179:14222" ph="SELECT usern... users" />
+                <marker date="1597368699875" expanded="true" signature="14842:14895" ph="SELECT plant... plant" />
+                <marker date="1597368699875" expanded="true" signature="16180:16238" ph="SELECT COUNT... users" />
+                <marker date="1597368699875" expanded="true" signature="16267:16310" ph="SELECT csa_i... users" />
+                <marker date="1597368699875" expanded="true" signature="16397:16456" ph="SELECT COUNT... admins" />
+                <marker date="1597368699875" expanded="true" signature="16482:16528" ph="SELECT admin... admins" />
+                <marker date="1597368699875" expanded="true" signature="17459:17568" ph="INSERT INTO logs... " />
+                <marker date="1597368699875" expanded="true" signature="18142:18188" ph="SELECT admin... admins" />
+                <marker date="1597368699875" expanded="true" signature="18655:18791" ph="INSERT INTO logs... " />
+                <marker date="1597368699875" expanded="true" signature="19386:19445" ph="SELECT COUNT... admins" />
+                <marker date="1597368699875" expanded="true" signature="19755:19801" ph="SELECT admin... admins" />
+                <marker date="1597368699875" expanded="true" signature="20242:20351" ph="INSERT INTO logs... " />
+                <marker date="1597368699875" expanded="true" signature="20897:20956" ph="SELECT COUNT... admins" />
+                <marker date="1597368699875" expanded="true" signature="21265:21311" ph="SELECT admin... admins" />
+                <marker date="1597368699875" expanded="true" signature="21752:21875" ph="INSERT INTO logs... " />
+                <marker date="1597368699875" expanded="true" signature="22449:22507" ph="SELECT COUNT... users" />
+                <marker date="1597368699875" expanded="true" signature="22800:22843" ph="SELECT csa_i... users" />
+                <marker date="1597368699875" expanded="true" signature="23265:23374" ph="INSERT INTO logs... " />
+                <marker date="1597368699875" expanded="true" signature="25159:25227" ph="SELECT COUNT... industry" />
+                <marker date="1597368699875" expanded="true" signature="25691:25752" ph="SELECT id1, industry" />
+                <marker date="1597368699875" expanded="true" signature="26391:26450" ph="SELECT COUNT... plant" />
+                <marker date="1597368699875" expanded="true" signature="26855:26908" ph="SELECT plant... plant" />
+                <marker date="1597368699875" expanded="true" signature="27572:27627" ph="SELECT COUNT... users" />
+                <marker date="1597368699875" expanded="true" signature="28074:28128" ph="SELECT first... users" />
+                <marker date="1597368699875" expanded="true" signature="29531:29591" ph="SELECT COUNT... admins" />
+                <marker date="1597368699875" expanded="true" signature="30049:30095" ph="SELECT usern... admins" />
+                <marker date="1597368699875" expanded="true" signature="30606:30686" ph="SELECT id_al... customers" />
+                <marker date="1597368699875" expanded="true" signature="33399:33462" ph="SELECT count... country_code" />
+                <marker date="1597368699875" expanded="true" signature="36064:36109" ph="SELECT `valu... configs" />
+                <marker date="1597368699875" expanded="true" signature="45999:46048" ph="INSERT INTO error_logs... " />
+                <marker date="1597368699875" expanded="true" signature="47634:47724" ph="SELECT addre... customers" />
+                <marker date="1597368699875" expanded="true" signature="48288:48376" ph="SELECT addre... contacts" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mobilecsa.properties" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/mobilecsa.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="42" lean-forward="true" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -98,9 +222,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>MAX_IMAGE_SIZE</find>
-      <find>Exception rai</find>
-      <find>Exception raised</find>
       <find>Contact Person</find>
       <find>City</find>
       <find>countryStore</find>
@@ -128,6 +249,9 @@
       <find>getConnectionFromCRM</find>
       <find>getNext</find>
       <find>Model Id</find>
+      <find>Database er</find>
+      <find>Joborder</find>
+      <find>joborderStore</find>
     </findStrings>
     <replaceStrings>
       <replace>There was an error processing login request</replace>
@@ -165,57 +289,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/web/index.jsp" />
-        <option value="$PROJECT_DIR$/web/createpassword.jsp" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/login.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/createpassword.js" />
-        <option value="$PROJECT_DIR$/web/csamanagement.jsp" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/utils.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/editcustomercompany.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/editcontact.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/editcustomerperson.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/addcontacts.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/addcustomercompany.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/addcustomerperson.js" />
-        <option value="$PROJECT_DIR$/web/searchcontactprototype.jsp" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/searchcontactprototype.js" />
-        <option value="$PROJECT_DIR$/web/searchcustomerprototype.jsp" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/searchcustomerprototype.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/jsfunctions.js" />
-        <option value="$PROJECT_DIR$/web/customer.jsp" />
-        <option value="$PROJECT_DIR$/web/contacts.jsp" />
-        <option value="$PROJECT_DIR$/web/searchcustomer.jsp" />
-        <option value="$PROJECT_DIR$/web/searchcontact.jsp" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/searchcontact.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/searchcustomer.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/contacts.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/customer.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/dataconnection.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/sendnotification.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/verifycode.js" />
-        <option value="$PROJECT_DIR$/web/addcustomercompany.jsp" />
-        <option value="$PROJECT_DIR$/web/addcustomerperson.jsp" />
-        <option value="$PROJECT_DIR$/web/addcontacts.jsp" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/newcustomer.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/newcompany.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/newcontacts.js" />
-        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.java" />
-        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderSignature.java" />
-        <option value="$PROJECT_DIR$/web/initialjolist.jsp" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/csamanagement.js" />
-        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCountry.java" />
-        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/LockUser.java" />
-        <option value="$PROJECT_DIR$/web/johome.jsp" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/home.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/initialjoborder.js" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/johome.js" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateCompany.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateContact.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateContactPhoto.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateCustomer.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateCustomerPhoto.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UploadPhoto.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaDateCommit.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/CancelJoborder.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/CheckExistingJONumber.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/CheckInitial.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetAllInitialJoborderList.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetCsaJoList.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetDateCommitList.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborder.java" />
         <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderList.java" />
-        <option value="$PROJECT_DIR$/web/includes/jscripts/initialjolist.js" />
-        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/Login.java" />
-        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AuthorizeTransfer.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetJoWoStatusList.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetMcsaEngineModelList.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetQualityCheckList.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetWorkOrderQCList.java" />
         <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/InitialJobOrder.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SearchInitialJobOrder.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SearchJoborderFromAdmin.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SetTransfer.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/UpdateInitialJoborder.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/UpdateInitialJoborderWithoutPhoto.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAdministratorByParams.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAdministrators.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAllCustomers.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAreaCode.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCity.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetContacts.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetContactsByParams.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCountry.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCountryCode.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCsaByParams.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCSAs.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerCompany.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerCompanyByParams.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerPerson.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetErrorLogs.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndividualCustomerByParams.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetLocationAndroid.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetLogs.java" />
         <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetMcsaCustomerList.java" />
-        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/tests/IoTCheckWorkQueue.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetPlantAssociated.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetProvinces.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetUsernameFromCRM.java" />
+        <option value="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetUsernames.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/mobilecsa.properties" />
       </list>
     </option>
   </component>
@@ -333,10 +457,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -368,14 +490,15 @@
               <item name="com" type="462c0819:PsiDirectoryNode" />
               <item name="mobilecsa" type="462c0819:PsiDirectoryNode" />
               <item name="servlet" type="462c0819:PsiDirectoryNode" />
-              <item name="joborder" type="462c0819:PsiDirectoryNode" />
+              <item name="getJsonData" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mobilescsa" type="b2602c69:ProjectViewProjectNode" />
               <item name="mobilescsa" type="462c0819:PsiDirectoryNode" />
               <item name="com" type="462c0819:PsiDirectoryNode" />
               <item name="mobilecsa" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
+              <item name="servlet" type="462c0819:PsiDirectoryNode" />
+              <item name="joborder" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mobilescsa" type="b2602c69:ProjectViewProjectNode" />
@@ -402,10 +525,18 @@
               <item name="includes" type="462c0819:PsiDirectoryNode" />
               <item name="jscripts" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="mobilescsa" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mobilescsa" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -413,10 +544,10 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="js.eslint.eslintPackage" value="" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.182" />
-    <property name="project.structure.side.proportion" value="0.18401015" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.side.proportion" value="0.16429354" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://E:/files/IdeaProjects/mobilescsa/web/WEB-INF/web.xml&#10;find and replace&#9;null&#9;null" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
@@ -428,8 +559,18 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\files\IdeaProjects\mobilescsa\web" />
+      <recent name="E:\files\IdeaProjects\mobilescsa\web\WEB-INF" />
+      <recent name="E:\files\IdeaProjects\mobilescsa" />
+      <recent name="E:\files\IdeaProjects\mobilescsa\com\wmdc\mobilecsa\utils" />
+      <recent name="E:\files\IdeaProjects\mobilescsa\web\includes\jscripts" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="wmdc.mobilecsa.servlet.tests" />
+      <recent name="wmdc.mobilecsa.servlet" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="wmdc.mobilecsa.servlet" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -438,16 +579,6 @@
       <recent name="E:\files\IdeaProjects\mobilescsa\web\includes\images" />
       <recent name="E:\files\IdeaProjects\mobilescsa\web\WEB-INF" />
       <recent name="E:\files\IdeaProjects\mobilescsa\web\res\texts" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="wmdc.mobilecsa.servlet" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\files\IdeaProjects\mobilescsa\web" />
-      <recent name="E:\files\IdeaProjects\mobilescsa\web\WEB-INF" />
-      <recent name="E:\files\IdeaProjects\mobilescsa" />
-      <recent name="E:\files\IdeaProjects\mobilescsa\com\wmdc\mobilecsa\utils" />
-      <recent name="E:\files\IdeaProjects\mobilescsa\web\includes\jscripts" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -542,7 +673,7 @@
     <configuration name="Tomcat" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.0.27" ALTERNATIVE_JRE_ENABLED="false">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="mobilescsa:war exploded">
+        <artifact name="mcsa">
           <settings>
             <option name="CONTEXT_PATH" value="/mcsa" />
           </settings>
@@ -607,7 +738,7 @@
       </ConfigurationWrapper>
       <method>
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="mobilescsa:war exploded" />
+          <artifact name="mcsa" />
         </option>
       </method>
     </configuration>
@@ -2103,7 +2234,12 @@
       <workItem from="1600648314921" duration="2165000" />
       <workItem from="1600735181895" duration="2458000" />
       <workItem from="1601601391688" duration="11417000" />
-      <workItem from="1601685367586" duration="7250000" />
+      <workItem from="1601685367586" duration="7851000" />
+      <workItem from="1601695921067" duration="12616000" />
+      <workItem from="1601868411713" duration="2974000" />
+      <workItem from="1601962464270" duration="5928000" />
+      <workItem from="1602058882062" duration="1095000" />
+      <workItem from="1602120468180" duration="12906000" />
     </task>
     <task id="LOCAL-00024" summary="Added asterisk for Date of birth to be not ignored.&#10;&#10;file : addcontacts.js line 459">
       <created>1508736019100</created>
@@ -2452,7 +2588,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7495813000" />
+    <option name="totallyTimeSpent" value="7531933000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2476,20 +2612,20 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10920437" sideWeight="0.431918" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21684867" sideWeight="0.568082" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16062993" sideWeight="0.6770045" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19032761" sideWeight="0.568082" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.63388807" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19692533" sideWeight="0.49448818" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20497803" sideWeight="0.49448818" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1505295" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20204978" sideWeight="0.5055118" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39937598" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20204978" sideWeight="0.5055118" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2609,365 +2745,577 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/addcustomercompany.jsp">
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaQC.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="101" column="9" lean-forward="true" selection-start-line="101" selection-start-column="9" selection-end-line="101" selection-end-column="9" />
+        <state relative-caret-position="183">
+          <caret line="244" column="33" lean-forward="false" selection-start-line="244" selection-start-column="33" selection-end-line="244" selection-end-column="33" />
+          <folding>
+            <marker date="1602127738156" expanded="true" signature="1279:1324" ph="SELECT `valu... configs" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/dataconnection.js">
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/CancelJoborder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+        <state relative-caret-position="458">
+          <caret line="99" column="19" lean-forward="true" selection-start-line="99" selection-start-column="19" selection-end-line="99" selection-end-column="19" />
+          <folding>
+            <marker date="1602127738228" expanded="true" signature="2069:2137" ph="SELECT cance... initial_joborder" />
+            <marker date="1602127738228" expanded="true" signature="2612:2679" ph="UPDATE initi... " />
+            <marker date="1602127738228" expanded="true" signature="2612:2683" ph="UPDATE initi... " />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/login.jsp">
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/CheckExistingJONumber.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+        <state relative-caret-position="338">
+          <caret line="79" column="19" lean-forward="true" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1602128956649" expanded="true" signature="1862:1936" ph="SELECT COUNT... initial_joborder" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/newcustomer.js">
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/CheckInitial.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="628" column="0" lean-forward="false" selection-start-line="628" selection-start-column="0" selection-end-line="628" selection-end-column="0" />
+        <state relative-caret-position="465">
+          <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <folding>
+            <marker date="1602128956562" expanded="true" signature="1967:2039" ph="SELECT COUNT... initial_joborder" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/newcontacts.js">
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetAllInitialJoborderList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="681" column="41" lean-forward="true" selection-start-line="681" selection-start-column="41" selection-end-line="681" selection-end-column="41" />
+        <state relative-caret-position="254">
+          <caret line="85" column="98" lean-forward="false" selection-start-line="85" selection-start-column="98" selection-end-line="85" selection-end-column="98" />
+          <folding>
+            <marker date="1602128956514" expanded="true" signature="1539:1813" ph="SELECT initi... initial_joborder" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/mobilecsa.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/utils/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="224" column="39" lean-forward="true" selection-start-line="224" selection-start-column="39" selection-end-line="224" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddCustomerCompany.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-653">
-          <caret line="142" column="35" lean-forward="true" selection-start-line="142" selection-start-column="35" selection-end-line="142" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="59" column="62" lean-forward="false" selection-start-line="59" selection-start-column="62" selection-end-line="59" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetPlantAssociated.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="47" column="68" lean-forward="true" selection-start-line="47" selection-start-column="68" selection-end-line="47" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetProvinces.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAreaCode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="35" column="8" lean-forward="true" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCountryCode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2916">
-          <caret line="104" column="29" lean-forward="true" selection-start-line="104" selection-start-column="29" selection-end-line="104" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/newcompany.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetQualityCheckList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="123" column="46" lean-forward="true" selection-start-line="123" selection-start-column="46" selection-end-line="123" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/home.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAdministratorByParams.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="95" column="23" lean-forward="true" selection-start-line="95" selection-start-column="23" selection-end-line="95" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SearchContactFromUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1357">
-          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/Logout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/LockUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="87" column="0" lean-forward="true" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCountry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="67" column="38" lean-forward="true" selection-start-line="67" selection-start-column="38" selection-end-line="67" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/johome.jsp">
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetCsaJoList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
-          <caret line="29" column="55" lean-forward="true" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
+          <caret line="168" column="34" lean-forward="true" selection-start-line="168" selection-start-column="34" selection-end-line="168" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1602128956624" expanded="true" signature="986:1031" ph="SELECT `valu... configs" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/home.js">
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetDateCommitList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="71" column="32" lean-forward="false" selection-start-line="71" selection-start-column="32" selection-end-line="71" selection-end-column="32" />
+        <state relative-caret-position="317">
+          <caret line="154" column="61" lean-forward="false" selection-start-line="154" selection-start-column="61" selection-end-line="154" selection-end-column="61" />
+          <folding>
+            <marker date="1602128956706" expanded="true" signature="1001:1046" ph="SELECT `valu... configs" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/johome.js">
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="49" column="18" lean-forward="true" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/initialjoborder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="461" column="4" lean-forward="true" selection-start-line="461" selection-start-column="4" selection-end-line="467" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/addcontacts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="51" selection-end-column="3" />
+        <state relative-caret-position="365">
+          <caret line="98" column="40" lean-forward="false" selection-start-line="98" selection-start-column="40" selection-end-line="98" selection-end-column="40" />
+          <folding>
+            <marker date="1602128956675" expanded="true" signature="2090:2433" ph="SELECT custo... initial_joborder" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="74" column="46" lean-forward="false" selection-start-line="74" selection-start-column="29" selection-end-line="74" selection-end-column="46" />
+        <state relative-caret-position="324">
+          <caret line="98" column="98" lean-forward="false" selection-start-line="98" selection-start-column="98" selection-end-line="98" selection-end-column="98" />
+          <folding>
+            <marker date="1602128956597" expanded="true" signature="2175:2460" ph="SELECT initi... initial_joborder" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/initialjolist.js">
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderPhoto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="91" column="40" lean-forward="false" selection-start-line="91" selection-start-column="40" selection-end-line="91" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/csamanagement.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="130" column="29" lean-forward="false" selection-start-line="130" selection-start-column="29" selection-end-line="130" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/initialjolist.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/Login.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="144" column="31" lean-forward="true" selection-start-line="144" selection-start-column="31" selection-end-line="144" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddContacts.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="361" column="34" lean-forward="false" selection-start-line="361" selection-start-column="34" selection-end-line="361" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AuthorizeTransfer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="155" column="0" lean-forward="false" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/AddCustomerPerson.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="32" column="7" lean-forward="false" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/ChangeUserPassword.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-847">
-          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="119" column="26" lean-forward="false" selection-start-line="119" selection-start-column="26" selection-end-line="119" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/CreateAdministrator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="165" column="66" lean-forward="false" selection-start-line="165" selection-start-column="66" selection-end-line="165" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/GetCustomerPhoto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1185">
-          <caret line="90" column="37" lean-forward="false" selection-start-line="90" selection-start-column="37" selection-end-line="90" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/EditUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1110">
-          <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/GetContactsSignature.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="48" column="55" lean-forward="false" selection-start-line="48" selection-start-column="55" selection-end-line="48" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateCustomer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/UpdateContactPhoto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="29" column="13" lean-forward="false" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/tests/StackTraceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetMcsaCustomerList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="165" column="35" lean-forward="false" selection-start-line="165" selection-start-column="35" selection-end-line="165" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetMcsaEngineModelList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="186" column="13" lean-forward="true" selection-start-line="186" selection-start-column="13" selection-end-line="186" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/InitialJobOrder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="227" column="19" lean-forward="false" selection-start-line="227" selection-start-column="18" selection-end-line="227" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/CheckSessionExpiry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="24" column="29" lean-forward="false" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/tests/IoTCheckWorkQueue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+        <state relative-caret-position="293">
+          <caret line="104" column="58" lean-forward="false" selection-start-line="104" selection-start-column="41" selection-end-line="104" selection-end-column="58" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1592805224742" expanded="true" signature="2187:2296" ph="SELECT COUNT... initial_joborder_image" />
+            <marker date="1592805224742" expanded="true" signature="2796:2866" ph="SELECT image... initial_joborder_image" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetInitialJoborderSignature.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="19" column="34" lean-forward="true" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+        <state relative-caret-position="400">
+          <caret line="120" column="0" lean-forward="true" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+          <folding>
+            <marker date="1597816995882" expanded="true" signature="2449:2552" ph="SELECT COUNT... initial_joborder" />
+            <marker date="1597816995882" expanded="true" signature="3158:3226" ph="SELECT signa... initial_joborder" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetJoWoStatusList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="159" column="102" lean-forward="false" selection-start-line="159" selection-start-column="102" selection-end-line="159" selection-end-column="102" />
+          <folding>
+            <marker date="1602129586110" expanded="true" signature="1003:1048" ph="SELECT `valu... configs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetMcsaEngineModelList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="194" column="94" lean-forward="false" selection-start-line="194" selection-start-column="94" selection-end-line="194" selection-end-column="94" />
+          <folding>
+            <marker date="1602129586297" expanded="true" signature="1074:1119" ph="SELECT `valu... configs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetMCSAJOImage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1357">
+          <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding>
+            <marker date="1597370277408" expanded="true" signature="1033:1078" ph="SELECT `valu... configs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetQualityCheckList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="168" column="99" lean-forward="false" selection-start-line="168" selection-start-column="99" selection-end-line="168" selection-end-column="99" />
+          <folding>
+            <marker date="1602129586201" expanded="true" signature="987:1032" ph="SELECT `valu... configs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/GetWorkOrderQCList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="160" column="95" lean-forward="false" selection-start-line="160" selection-start-column="95" selection-end-line="160" selection-end-column="95" />
+          <folding>
+            <marker date="1602129586461" expanded="true" signature="996:1041" ph="SELECT `valu... configs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/InitialJobOrder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="182" column="105" lean-forward="false" selection-start-line="182" selection-start-column="105" selection-end-line="182" selection-end-column="105" />
+          <folding>
+            <marker date="1602129586015" expanded="true" signature="4768:5234" ph="INSERT INTO initial_joborder... " />
+            <marker date="1602129586015" expanded="true" signature="6372:6545" ph="INSERT INTO initial_joborder_image... " />
+            <marker date="1602129586015" expanded="true" signature="9092:9181" ph="SELECT COUNT... initial_joborder_image" />
+            <marker date="1602129586015" expanded="true" signature="9673:9731" ph="SELECT cance... initial_joborder" />
+            <marker date="1602129586015" expanded="true" signature="10421:10491" ph="SELECT COUNT... initial_joborder" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SearchInitialJobOrder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="102" column="100" lean-forward="false" selection-start-line="102" selection-start-column="100" selection-end-line="102" selection-end-column="100" />
+          <folding>
+            <marker date="1602129586050" expanded="true" signature="1861:2222" ph="SELECT initi... initial_joborder" />
+            <marker date="1602129586050" expanded="true" signature="5260:5357" ph="SELECT COUNT... initial_joborder" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SearchJoborderFromAdmin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="99" column="41" lean-forward="true" selection-start-line="99" selection-start-column="41" selection-end-line="99" selection-end-column="41" />
+          <folding>
+            <marker date="1602129586387" expanded="true" signature="2113:2309" ph="SELECT initi... initial_joborder" />
+            <marker date="1602129586387" expanded="true" signature="2486:2684" ph="SELECT initi... initial_joborder" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/SetTransfer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="95" column="0" lean-forward="true" selection-start-line="95" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+          <folding>
+            <marker date="1602129586144" expanded="true" signature="2722:2832" ph="UPDATE initi... " />
+            <marker date="1602129586144" expanded="true" signature="4194:4297" ph="SELECT COUNT... initial_joborder" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/UpdateInitialJoborder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="112" column="80" lean-forward="true" selection-start-line="112" selection-start-column="80" selection-end-line="112" selection-end-column="80" />
+          <folding>
+            <marker date="1602129586503" expanded="true" signature="3156:3556" ph="UPDATE initi... " />
+            <marker date="1602129586503" expanded="true" signature="6790:6886" ph="UPDATE initi... " />
+            <marker date="1602129586503" expanded="true" signature="7465:7586" ph="UPDATE initi... " />
+            <marker date="1602129586503" expanded="true" signature="7963:8136" ph="INSERT INTO initial_joborder_image... " />
+            <marker date="1602129586503" expanded="true" signature="8866:8955" ph="SELECT COUNT... initial_joborder_image" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/UpdateInitialJoborderWithoutPhoto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="119" column="26" lean-forward="true" selection-start-line="119" selection-start-column="26" selection-end-line="119" selection-end-column="26" />
+          <folding>
+            <marker date="1602129586265" expanded="true" signature="3332:3732" ph="UPDATE initi... " />
+            <marker date="1602129586265" expanded="true" signature="6056:6152" ph="UPDATE initi... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/WorkExtension.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="30" column="34" lean-forward="true" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAdministratorByParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="87" column="0" lean-forward="true" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+          <folding>
+            <marker date="1602129586234" expanded="true" signature="2537:2654" ph="SELECT admin... admins" />
+            <marker date="1602129586234" expanded="true" signature="4315:4375" ph="SELECT COUNT... admins" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAdministrators.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="76" column="95" lean-forward="false" selection-start-line="76" selection-start-column="95" selection-end-line="76" selection-end-column="95" />
+          <folding>
+            <marker date="1602129586335" expanded="true" signature="1493:1562" ph="SELECT admin... admins" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAllCustomers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="92" column="0" lean-forward="true" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+          <folding>
+            <marker date="1602129586172" expanded="true" signature="1641:1704" ph="SELECT custo... customers" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetAreaCode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="74" column="83" lean-forward="false" selection-start-line="74" selection-start-column="83" selection-end-line="74" selection-end-column="83" />
+          <folding>
+            <marker date="1602134897900" expanded="true" signature="1481:1532" ph="SELECT area_... area_code" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetContacts.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="74" column="89" lean-forward="false" selection-start-line="74" selection-start-column="89" selection-end-line="74" selection-end-column="89" />
+          <folding>
+            <marker date="1602134897985" expanded="true" signature="1334:1471" ph="SELECT conta... contacts" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetContactsByParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="182" column="89" lean-forward="false" selection-start-line="182" selection-start-column="89" selection-end-line="182" selection-end-column="89" />
+          <folding>
+            <marker date="1602134897838" expanded="true" signature="2507:2994" ph="SELECT conta... contacts" />
+            <marker date="1602134897838" expanded="true" signature="9071:9166" ph="SELECT COUNT... contacts" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCountry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="74" column="88" lean-forward="false" selection-start-line="74" selection-start-column="88" selection-end-line="74" selection-end-column="88" />
+          <folding>
+            <marker date="1602134897809" expanded="true" signature="1638:1677" ph="SELECT count... country" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCountryCode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="63" column="37" lean-forward="true" selection-start-line="63" selection-start-column="37" selection-end-line="63" selection-end-column="37" />
+          <folding>
+            <marker date="1602134897863" expanded="true" signature="1486:1549" ph="SELECT count... country_code" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCsaByParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="91" column="84" lean-forward="false" selection-start-line="91" selection-start-column="84" selection-end-line="91" selection-end-column="84" />
+          <folding>
+            <marker date="1602135474370" expanded="true" signature="2305:2414" ph="SELECT csa_i... users" />
+            <marker date="1602135474370" expanded="true" signature="3902:3958" ph="SELECT COUNT... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCSAs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="74" column="84" lean-forward="false" selection-start-line="74" selection-start-column="84" selection-end-line="74" selection-end-column="84" />
+          <folding>
+            <marker date="1602135473931" expanded="true" signature="1369:1520" ph="SELECT csa_i... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerCompany.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="79" column="89" lean-forward="false" selection-start-line="79" selection-start-column="89" selection-end-line="79" selection-end-column="89" />
+          <folding>
+            <marker date="1602135473959" expanded="true" signature="1385:1654" ph="SELECT custo... customers" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerCompanyByParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="166" column="74" lean-forward="false" selection-start-line="166" selection-start-column="74" selection-end-line="166" selection-end-column="74" />
+          <folding>
+            <marker date="1602135474434" expanded="true" signature="2363:2824" ph="SELECT custo... customers" />
+            <marker date="1602135474434" expanded="true" signature="8821:8890" ph="SELECT COUNT... customers" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCustomerPerson.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="89" column="9" lean-forward="true" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="9" />
+          <folding>
+            <marker date="1602135473886" expanded="true" signature="1390:1647" ph="SELECT custo... customers" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetErrorLogs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="64" column="91" lean-forward="false" selection-start-line="64" selection-start-column="91" selection-end-line="64" selection-end-column="91" />
+          <folding>
+            <marker date="1602135474032" expanded="true" signature="1234:1258" ph="SELECT * FRO... error_logs" />
+            <marker date="1602135474032" expanded="true" signature="3429:3472" ph="SELECT * FRO... error_logs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndividualCustomerByParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="176" column="89" lean-forward="false" selection-start-line="176" selection-start-column="89" selection-end-line="176" selection-end-column="89" />
+          <folding>
+            <marker date="1602135474310" expanded="true" signature="2302:2762" ph="SELECT custo... customers" />
+            <marker date="1602135474310" expanded="true" signature="8880:8970" ph="SELECT COUNT... customers" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="62" column="89" lean-forward="false" selection-start-line="62" selection-start-column="89" selection-end-line="62" selection-end-column="89" />
+          <folding>
+            <marker date="1602135474490" expanded="true" signature="1367:1419" ph="SELECT indus... industry" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetLocationAndroid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="92" column="38" lean-forward="false" selection-start-line="92" selection-start-column="38" selection-end-line="92" selection-end-column="38" />
+          <folding>
+            <marker date="1602135473982" expanded="true" signature="2512:2648" ph="SELECT addre... customers" />
+            <marker date="1602135473982" expanded="true" signature="3310:3435" ph="SELECT addre... contacts" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetLogs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding>
+            <marker date="1602135474239" expanded="true" signature="1254:1323" ph="SELECT error... error_logs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetMcsaCustomerList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="189" column="90" lean-forward="false" selection-start-line="189" selection-start-column="90" selection-end-line="189" selection-end-column="90" />
+          <folding>
+            <marker date="1602135474274" expanded="true" signature="1016:1061" ph="SELECT `valu... configs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetMonths.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-772">
+          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetPlantAssociated.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="60" column="87" lean-forward="false" selection-start-line="60" selection-start-column="87" selection-end-line="60" selection-end-column="87" />
+          <folding>
+            <marker date="1602135474457" expanded="true" signature="1282:1326" ph="SELECT plant... plant" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetProvinces.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="67" column="90" lean-forward="false" selection-start-line="67" selection-start-column="90" selection-end-line="67" selection-end-column="90" />
+          <folding>
+            <marker date="1602135474202" expanded="true" signature="1466:1508" ph="SELECT provi... province" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetUsernameFromCRM.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="70" column="90" lean-forward="false" selection-start-line="70" selection-start-column="90" selection-end-line="70" selection-end-column="90" />
+          <folding>
+            <marker date="1602135474150" expanded="true" signature="1531:1584" ph="SELECT csa_i... csa" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetUsernames.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="64" column="90" lean-forward="false" selection-start-line="64" selection-start-column="90" selection-end-line="64" selection-end-column="90" />
+          <folding>
+            <marker date="1602135474402" expanded="true" signature="1308:1367" ph="SELECT usern... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetZipcodeByCityid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="69" column="89" lean-forward="false" selection-start-line="69" selection-start-column="68" selection-end-line="69" selection-end-column="89" />
+          <folding>
+            <marker date="1592797595418" expanded="true" signature="3737:3780" ph="SELECT zip_c... city" />
+            <marker date="1592797595418" expanded="true" signature="4221:4277" ph="SELECT COUNT... city" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetCity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+          <folding>
+            <marker date="1602134897954" expanded="true" signature="1622:1662" ph="SELECT city_... city" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/utils/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="137" column="0" lean-forward="true" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+          <folding>
+            <marker date="1597368699875" expanded="true" signature="5683:5708" ph="SELECT value... configs" />
+            <marker date="1597368699875" expanded="true" signature="6478:6526" ph="SELECT count... country" />
+            <marker date="1597368699875" expanded="true" signature="7098:7144" ph="SELECT next_... industry" />
+            <marker date="1597368699875" expanded="true" signature="7513:7562" ph="UPDATE indus... " />
+            <marker date="1597368699875" expanded="true" signature="8259:8305" ph="SELECT next_... industry" />
+            <marker date="1597368699875" expanded="true" signature="8912:8979" ph="SELECT COUNT... plant" />
+            <marker date="1597368699875" expanded="true" signature="9439:9492" ph="SELECT plant... plant" />
+            <marker date="1597368699875" expanded="true" signature="10153:10218" ph="SELECT COUNT... industry" />
+            <marker date="1597368699875" expanded="true" signature="10690:10741" ph="SELECT indus... industry" />
+            <marker date="1597368699875" expanded="true" signature="11427:11473" ph="SELECT indus... industry" />
+            <marker date="1597368699875" expanded="true" signature="12095:12146" ph="SELECT indus... industry" />
+            <marker date="1597368699875" expanded="true" signature="12830:12881" ph="SELECT provi... province" />
+            <marker date="1597368699875" expanded="true" signature="13528:13567" ph="SELECT city city" />
+            <marker date="1597368699875" expanded="true" signature="14179:14222" ph="SELECT usern... users" />
+            <marker date="1597368699875" expanded="true" signature="14842:14895" ph="SELECT plant... plant" />
+            <marker date="1597368699875" expanded="true" signature="16180:16238" ph="SELECT COUNT... users" />
+            <marker date="1597368699875" expanded="true" signature="16267:16310" ph="SELECT csa_i... users" />
+            <marker date="1597368699875" expanded="true" signature="16397:16456" ph="SELECT COUNT... admins" />
+            <marker date="1597368699875" expanded="true" signature="16482:16528" ph="SELECT admin... admins" />
+            <marker date="1597368699875" expanded="true" signature="17459:17568" ph="INSERT INTO logs... " />
+            <marker date="1597368699875" expanded="true" signature="18142:18188" ph="SELECT admin... admins" />
+            <marker date="1597368699875" expanded="true" signature="18655:18791" ph="INSERT INTO logs... " />
+            <marker date="1597368699875" expanded="true" signature="19386:19445" ph="SELECT COUNT... admins" />
+            <marker date="1597368699875" expanded="true" signature="19755:19801" ph="SELECT admin... admins" />
+            <marker date="1597368699875" expanded="true" signature="20242:20351" ph="INSERT INTO logs... " />
+            <marker date="1597368699875" expanded="true" signature="20897:20956" ph="SELECT COUNT... admins" />
+            <marker date="1597368699875" expanded="true" signature="21265:21311" ph="SELECT admin... admins" />
+            <marker date="1597368699875" expanded="true" signature="21752:21875" ph="INSERT INTO logs... " />
+            <marker date="1597368699875" expanded="true" signature="22449:22507" ph="SELECT COUNT... users" />
+            <marker date="1597368699875" expanded="true" signature="22800:22843" ph="SELECT csa_i... users" />
+            <marker date="1597368699875" expanded="true" signature="23265:23374" ph="INSERT INTO logs... " />
+            <marker date="1597368699875" expanded="true" signature="25159:25227" ph="SELECT COUNT... industry" />
+            <marker date="1597368699875" expanded="true" signature="25691:25752" ph="SELECT id1, industry" />
+            <marker date="1597368699875" expanded="true" signature="26391:26450" ph="SELECT COUNT... plant" />
+            <marker date="1597368699875" expanded="true" signature="26855:26908" ph="SELECT plant... plant" />
+            <marker date="1597368699875" expanded="true" signature="27572:27627" ph="SELECT COUNT... users" />
+            <marker date="1597368699875" expanded="true" signature="28074:28128" ph="SELECT first... users" />
+            <marker date="1597368699875" expanded="true" signature="29531:29591" ph="SELECT COUNT... admins" />
+            <marker date="1597368699875" expanded="true" signature="30049:30095" ph="SELECT usern... admins" />
+            <marker date="1597368699875" expanded="true" signature="30606:30686" ph="SELECT id_al... customers" />
+            <marker date="1597368699875" expanded="true" signature="33399:33462" ph="SELECT count... country_code" />
+            <marker date="1597368699875" expanded="true" signature="36064:36109" ph="SELECT `valu... configs" />
+            <marker date="1597368699875" expanded="true" signature="45999:46048" ph="INSERT INTO error_logs... " />
+            <marker date="1597368699875" expanded="true" signature="47634:47724" ph="SELECT addre... customers" />
+            <marker date="1597368699875" expanded="true" signature="48288:48376" ph="SELECT addre... contacts" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/mobilecsa.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="42" lean-forward="true" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
           <folding />
         </state>
       </provider>
@@ -2989,11 +3337,11 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>mobilescsa:war exploded</last-edited>
+          <last-edited>mcsa</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.18401015" />
+                <option value="0.16429354" />
                 <option value="0.5" />
               </list>
             </option>

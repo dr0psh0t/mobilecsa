@@ -182,12 +182,12 @@ public class GetMcsaCustomerList extends HttpServlet {
             }
 
         } catch (MalformedURLException | ConnectException | SocketTimeoutException e) {
-            Utils.printJsonException(new JSONObject(), e.toString(), out);
+            Utils.printJsonException(new JSONObject(), "Cannot get customer at this time.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Network Exception",
                     e.toString(), ctx, null);
 
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), e.toString(), out);
+            Utils.printJsonException(new JSONObject(), "Cannot get customer at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString(),
                     ctx, null);
 

@@ -159,12 +159,12 @@ public class ApproveMcsaDateCommit extends HttpServlet {
             }
 
         } catch (MalformedURLException | ConnectException | SocketTimeoutException ne) {
-            Utils.printJsonException(new JSONObject(), ne.toString(), out);
+            Utils.printJsonException(new JSONObject(), "Cannot approve joborder at this time.", out);
 
             Utils.displayStackTraceArray(ne.getStackTrace(), Utils.JOBORDER_PACKAGE, "NetworkException",
                     ne.toString(), ctx, null);
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot approve joborder at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.JOBORDER_PACKAGE, "Exception", e.toString(), ctx,
                     null);
 

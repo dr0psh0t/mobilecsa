@@ -17,6 +17,7 @@ import java.sql.*;
  * Created by wmdcprog on 2/24/2017.
  */
 @WebServlet("/scanloggedinsession")
+
 public class ScanLoggedinSession extends HttpServlet {
 
     @Override
@@ -64,12 +65,12 @@ public class ScanLoggedinSession extends HttpServlet {
             out.println(responseJson);
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot scan session at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
                     getServletContext(), conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot scan session at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(),
                     getServletContext(), conn);
 

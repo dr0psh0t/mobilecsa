@@ -101,12 +101,12 @@ public class AuthorizeTransfer extends HttpServlet {
                 Utils.printJsonException(responseJson, "Password should be 8-32 characters in length.", out);
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot authorize transfer at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
                     ctx, conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot authorize transfer at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
                     conn);
 

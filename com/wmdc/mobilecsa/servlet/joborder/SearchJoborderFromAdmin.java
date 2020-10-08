@@ -64,12 +64,12 @@ public class SearchJoborderFromAdmin extends HttpServlet {
 
             try {
                 sql = "SELECT initial_joborder_id, customer_source, customer, date_stamp, serial_num, model_id, " +
-                        "make, jo_number, is_added FROM initial_joborder WHERE jo_number = ?";
+                        "make, jo_number, is_added, cancelled FROM initial_joborder WHERE jo_number = ?";
                 prepStmt = conn.prepareStatement(sql);
                 prepStmt.setString(1, query);
             } catch (NumberFormatException nfe) {
                 sql = "SELECT initial_joborder_id, customer_source, customer, date_stamp, serial_num, model_id, " +
-                        "make, jo_number, is_added FROM initial_joborder WHERE customer like ?";
+                        "make, jo_number, is_added, cancelled FROM initial_joborder WHERE customer like ?";
                 prepStmt = conn.prepareStatement(sql);
                 prepStmt.setString(1, query+"%");
             }
@@ -91,6 +91,7 @@ public class SearchJoborderFromAdmin extends HttpServlet {
                 resJson.put("make", resultSet.getString("make"));
                 resJson.put("joNumber", resultSet.getString("jo_number"));
                 resJson.put("added", resultSet.getInt("is_added"));
+                resJson.put("cancelled", resultSet.getInt("cancelled"));
 
                 initialJoborderList.add(resJson);
             }
@@ -100,12 +101,12 @@ public class SearchJoborderFromAdmin extends HttpServlet {
             resJson.put("initialJoborderList", initialJoborderList);
             out.println(resJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot search joborder at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException",
                     sqe.toString(), ctx, conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot search joborder at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
                     conn);
 

@@ -274,11 +274,11 @@ public class TransferCustomer extends HttpServlet {
             Utils.printSuccessJson(resJson, "Successfully Transferred customer", out);
 
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.printJsonException(resJson, "Database error occurred.", out);
+            Utils.printJsonException(resJson, "Cannot transfer customer at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
                     ctx, conn);
         } catch (Exception e) {
-            Utils.printJsonException(resJson, "Exception has occurred.", out);
+            Utils.printJsonException(resJson, "Cannot transfer customer at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
                     conn);
 

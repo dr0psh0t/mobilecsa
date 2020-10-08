@@ -49,12 +49,12 @@ public class GetLogs extends HttpServlet {
 
         } catch (ClassNotFoundException | SQLException sqe) {
 
-            Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot get logs at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
                     sqe.toString(), getServletContext(), conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot get logs at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "Exception", e.toString(),
                     getServletContext(), conn);
 

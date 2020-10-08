@@ -56,7 +56,7 @@ public class SearchInitialJobOrder extends HttpServlet {
 
             prepStmt = conn.prepareStatement("SELECT initial_joborder_id, jo_number, customer_id, customer_source, " +
                     "mobile, model_id, serial_num, po_date, date_received, date_committed, category, prepared_by, " +
-                    "remarks, purchase_order, reference_number, make, date_stamp, customer FROM initial_joborder " +
+                    "remarks, purchase_order, reference_number, make, date_stamp, customer, cancelled FROM initial_joborder " +
                     "WHERE customer like ?");
             prepStmt.setString(1, customer+"%");
             resultSet = prepStmt.executeQuery();
@@ -85,6 +85,7 @@ public class SearchInitialJobOrder extends HttpServlet {
                 obj.put("referenceNo", resultSet.getString("reference_number"));
                 obj.put("csa", Utils.getCsaNameById(resultSet.getInt("prepared_by"), conn));
                 obj.put("dateStamp", resultSet.getString("date_stamp"));
+                obj.put("cancelled", resultSet.getInt("cancelled"));
                 arrayList.add(obj);
             }
 
@@ -94,12 +95,12 @@ public class SearchInitialJobOrder extends HttpServlet {
 
             out.println(resJson);
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.printJsonException(new JSONObject(), "Database error occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot search initial joborder at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(), ctx,
                     conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(new JSONObject(), "Exception has occurred.", out);
+            Utils.printJsonException(new JSONObject(), "Cannot search initial joborder at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
                     conn);
 

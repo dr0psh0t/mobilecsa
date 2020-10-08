@@ -87,12 +87,12 @@ public class UpdateCustomerPhoto extends HttpServlet {
                 Utils.printSuccessJson(resJson, "Successfully updated customer photo.", out);
             }
         } catch (ClassNotFoundException | SQLException sqe) {
-            Utils.printJsonException(resJson, "DB exception raised", out);
+            Utils.printJsonException(resJson, "Cannot update photo at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
                     ctx, conn);
 
         } catch (Exception e) {
-            Utils.printJsonException(resJson, "Exception raised", out);
+            Utils.printJsonException(resJson, "Cannot update photo at the moment.", out);
             Utils.displayStackTraceArray(e.getStackTrace(), Utils.SERVLET_PACKAGE, "Exception", e.toString(), ctx,
                     conn);
 
