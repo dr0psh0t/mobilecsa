@@ -1,0 +1,25 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="mcsa exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/mcsa_exploded</output-path>
+    <root id="root">
+      <element id="archive" name="mcsa exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="mobilescsa" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="D:/daryll/jarlib/commons-codec-1.10.jar" />
+          <element id="file-copy" path="D:/daryll/jarlib/commons-lang3-3.5.jar" />
+          <element id="file-copy" path="D:/daryll/jarlib/googleauth.jar" />
+          <element id="file-copy" path="D:/daryll/jarlib/mariadb-java-client-1.5.7.jar" />
+          <element id="file-copy" path="D:/daryll/jarlib/javase-3.1.1-20150211.225955-15.jar" />
+          <element id="file-copy" path="D:/daryll/jarlib/core-3.3.1.jar" />
+          <element id="file-copy" path="D:/daryll/jarlib/json-20190722.jar" />
+          <element id="file-copy" path="D:/Program Files/Apache Tomcat 8.0.27/lib/jsp-api.jar" />
+          <element id="file-copy" path="D:/Program Files/Apache Tomcat 8.0.27/lib/servlet-api.jar" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="mobilescsa/web/Web" />
+    </root>
+  </artifact>
+</component>

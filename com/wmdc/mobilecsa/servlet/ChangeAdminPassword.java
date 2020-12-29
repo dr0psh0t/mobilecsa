@@ -102,6 +102,7 @@ public class ChangeAdminPassword extends HttpServlet {
                 responseJson.put("success", true);
                 responseJson.put("reason", "Successfully changed password");
                 out.println(responseJson);
+                //request.getRequestDispatcher("/logout").forward(request, response);
             } else {
                 Utils.printJsonException(responseJson, "Password should be 8-32 characters in length.", out);
             }

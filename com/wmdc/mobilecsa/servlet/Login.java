@@ -170,6 +170,7 @@ public class Login extends HttpServlet {
             }
 
         } catch (ClassNotFoundException | SQLException sqe) {
+            sqe.printStackTrace();
             Utils.printJsonException(resJson, "Cannot login at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.SERVLET_PACKAGE, "DBException", sqe.toString(),
                     ctx, conn);

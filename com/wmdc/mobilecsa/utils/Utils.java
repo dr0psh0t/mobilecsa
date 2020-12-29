@@ -115,19 +115,26 @@ public class Utils {
 
     public static Connection getConnectionFromCRM(ServletContext servletContext)
             throws SQLException, IOException, NullPointerException {
+
         String url = getUrlFromConfig(servletContext);
 
         if (url == null) {
             throw new NullPointerException("URL database is null");
         } else {
-                return DriverManager.getConnection(url, getPropertyValue("user", servletContext),
-                        getPropertyValue("password", servletContext));
+
+            String user = getPropertyValue("user", servletContext);
+            String password = getPropertyValue("password", servletContext);
+
+            return DriverManager.getConnection(url, user, password);
         }
     }
 
     public static Connection getConnection(ServletContext servletContext) throws SQLException, IOException {
-        return DriverManager.getConnection(getPropertyValue("url", servletContext),
-                getPropertyValue("user", servletContext), getPropertyValue("password", servletContext));
+        String url = getPropertyValue("url", servletContext);
+        String user = getPropertyValue("user", servletContext);
+        String password = getPropertyValue("password", servletContext);
+
+        return DriverManager.getConnection(url, user, password);
     }
 
     public static String getPropertyValue(String key, ServletContext servletContext) throws IOException {
@@ -291,7 +298,8 @@ public class Utils {
         if (industryCount < 1) {
             prepStmt.close();
             resultSet.close();
-            throw new Exception("No industry found with the supplied name");
+            //throw new Exception("No industry found with the supplied name");
+            return 1;
         } else {
             prepStmt = conn.prepareStatement("SELECT industry_id FROM industry WHERE industry = ?");
             prepStmt.setString(1, industry);

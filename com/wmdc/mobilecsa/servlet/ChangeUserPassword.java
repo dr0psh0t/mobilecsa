@@ -81,6 +81,7 @@ public class ChangeUserPassword extends HttpServlet {
                 int updateCount = prepStmt.executeUpdate();
                 if (updateCount > 0) {
                     Utils.printSuccessJson(resJson, "Successfully updated password for "+updateCount+" user/s.", out);
+                    //request.getRequestDispatcher("/logout").forward(request, response);
                 } else {
                     Utils.printJsonException(resJson, updateCount+" records were updated.", out);
                 }
