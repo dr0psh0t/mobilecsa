@@ -49,7 +49,7 @@ var formLogin = Ext.create('Ext.form.Panel', {
         marginLeft: 'auto',
         marginRight: 'auto'
     },
-    width: 300,
+    width: 350,
     height: 295,
     items: [{
         xtype: 'image',

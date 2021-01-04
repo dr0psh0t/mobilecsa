@@ -14,6 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -149,6 +150,17 @@ public class Utils {
 
     public static String getServerAddress(ServletContext servletContext) throws IOException {
         return getPropertyValue("serverAddress", servletContext);
+    }
+
+    public static boolean invalidatingSession(HttpServletRequest request) {
+        try {
+            HttpSession httpSession = request.getSession(false);
+            httpSession.invalidate();
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private static String getUrlFromConfig(ServletContext servletContext) throws SQLException, IOException {

@@ -98,13 +98,12 @@ public class SecurityKey extends HttpServlet {
             if(googleAuthenticator.authorize(secretKey, securityKey)) {
                 Utils.logLogin(conn, interimUsername, isAdmin);
 
+                httpSession.invalidate();
+                httpSession = request.getSession();
                 httpSession.setAttribute("username", interimUsername);
                 httpSession.setAttribute("csaId", id);
-                httpSession.setAttribute("interimUsername", null);
-                httpSession.setAttribute("interimUserId", null);
-                httpSession.setAttribute("interimAdminId", null);
-                httpSession.setAttribute("lockedUsername", null);
 
+                resJson.put("sessionId", httpSession.getId());
                 resJson.put("success", true);
                 resJson.put("isAdmin", isAdmin);
                 resJson.put("csaId", id);
@@ -120,6 +119,7 @@ public class SecurityKey extends HttpServlet {
                 }
 
                 out.println(resJson);
+
             } else {
                 Utils.printJsonException(resJson, "Invalid security key.", out);
             }
@@ -146,3 +146,6 @@ public class SecurityKey extends HttpServlet {
         Utils.redirectToLogin(response);
     }
 }
+/*
+Wellmade Motors and Development Corporation
+ */

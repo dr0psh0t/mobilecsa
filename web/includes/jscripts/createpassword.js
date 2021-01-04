@@ -52,7 +52,7 @@ Ext.onReady(function() {
             items: [{
                 xtype: 'image',
                 id: 'loginIcon',
-                src: 'includes/images/icons/lock.png',
+                src: 'includes/images/icons/lock_2.png',
                 width: 80,
                 height: 80,
                 style: {

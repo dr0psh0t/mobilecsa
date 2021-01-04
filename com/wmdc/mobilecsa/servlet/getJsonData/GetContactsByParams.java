@@ -175,6 +175,8 @@ public class GetContactsByParams extends HttpServlet {
 
             out.println(obj);
         } catch (ClassNotFoundException | SQLException sqe) {
+            sqe.printStackTrace();
+
             Utils.printJsonException(new JSONObject(), "Cannot get contacts at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",
                     sqe.toString(), ctx, conn);
