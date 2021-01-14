@@ -52,8 +52,8 @@ public class GetIndustry extends HttpServlet {
 
             responseJson.put("industryStore", arrayList);
             responseJson.put("success", true);
-
             out.println(responseJson);
+
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.printJsonException(new JSONObject(), "Cannot get industry at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",

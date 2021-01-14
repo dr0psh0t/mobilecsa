@@ -146,6 +146,3 @@ public class SecurityKey extends HttpServlet {
         Utils.redirectToLogin(response);
     }
 }
-/*
-Wellmade Motors and Development Corporation
- */

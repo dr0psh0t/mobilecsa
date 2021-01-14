@@ -58,7 +58,7 @@ Ext.onReady(function() {
                     },
                     items: [{
                         xtype: 'button',
-                        iconCls: 'customer',
+                        iconCls: 'joborder',
                         iconAlign: 'top',
                         cls: 'x-button',
                         width: 140,
@@ -70,7 +70,7 @@ Ext.onReady(function() {
                                 location.assign('initialjoborder.jsp');
                             }
                         }
-                    },{
+                    },/*{
                         xtype: 'button',
                         iconCls: 'contacts',
                         iconAlign: 'top',
@@ -82,6 +82,33 @@ Ext.onReady(function() {
                         listeners: {
                             click: function() {
                                 location.assign('initialjolist.jsp');
+                            }
+                        }
+                    }*/{
+                        xtype: 'button',
+                        iconCls: 'qualitycheck',
+                        iconAlign: 'top',
+                        cls: 'x-button',
+                        width: 140,
+                        height: 140,
+                        margin: '5 5 5 5',
+                        html: '<span class="bigBtn">Quality Check</span>',
+                        listeners: {
+                            click: function() {
+                            }
+                        }
+                    },{
+                        xtype: 'button',
+                        iconCls: 'datecommit',
+                        iconAlign: 'top',
+                        cls: 'x-button',
+                        width: 140,
+                        height: 140,
+                        margin: '5 5 5 5',
+                        html: '<span class="bigBtn">Date Commit</span>',
+                        listeners: {
+                            click: function() {
+                                location.assign('datecommit.jsp');
                             }
                         }
                     }]

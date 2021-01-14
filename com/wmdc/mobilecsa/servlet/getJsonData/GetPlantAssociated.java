@@ -52,6 +52,7 @@ public class GetPlantAssociated extends HttpServlet {
             responseJson.put("plantStore", arrayList);
             responseJson.put("success", true);
             out.println(responseJson);
+
         } catch (ClassNotFoundException | SQLException sqe) {
             Utils.printJsonException(new JSONObject(), "Cannot get plants at this time.", out);
             Utils.displayStackTraceArray(sqe.getStackTrace(), Utils.GET_JSON_DATA_PACKAGE, "DBException",

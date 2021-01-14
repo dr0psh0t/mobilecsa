@@ -20,7 +20,8 @@
 
 .joborder
 {
-    background-image: url("../../includes/images/icons/joborder_icon.png"); !important;
+    /*background-image: url("../../includes/images/icons/joborder_icon.png"); !important;*/
+    background-image: url("../../includes/images/3dpics/tool.png"); !important;
     width : 90px; !important;
     height: 90px; !important;
     margin-right: auto !important;
@@ -30,6 +31,24 @@
 .contacts
 {
     background-image : url("../../includes/images/icons/contacts.png") !important;
+    width : 90px !important;
+    height : 90px !important;
+    margin-right : auto !important;
+    margin-left : auto !important;
+}
+
+.qualitycheck
+{
+    background-image : url("../../includes/images/icons/qc_check.png") !important;
+    width : 90px !important;
+    height : 90px !important;
+    margin-right : auto !important;
+    margin-left : auto !important;
+}
+
+.datecommit
+{
+    background-image : url("../../includes/images/icons/datecommit.png") !important;
     width : 90px !important;
     height : 90px !important;
     margin-right : auto !important;

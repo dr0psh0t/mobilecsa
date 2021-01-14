@@ -1174,35 +1174,7 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
     }]
 });
 
-Ext.define('CSAs', {
-    extend: 'Ext.data.Model',
-    fields: [
-        { name: 'username', type: 'string' },
-        { name: 'lastname', type: 'string' },
-        { name: 'firtname', type: 'string' },
-        { name: 'passwordStatus', type: 'string'},
-        { name: 'status', type: 'int'}
-    ]
-});
 
-var csaStore = Ext.create('Ext.data.Store', {
-    model: 'CSAs',
-    autoLoad: true,
-    proxy: {
-        type: 'ajax',
-        url		: 'getcsa',
-        reader: {
-            type: 'json',
-            rootProperty: 'store'
-        },
-        actionMethods: {
-            create: 'post',
-            read: 'post',
-            update: 'post',
-            destroy: 'post'
-        }
-    }
-});
 
 var menuTree = Ext.create('Ext.tree.Panel', {
     height: '100%',
@@ -1676,6 +1648,36 @@ var joborderGridPanel = Ext.create('Ext.grid.Panel', {
         dock: 'bottom',
         displayInfo: true
     }]
+});
+
+Ext.define('CSAs', {
+    extend: 'Ext.data.Model',
+    fields: [
+        { name: 'username', type: 'string' },
+        { name: 'lastname', type: 'string' },
+        { name: 'firtname', type: 'string' },
+        { name: 'passwordStatus', type: 'string'},
+        { name: 'status', type: 'int'}
+    ]
+});
+
+var csaStore = Ext.create('Ext.data.Store', {
+    model: 'CSAs',
+    autoLoad: true,
+    proxy: {
+        type: 'ajax',
+        url		: 'getcsa',
+        reader: {
+            type: 'json',
+            rootProperty: 'store'
+        },
+        actionMethods: {
+            create: 'post',
+            read: 'post',
+            update: 'post',
+            destroy: 'post'
+        }
+    }
 });
 
 var gridPanel = Ext.create('Ext.grid.Panel', {
