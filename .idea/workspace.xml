@@ -7,25 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7f8b586-c097-4367-b983-313524ac8894" name="Default" comment="commit for jan 18">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/datecommit.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/includes/jscripts/datecommit.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.class" afterPath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/getJsonData/GetPlantAssociated.class" afterPath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/WEB-INF/classes/wmdc/mobilecsa/servlet/getJsonData/GetPlantAssociated.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mcsa_war/mcsa war.war" afterPath="$PROJECT_DIR$/out/artifacts/mcsa_war/mcsa war.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.class" afterPath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/getJsonData/GetPlantAssociated.class" afterPath="$PROJECT_DIR$/out/production/mobilescsa/wmdc/mobilecsa/servlet/getJsonData/GetPlantAssociated.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SecurityKey.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/SecurityKey.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetIndustry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetPlantAssociated.java" afterPath="$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/getJsonData/GetPlantAssociated.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/csamanagement.jsp" afterPath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/csamanagement.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/includes/css/style.css" afterPath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/includes/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/includes/jscripts/csamanagement.js" afterPath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/includes/jscripts/csamanagement.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/includes/jscripts/johome.js" afterPath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/includes/jscripts/johome.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/csamanagement.jsp" afterPath="$PROJECT_DIR$/web/csamanagement.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/css/style.css" afterPath="$PROJECT_DIR$/web/includes/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/csamanagement.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/csamanagement.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/johome.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/johome.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/includes/jscripts/datecommit.js" afterPath="$PROJECT_DIR$/out/artifacts/mcsa_exploded/includes/jscripts/datecommit.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/includes/jscripts/datecommit.js" afterPath="$PROJECT_DIR$/web/includes/jscripts/datecommit.js" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -59,8 +43,8 @@
       <file leaf-file-name="csamanagement.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/includes/jscripts/csamanagement.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="314" column="40" lean-forward="false" selection-start-line="314" selection-start-column="40" selection-end-line="314" selection-end-column="40" />
+            <state relative-caret-position="-5894">
+              <caret line="97" column="0" lean-forward="true" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
               <folding>
                 <marker date="1610596164025" expanded="true" signature="1747:1763" ph="..." />
                 <marker date="1610596164025" expanded="true" signature="2155:2171" ph="..." />
@@ -91,58 +75,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApproveMcsaDateCommit.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaDateCommit.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="150" column="13" lean-forward="false" selection-start-line="150" selection-start-column="13" selection-end-line="150" selection-end-column="13" />
-              <folding>
-                <marker date="1602127738107" expanded="true" signature="1023:1068" ph="SELECT `valu... configs" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="johome.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/includes/jscripts/johome.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="105" column="13" lean-forward="false" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="csamanagement.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/csamanagement.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="52" column="16" lean-forward="false" selection-start-line="52" selection-start-column="16" selection-end-line="52" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="datecommit.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/datecommit.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="11" lean-forward="true" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="datecommit.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/includes/jscripts/datecommit.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+            <state relative-caret-position="764">
+              <caret line="92" column="41" lean-forward="false" selection-start-line="92" selection-start-column="40" selection-end-line="92" selection-end-column="41" />
               <folding>
-                <marker date="1610608438466" expanded="true" signature="4102:4114" ph="..." />
-                <marker date="1610608438466" expanded="true" signature="4189:4201" ph="..." />
-                <marker date="1610608438466" expanded="true" signature="4434:4446" ph="..." />
-                <marker date="1610608438466" expanded="true" signature="4521:4533" ph="..." />
+                <marker date="1610769514229" expanded="true" signature="4128:4140" ph="..." />
+                <marker date="1610769514229" expanded="true" signature="4215:4227" ph="..." />
+                <marker date="1610769514229" expanded="true" signature="4460:4472" ph="..." />
+                <marker date="1610769514229" expanded="true" signature="4547:4559" ph="..." />
               </folding>
             </state>
           </provider>
@@ -300,11 +242,10 @@
   <component name="MavenProjectNavigator">
     <treeState />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="298" />
-    <option name="y" value="123" />
-    <option name="width" value="792" />
-    <option name="height" value="458" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="371" />
+    <option name="width" value="1006" />
+    <option name="height" value="745" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -399,9 +340,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
-      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -457,7 +397,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2258,7 +2199,9 @@
       <workItem from="1610159848473" duration="425000" />
       <workItem from="1610585231379" duration="152000" />
       <workItem from="1610587732260" duration="8852000" />
-      <workItem from="1610601244622" duration="7307000" />
+      <workItem from="1610601244622" duration="7917000" />
+      <workItem from="1610673769209" duration="57000" />
+      <workItem from="1610757858862" duration="11216000" />
     </task>
     <task id="LOCAL-00024" summary="Added asterisk for Date of birth to be not ignored.&#10;&#10;file : addcontacts.js line 459">
       <created>1508736019100</created>
@@ -2607,7 +2550,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7606299000" />
+    <option name="totallyTimeSpent" value="7618182000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2619,8 +2562,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
+    <frame x="371" y="0" width="1006" height="745" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2632,20 +2574,20 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10920437" sideWeight="0.431918" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1950078" sideWeight="0.568082" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16062993" sideWeight="0.6770045" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21044303" sideWeight="0.568082" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.63388807" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16105418" sideWeight="0.49448818" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19765739" sideWeight="0.49448818" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1505295" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39937598" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20204978" sideWeight="0.5055118" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39937598" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3082,14 +3024,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/johome.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="105" column="13" lean-forward="false" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/datecommit.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -3106,10 +3040,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web/includes/jscripts/johome.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="105" column="13" lean-forward="false" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaDateCommit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="150" column="13" lean-forward="false" selection-start-line="150" selection-start-column="13" selection-end-line="150" selection-end-column="13" />
+          <folding>
+            <marker date="1602127738107" expanded="true" signature="1023:1068" ph="SELECT `valu... configs" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/web/includes/jscripts/csamanagement.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="314" column="40" lean-forward="false" selection-start-line="314" selection-start-column="40" selection-end-line="314" selection-end-column="40" />
+        <state relative-caret-position="-5894">
+          <caret line="97" column="0" lean-forward="true" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
           <folding>
             <marker date="1610596164025" expanded="true" signature="1747:1763" ph="..." />
             <marker date="1610596164025" expanded="true" signature="2155:2171" ph="..." />
@@ -3139,25 +3090,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/com/wmdc/mobilecsa/servlet/joborder/ApproveMcsaDateCommit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="150" column="13" lean-forward="false" selection-start-line="150" selection-start-column="13" selection-end-line="150" selection-end-column="13" />
-          <folding>
-            <marker date="1602127738107" expanded="true" signature="1023:1068" ph="SELECT `valu... configs" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/includes/jscripts/datecommit.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+        <state relative-caret-position="764">
+          <caret line="92" column="41" lean-forward="false" selection-start-line="92" selection-start-column="40" selection-end-line="92" selection-end-column="41" />
           <folding>
-            <marker date="1610608438466" expanded="true" signature="4102:4114" ph="..." />
-            <marker date="1610608438466" expanded="true" signature="4189:4201" ph="..." />
-            <marker date="1610608438466" expanded="true" signature="4434:4446" ph="..." />
-            <marker date="1610608438466" expanded="true" signature="4521:4533" ph="..." />
+            <marker date="1610769514229" expanded="true" signature="4128:4140" ph="..." />
+            <marker date="1610769514229" expanded="true" signature="4215:4227" ph="..." />
+            <marker date="1610769514229" expanded="true" signature="4460:4472" ph="..." />
+            <marker date="1610769514229" expanded="true" signature="4547:4559" ph="..." />
           </folding>
         </state>
       </provider>

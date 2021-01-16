@@ -52,6 +52,7 @@ var dateCommitStore = Ext.create('Ext.data.Store', {
 });
 
 var dateCommitGrid = Ext.create('Ext.grid.Panel', {
+    title: 'Date Commit',
     store: dateCommitStore,
     id: 'dcGrid',
     frame: true,
@@ -151,6 +152,69 @@ var dateCommitGrid = Ext.create('Ext.grid.Panel', {
             iconCls: 'refresh-icon',
             handler: function() {
                 location.assign('johome.jsp')
+            }
+        },'-',{
+            xtype: 'textfield',
+            fieldLabel: '<b>Search</b>',
+            id: 'searchFieldDC',
+            width: '30%',
+            labelWidth: 70,
+            enableKeyEvents: true,
+            triggers: {
+                clears: {
+                    cls: 'x-form-clear-trigger',
+                    handler: function() {
+                        if (Ext.getCmp('searchFieldDC').getValue() !== '') {
+                            this.setValue('');
+                            dateCommitGrid.setStore(dateCommitStore);
+                        }
+                    }
+                }
+            },
+            listeners: {
+                keypress: function(textfield, eo) {
+                    if (eo.getCharCode() === Ext.EventObject.ENTER) {
+                        var query = Ext.getCmp('searchFieldDC').getValue();
+
+                        if (query.length > 1) {
+
+                            //  alert(query);
+                            //  var store = dateCommitGrid.getStore();
+                            //  array
+                            //  var dcItems = store.data.items;
+
+                            var rowNumber = dateCommitGrid.getStore().find('joNum', query);
+
+                            //console.log(rowNumber);
+                            //dateCommitGrid.getView().focusRow(rowNumber);
+                            //dateCommitGrid.getSelectionModel().select(rowNumber);
+
+                            if (rowNumber < 0) {
+                                Ext.Msg.alert(query, 'No joborder found.');
+                            } else {
+                                var dcItems = dateCommitGrid.getStore().data.items;
+
+                                //console.log(dcItems[rowNumber].data);
+
+                                dateCommitGrid.setStore(Ext.create('Ext.data.Store', {
+                                    model: 'DateCommit',
+                                    data: [{
+                                        'joId': dcItems[rowNumber].data.joId,
+                                        'joNum': dcItems[rowNumber].data.joNum,
+                                        'customerId': dcItems[rowNumber].data.customerId,
+                                        'customer': dcItems[rowNumber].data.customer,
+                                        'isCsaApproved': dcItems[rowNumber].data.isCsaApproved,
+                                        'isPnmApproved': dcItems[rowNumber].data.isPnmApproved,
+                                        'dateCommit': dcItems[rowNumber].data.dateCommit,
+                                        'dateReceive': dcItems[rowNumber].data.dateReceive
+                                    }]
+                                }));
+
+                                dateCommitGrid.getSelectionModel().select(0);
+                            }
+                        }
+                    }
+                }
             }
         }]
     }]
