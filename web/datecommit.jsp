@@ -27,8 +27,6 @@
 
     <script src="includes/jscripts/dataconnection.js"></script>
 
-    <script src="includes/jscripts/jsfunctions.js"></script>
-
     <script src="includes/jscripts/datecommit.js"></script>
 </head>
 <body>

@@ -1174,8 +1174,6 @@ var customerGrid = Ext.create('Ext.grid.Panel', {
     }]
 });
 
-
-
 var menuTree = Ext.create('Ext.tree.Panel', {
     height: '100%',
     rootVisible: false,

@@ -95,6 +95,7 @@ Ext.onReady(function() {
                         html: '<span class="bigBtn">Quality Check</span>',
                         listeners: {
                             click: function() {
+                                location.assign('qualitycheck.jsp');
                             }
                         }
                     },{

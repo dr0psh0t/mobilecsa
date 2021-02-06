@@ -58,9 +58,8 @@ var dateCommitGrid = Ext.create('Ext.grid.Panel', {
     frame: true,
     height: '100%',
     listeners: {
-        beforeitemdblclick: function (selModel, record) {
+        itemclick: function (selModel, record) {
             var data = record.data;
-            console.log(record.data);
 
             if (data === null) {
                 console.log('record is null.');
@@ -68,8 +67,8 @@ var dateCommitGrid = Ext.create('Ext.grid.Panel', {
                 if (!data.isCsaApproved) {
 
                     Ext.Msg.show({
-                        title: 'Date Commit',
-                        msg: 'Approve Joborder '+data.joNum+'?',
+                        title: 'Approve',
+                        msg: data.joNum+' - '+data.customer+'?',
                         buttons: Ext.Msg.YESNO,
                         callback: function(btn) {
 
@@ -138,27 +137,12 @@ var dateCommitGrid = Ext.create('Ext.grid.Panel', {
     dockedItems: [{
         xtype: 'toolbar',
         dock: 'top',
-        buttonAlign: 'right',
         items: [{
-            xtype: 'button',
-            text: '<b>Refresh</b>',
-            iconCls: 'refresh-icon',
-            handler: function() {
-                dateCommitStore.load({url: 'getdclist'});
-            }
-        },{
-            xtype: 'button',
-            text: '<b>Back</b>',
-            iconCls: 'refresh-icon',
-            handler: function() {
-                location.assign('johome.jsp')
-            }
-        },'-',{
             xtype: 'textfield',
             fieldLabel: '<b>Search</b>',
             id: 'searchFieldDC',
-            width: '30%',
-            labelWidth: 70,
+            width: '50%',
+            labelWidth: 50,
             enableKeyEvents: true,
             triggers: {
                 clears: {
@@ -174,51 +158,81 @@ var dateCommitGrid = Ext.create('Ext.grid.Panel', {
             listeners: {
                 keypress: function(textfield, eo) {
                     if (eo.getCharCode() === Ext.EventObject.ENTER) {
-                        var query = Ext.getCmp('searchFieldDC').getValue();
-
-                        if (query.length > 1) {
-
-                            //  alert(query);
-                            //  var store = dateCommitGrid.getStore();
-                            //  array
-                            //  var dcItems = store.data.items;
-
-                            var rowNumber = dateCommitGrid.getStore().find('joNum', query);
-
-                            //console.log(rowNumber);
-                            //dateCommitGrid.getView().focusRow(rowNumber);
-                            //dateCommitGrid.getSelectionModel().select(rowNumber);
-
-                            if (rowNumber < 0) {
-                                Ext.Msg.alert(query, 'No joborder found.');
-                            } else {
-                                var dcItems = dateCommitGrid.getStore().data.items;
-
-                                //console.log(dcItems[rowNumber].data);
-
-                                dateCommitGrid.setStore(Ext.create('Ext.data.Store', {
-                                    model: 'DateCommit',
-                                    data: [{
-                                        'joId': dcItems[rowNumber].data.joId,
-                                        'joNum': dcItems[rowNumber].data.joNum,
-                                        'customerId': dcItems[rowNumber].data.customerId,
-                                        'customer': dcItems[rowNumber].data.customer,
-                                        'isCsaApproved': dcItems[rowNumber].data.isCsaApproved,
-                                        'isPnmApproved': dcItems[rowNumber].data.isPnmApproved,
-                                        'dateCommit': dcItems[rowNumber].data.dateCommit,
-                                        'dateReceive': dcItems[rowNumber].data.dateReceive
-                                    }]
-                                }));
-
-                                dateCommitGrid.getSelectionModel().select(0);
-                            }
-                        }
+                        search();
                     }
                 }
+            }
+        },{
+            xtype: 'button',
+            text: '<b>Search</b>',
+            iconCls: 'refresh-icon',
+            handler: function() {
+                search();
+            }
+        }]
+    },{
+        xtype: 'toolbar',
+        dock: 'bottom',
+        buttonAlign: 'right',
+        items: [{
+            xtype: 'button',
+            text: '<b>Refresh</b>',
+            iconCls: 'refresh-icon',
+            handler: function() {
+                dateCommitStore.load({url: 'getdclist'});
+            }
+        },{
+            xtype: 'button',
+            text: '<b>Back</b>',
+            iconCls: 'refresh-icon',
+            handler: function() {
+                location.assign('johome.jsp')
             }
         }]
     }]
 });
+
+function search() {
+    var query = Ext.getCmp('searchFieldDC').getValue();
+
+    if (query.length > 1) {
+
+        //  alert(query);
+        //  var store = dateCommitGrid.getStore();
+        //  array
+        //  var dcItems = store.data.items;
+
+        var rowNumber = dateCommitGrid.getStore().find('joNum', query);
+
+        //console.log(rowNumber);
+        //dateCommitGrid.getView().focusRow(rowNumber);
+        //dateCommitGrid.getSelectionModel().select(rowNumber);
+
+        if (rowNumber < 0) {
+            Ext.Msg.alert(query, 'No joborder found.');
+        } else {
+            var dcItems = dateCommitGrid.getStore().data.items;
+
+            //console.log(dcItems[rowNumber].data);
+
+            dateCommitGrid.setStore(Ext.create('Ext.data.Store', {
+                model: 'DateCommit',
+                data: [{
+                    'joId': dcItems[rowNumber].data.joId,
+                    'joNum': dcItems[rowNumber].data.joNum,
+                    'customerId': dcItems[rowNumber].data.customerId,
+                    'customer': dcItems[rowNumber].data.customer,
+                    'isCsaApproved': dcItems[rowNumber].data.isCsaApproved,
+                    'isPnmApproved': dcItems[rowNumber].data.isPnmApproved,
+                    'dateCommit': dcItems[rowNumber].data.dateCommit,
+                    'dateReceive': dcItems[rowNumber].data.dateReceive
+                }]
+            }));
+
+            dateCommitGrid.getSelectionModel().select(0);
+        }
+    }
+}
 
 Ext.onReady(function() {
     Ext.QuickTips.init();
