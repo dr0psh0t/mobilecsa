@@ -134,7 +134,7 @@ var qcGrid = Ext.create('Ext.grid.Panel', {
         },{
             xtype: 'button',
             text: '<b>Search</b>',
-            iconCls: 'refresh-icon',
+            iconCls: 'search-icon',
             handler: function() {
                 search();
             }
@@ -149,21 +149,21 @@ var qcGrid = Ext.create('Ext.grid.Panel', {
         items: [{
             xtype: 'button',
             text: '<b>Refresh</b>',
-            iconCls: 'refresh-icon',
+            iconCls: 'refresh2',
             handler: function() {
                 qcGrid.setStore(qcStore);
             }
         },{
             xtype: 'button',
             text: '<b>Back</b>',
-            iconCls: 'refresh-icon',
+            iconCls: 'rewind',
             handler: function() {
                 location.assign('johome.jsp')
             }
         },'-',{
             xtype: 'button',
             text: '<b>Prev</b>',
-            iconCls: 'refresh-icon',
+            iconCls: 'prev-icon',
             handler: function() {
                 if (pageCounter > 1) {
                     --pageCounter;
@@ -182,7 +182,7 @@ var qcGrid = Ext.create('Ext.grid.Panel', {
         },{
             xtype: 'button',
             text: '<b>Next</b>',
-            iconCls: 'refresh-icon',
+            iconCls: 'next-icon',
             handler: function() {
                 ++pageCounter;
                 Ext.getCmp('pageId').setText(pageCounter);
@@ -249,9 +249,9 @@ function initQc(param) {
     Ext.create('Ext.Window', {
         id: 'initQcWindow',
         title: 'Quality Check',
-        width: 450,
+        width: 300,
         height: 180,
-        minWidth: 450,
+        minWidth: 300,
         minHeight: 180,
         layout: 'fit',
         plain: true,
@@ -261,7 +261,8 @@ function initQc(param) {
                 id: 'qcForm',
                 region: 'center',
                 bodyStyle: 'padding: 5px',
-                width: 450,
+                width: 300,
+                //width: '90%',
                 height: 180,
                 items: [{
                     xtype: 'filefield',

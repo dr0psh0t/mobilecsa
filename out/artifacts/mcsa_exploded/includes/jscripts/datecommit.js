@@ -165,7 +165,7 @@ var dateCommitGrid = Ext.create('Ext.grid.Panel', {
         },{
             xtype: 'button',
             text: '<b>Search</b>',
-            iconCls: 'refresh-icon',
+            iconCls: 'search-icon',
             handler: function() {
                 search();
             }
@@ -177,14 +177,14 @@ var dateCommitGrid = Ext.create('Ext.grid.Panel', {
         items: [{
             xtype: 'button',
             text: '<b>Refresh</b>',
-            iconCls: 'refresh-icon',
+            iconCls: 'refresh2',
             handler: function() {
                 dateCommitStore.load({url: 'getdclist'});
             }
         },{
             xtype: 'button',
             text: '<b>Back</b>',
-            iconCls: 'refresh-icon',
+            iconCls: 'rewind',
             handler: function() {
                 location.assign('johome.jsp')
             }

@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 
 @WebServlet("/IoTCheckWorkQueue")
 public class IoTCheckWorkQueue extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
@@ -22,15 +23,15 @@ public class IoTCheckWorkQueue extends HttpServlet {
 
         resJson.put("joInfo", "25259-96884");
         resJson.put("success", 1);
-
-        resJson.put("dTime", 1601633712);
-
-        resJson.put("mId", 100060);
-        resJson.put("startTime", 1599494016);
         resJson.put("hash", "sgkdfkjt45-2340-8gasdf|fjsdkflksj==");
+
+        resJson.put("mId", 1000392);
+        resJson.put("startTime", 1621432390);
+        resJson.put("dTime", 1621433110);
 
         //resJson.put("success", 0);
         //resJson.put("reason", "No Work in Queue, or already completed.");
+        System.out.println("Incoming: "+request.getRemoteAddr());
 
         out.print(resJson);
     }

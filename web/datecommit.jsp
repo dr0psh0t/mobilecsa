@@ -18,6 +18,26 @@
         .refresh-icon {
             background-image : url('includes/images/icons/refresh.png');
         }
+
+        .search-icon {
+            background-image : url('includes/images/icons/search-icon2.png');
+        }
+
+        .prev-icon {
+            background-image : url('includes/images/icons/arrow_left.png');
+        }
+
+        .next-icon {
+            background-image : url('includes/images/icons/arrow_right.png');
+        }
+
+        .rewind {
+            background-image : url('includes/images/icons/rewind.png');
+        }
+
+        .refresh2 {
+            background-image : url('includes/images/icons/refresh2.png');
+        }
     </style>
 
     <script> cId = '${sessionScope.csaId}'; </script>
