@@ -1236,8 +1236,7 @@ var addContactsForm = Ext.create('Ext.form.Panel', {
             anchor : '100%',
             margin : '20',
             cls : ['labeltextsize', 'bold-text']
-        },
-        {
+        },{
             xtype : 'filefield',
             id : 'specimenPhoto',
             name : 'specimenPhoto',
@@ -1278,7 +1277,7 @@ var addContactsForm = Ext.create('Ext.form.Panel', {
 
                         Ext.Msg.alert('Warning!', 'Chosen file is not an image.');
                         Ext.getCmp('specimenPhoto').inputEl.dom.value = '';
-                    }
+                    };
 
                     img.src = _URL.createObjectURL(file);
 

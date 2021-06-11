@@ -383,13 +383,14 @@ function displayContacts(contactId, stretched) {
 function displayPhoto(link) {
 
     var windowpic = Ext.create('Ext.Window', {
+        modal: true,
+        x: 400,
+        y: 25,
         id: 'pictureWindow',
         title: 'Photo',
         reference: 'picWin',
-        minWidth: 400,
-        minHeight: 400,
-        maxWidth: 750,
-        maxHeight: 620,
+        maxWidth: 400,
+        maxHeight: 400,
         layout: 'fit',
         plain: true,
         items: [
@@ -404,22 +405,77 @@ function displayPhoto(link) {
                         listeners: {
                             el: {
                                 load: function() {
-                                    //  DO NOT DELETE COMMENTS HERE
+                                    var photoId = Ext.getCmp('photoId');
+                                    var picWin = Ext.getCmp('pictureWindow');
 
-                                    //var picWin = Ext.getCmp('pictureWindow');
+                                    var imgW = this.getWidth();
+                                    var imgH = this.getHeight();
 
-                                    //console.log(this.getWidth()+'x'+this.getHeight());
-                                    //console.log('picWindow= '+picWin.getWidth()+'x'+picWin.getHeight());
+                                    var screenH = screen.height - 50;
+                                    var screenW = screen.width;
 
-                                    //picWin.setMaxWidth();
+                                    var windowH;
+                                    var windowW;
 
-                                    //picWin.setMaxWidth(screen.width / 2);
-                                    //picWin.setMaxHeight(screen.height * 0.70);
+                                    if (imgH < (screenH - 100) && imgW < screenW) {
+                                        if (imgH === imgW) {
+                                            windowH = imgH - 100;
+                                            windowW = imgW - 100
+                                        } else if (imgH > imgW) {
+                                            windowW = imgW;
+                                            if (imgH > 500) {
+                                                windowH = imgH - 100;
+                                            } else {
+                                                windowH = imgH;
+                                            }
+                                        } else {
+                                            windowH = imgH;
+                                            if (imgW > 1000) {
+                                                windowW = imgW - 100;
+                                            } else {
+                                                windowW = imgW;
+                                            }
+                                        }
 
-                                    //picWin.setMaxWidth(this.getWidth());
-                                    //picWin.setMaxHeight(this.getHeight());
+                                        photoId.setMaxHeight(windowH);
+                                        photoId.setMaxWidth(windowW);
 
-                                    //console.log(screen.width+'x'+screen.height);
+                                        picWin.setMaxHeight(windowH + 150);
+                                        picWin.setMaxWidth(windowW + 50);
+
+                                    } else {
+                                        var difference;
+                                        var percentLost;
+                                        var newH;
+                                        var newW;
+
+                                        picWin.setMaxHeight(newH);
+                                        picWin.setMaxWidth(newH);
+
+                                        if (imgW > imgH) {
+                                            difference = imgW - screenW;
+                                            percentLost = difference / imgW;
+
+                                            photoId.setMinWidth(imgW - (imgW * percentLost));
+                                            photoId.setMinHeight(imgH - (imgH * percentLost));
+                                        } else if (imgH > imgW) {
+                                            difference = imgH - screenH;
+                                            percentLost = difference / imgH;
+                                            newH = (imgH - (imgH * percentLost));
+                                            newW = (imgW - (imgW * percentLost));
+
+                                            photoId.setMaxWidth(newW - 200);
+                                            photoId.setMaxHeight(newH - 200);
+                                        } else {
+                                            difference = imgW - screenW;
+                                            percentLost = difference / imgW;
+                                            newH = (imgH - (imgH * percentLost));
+                                            newW = (imgW - (imgW * percentLost));
+
+                                            photoId.setMaxWidth(newW - 200);
+                                            photoId.setMaxHeight(newH - 200);
+                                        }
+                                    }
                                 }
                             }
                         }
